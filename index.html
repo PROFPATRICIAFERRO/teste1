@@ -12,7 +12,7 @@
         }
 
         body {
-            background: #1a1a1a;
+            background: #1c1c1c;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -26,12 +26,12 @@
         #game {
             position: relative;
             width: 100%;
-            max-width: 900px;
-            height: 650px;
-            max-height: 100vh;
+            max-width: 960px;
+            height: 100vh;
+            max-height: 700px;
             overflow: hidden;
-            box-shadow: 0 0 40px rgba(0,0,0,0.7);
-            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
         }
 
         .tela {
@@ -57,166 +57,188 @@
         #tela-inicial {
             background-image: url('inicial3.png');
             justify-content: flex-end;
-            padding-bottom: 80px;
+            padding-bottom: 100px;
         }
 
         .logos-inicio {
             display: flex;
-            gap: 25px;
-            margin-bottom: 30px;
+            gap: 30px;
+            margin-bottom: 35px;
         }
 
         .logos-inicio img {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35));
             animation: flutuar 3s ease-in-out infinite;
         }
 
-        .logos-inicio img:nth-child(2) { animation-delay: 0.4s; }
-        .logos-inicio img:nth-child(3) { animation-delay: 0.8s; }
+        .logos-inicio img:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .logos-inicio img:nth-child(3) {
+            animation-delay: 0.8s;
+        }
 
         @keyframes flutuar {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
         }
 
         .btn {
             background: linear-gradient(135deg, #f9a825, #ef6c00);
             color: white;
             border: none;
-            padding: 16px 48px;
-            font-size: 1.4rem;
+            padding: 18px 55px;
+            font-size: 1.5rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            letter-spacing: 2px;
-            box-shadow: 0 8px 25px rgba(239,108,0,0.5);
+            letter-spacing: 3px;
+            box-shadow: 0 8px 30px rgba(239, 108, 0, 0.55);
             transition: all 0.3s;
             text-transform: uppercase;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(239,108,0,0.7);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 40px rgba(239, 108, 0, 0.75);
         }
 
         .btn:active {
-            transform: scale(0.95);
+            transform: scale(0.96);
         }
 
         /* ========== TELAS DE DIÁLOGO ========== */
         .dialogo-container {
+            position: relative;
             width: 100%;
             height: 100%;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            padding-bottom: 30px;
+            padding-bottom: 40px;
         }
 
         .personagem {
             position: absolute;
-            bottom: 140px;
+            bottom: 170px;
             left: 50%;
             transform: translateX(-50%);
-            width: 160px;
+            width: 200px;
             height: auto;
             z-index: 2;
+            pointer-events: none;
         }
 
         .balao {
             position: relative;
             background: white;
             border: 3px solid #4a8c3f;
-            border-radius: 25px;
-            padding: 20px 30px;
-            max-width: 80%;
+            border-radius: 28px;
+            padding: 22px 35px;
+            max-width: 78%;
             text-align: center;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: #2d2d2d;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+            margin-bottom: 25px;
             z-index: 3;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .balao::before {
             content: '';
             position: absolute;
-            top: -18px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
-            border-left: 16px solid transparent;
-            border-right: 16px solid transparent;
-            border-bottom: 18px solid white;
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+            border-bottom: 20px solid white;
             z-index: 4;
         }
 
         .balao::after {
             content: '';
             position: absolute;
-            top: -23px;
+            top: -26px;
             left: 50%;
             transform: translateX(-50%);
-            border-left: 19px solid transparent;
-            border-right: 19px solid transparent;
-            border-bottom: 21px solid #4a8c3f;
+            border-left: 21px solid transparent;
+            border-right: 21px solid transparent;
+            border-bottom: 23px solid #4a8c3f;
             z-index: 3;
         }
 
         .seta-avancar {
             position: absolute;
-            bottom: 25px;
-            right: 40px;
-            font-size: 3rem;
+            bottom: 30px;
+            right: 50px;
+            font-size: 3.2rem;
             color: #f9a825;
             cursor: pointer;
             z-index: 10;
             animation: piscar 1.2s infinite;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             user-select: none;
         }
 
         @keyframes piscar {
-            0%,100% { opacity: 1; transform: translateX(0); }
-            50% { opacity: 0.5; transform: translateX(10px); }
+            0%,
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            50% {
+                opacity: 0.45;
+                transform: translateX(12px);
+            }
         }
 
         .input-nome {
-            padding: 14px 25px;
-            font-size: 1.1rem;
+            padding: 16px 28px;
+            font-size: 1.2rem;
             border: 3px solid #4a8c3f;
             border-radius: 40px;
             text-align: center;
             outline: none;
-            width: 300px;
+            width: 320px;
             max-width: 80%;
             background: #f9fbe7;
         }
 
         .escolha-personagem {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            gap: 40px;
-            z-index: 3;
+            gap: 50px;
+            z-index: 5;
         }
 
         .card-personagem {
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: transform 0.3s, border-color 0.3s;
             border: 4px solid transparent;
-            border-radius: 20px;
+            border-radius: 22px;
             overflow: hidden;
             background: white;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
         }
 
         .card-personagem img {
-            width: 130px;
-            height: 160px;
+            width: 140px;
+            height: 180px;
             object-fit: cover;
             display: block;
         }
@@ -224,14 +246,12 @@
         .card-personagem.selecionado {
             border-color: #f9a825;
             transform: scale(1.08);
-            box-shadow: 0 0 25px rgba(249,168,37,0.5);
+            box-shadow: 0 0 30px rgba(249, 168, 37, 0.6);
         }
 
         /* ========== TELA JOGO ABELHA ========== */
         #tela-abelha {
             background-image: url('cenario1.png');
-            background-size: cover;
-            background-position: center;
         }
 
         #canvas-abelha {
@@ -245,90 +265,89 @@
 
         .hud {
             position: absolute;
-            top: 15px;
-            left: 20px;
+            top: 20px;
+            left: 25px;
             z-index: 5;
             display: flex;
-            gap: 20px;
+            gap: 25px;
         }
 
         .hud-item {
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.75);
             color: white;
-            padding: 8px 18px;
+            padding: 10px 22px;
             border-radius: 30px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.05rem;
         }
 
         .logos-jogo {
             position: absolute;
-            top: 15px;
-            right: 20px;
+            top: 20px;
+            right: 25px;
             z-index: 5;
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .logos-jogo img {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             object-fit: contain;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 50%;
-            padding: 3px;
+            padding: 4px;
         }
 
         /* ========== COMPOSTAGEM ========== */
         #tela-compostagem {
             background-image: url('cenario4.png');
-            background-size: cover;
-            background-position: center;
-            flex-direction: column;
             gap: 15px;
+            padding: 20px;
         }
 
         .composteira {
-            width: 220px;
-            height: 200px;
-            border: 4px dashed #5d4037;
-            border-radius: 20px;
-            background: rgba(139,90,43,0.3);
+            width: 240px;
+            height: 220px;
+            border: 5px dashed #5d4037;
+            border-radius: 25px;
+            background: rgba(139, 90, 43, 0.25);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
+            position: relative;
         }
 
         .composteira img {
-            width: 100px;
+            width: 110px;
             height: auto;
         }
 
         .composteira.drag-over {
             border-color: #f9a825;
-            background: rgba(249,168,37,0.3);
-            box-shadow: 0 0 35px rgba(249,168,37,0.6);
+            background: rgba(249, 168, 37, 0.3);
+            box-shadow: 0 0 45px rgba(249, 168, 37, 0.7);
         }
 
         .itens {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 18px;
             justify-content: center;
-            max-width: 500px;
+            max-width: 550px;
         }
 
         .item {
-            width: 80px;
-            height: 80px;
-            border-radius: 16px;
+            width: 90px;
+            height: 90px;
+            border-radius: 18px;
             background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: grab;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
             transition: transform 0.2s;
             border: 3px solid #ccc;
         }
@@ -346,22 +365,20 @@
         }
 
         .item img {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             object-fit: contain;
         }
 
         /* ========== PLANTIO ========== */
         #tela-plantio {
             background-image: url('cenario2.png');
-            background-size: cover;
-            background-position: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .sementes {
             display: flex;
-            gap: 30px;
+            gap: 35px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -369,16 +386,16 @@
         .semente {
             cursor: pointer;
             border: 4px solid transparent;
-            border-radius: 20px;
+            border-radius: 22px;
             background: white;
-            padding: 10px;
+            padding: 12px;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         }
 
         .semente img {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             object-fit: contain;
         }
 
@@ -391,13 +408,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .terra {
             position: relative;
-            width: 200px;
-            height: 160px;
+            width: 220px;
+            height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -411,18 +428,25 @@
 
         .regador {
             position: absolute;
-            bottom: -30px;
-            right: -40px;
-            width: 80px;
+            bottom: -35px;
+            right: -45px;
+            width: 90px;
             cursor: pointer;
             transition: transform 0.2s;
             animation: balanco 2s ease-in-out infinite;
         }
 
         @keyframes balanco {
-            0%,100% { transform: rotate(0); }
-            30% { transform: rotate(-12deg); }
-            60% { transform: rotate(8deg); }
+            0%,
+            100% {
+                transform: rotate(0);
+            }
+            30% {
+                transform: rotate(-12deg);
+            }
+            60% {
+                transform: rotate(8deg);
+            }
         }
 
         .regador:hover {
@@ -434,96 +458,118 @@
         }
 
         @keyframes crescer {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* ========== CERTIFICADO ========== */
         #tela-certificado {
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.75);
             z-index: 50;
         }
 
         .certificado {
             background: #fef9e7;
             border: 8px double #c8a84e;
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 600px;
+            border-radius: 22px;
+            padding: 30px 25px;
+            max-width: 620px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 10px 45px rgba(0,0,0,0.5);
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.6);
             animation: pop 0.7s ease-out;
         }
 
         @keyframes pop {
-            0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0); opacity: 1; }
+            0% {
+                transform: scale(0.5) rotate(-6deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0);
+                opacity: 1;
+            }
         }
 
         .certificado h2 {
             color: #5d4037;
             font-family: 'Georgia', serif;
-            font-size: 1.8rem;
-            letter-spacing: 3px;
+            font-size: 2rem;
+            letter-spacing: 4px;
         }
 
         .nome-destaque {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: bold;
             color: #2d5a27;
             text-transform: uppercase;
-            margin: 10px 0;
+            margin: 12px 0;
         }
 
         .checklist {
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #3e3e3e;
-            line-height: 2;
-            padding-left: 30px;
+            line-height: 2.2;
+            padding-left: 35px;
         }
 
         .titulo-heroi {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #b8860b;
             letter-spacing: 2px;
-            margin: 10px 0;
+            margin: 12px 0;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
             .balao {
-                font-size: 0.85rem;
-                padding: 14px 18px;
+                font-size: 0.9rem;
+                padding: 16px 20px;
                 max-width: 90%;
             }
             .personagem {
-                width: 120px;
-                bottom: 120px;
+                width: 150px;
+                bottom: 140px;
             }
             .card-personagem img {
                 width: 100px;
-                height: 130px;
+                height: 140px;
+            }
+            .escolha-personagem {
+                gap: 30px;
+                top: 50px;
             }
             .item {
-                width: 60px;
-                height: 60px;
-            }
-            .item img {
-                width: 45px;
-                height: 45px;
-            }
-            .composteira {
-                width: 170px;
-                height: 160px;
-            }
-            .semente img {
                 width: 70px;
                 height: 70px;
             }
+            .item img {
+                width: 50px;
+                height: 50px;
+            }
+            .composteira {
+                width: 190px;
+                height: 180px;
+            }
+            .semente img {
+                width: 80px;
+                height: 80px;
+            }
             .certificado {
-                padding: 15px;
+                padding: 20px 15px;
+            }
+            .certificado h2 {
+                font-size: 1.5rem;
+            }
+            .nome-destaque {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -534,7 +580,7 @@
         <div id="tela-inicial" class="tela ativa">
             <div class="logos-inicio">
                 <img src="logo1.png" alt="Logo 1">
-                <img src="logo2.png" alt="Logo 2">
+                <img src="logo.png" alt="Logo 2">
                 <img src="logo3.png" alt="Logo 3">
             </div>
             <button class="btn" onclick="iniciar()">Começar</button>
@@ -546,9 +592,9 @@
                 <img id="img-personagem" class="personagem" src="principal1.png" alt="Adelita">
                 <div id="balao-dialogo" class="balao">Olá! Eu sou a Adelita...</div>
                 <div id="seta-dialogo" class="seta-avancar" onclick="proximoDialogo()">➤</div>
-                <div id="area-input" style="display:none; z-index:3;"></div>
-                <div id="area-escolha" style="display:none; z-index:3;"></div>
-                <button id="btn-missao" class="btn" style="display:none;" onclick="iniciarMissaoAbelha()">Começar Missão</button>
+                <div id="area-input" style="display:none; z-index:5; position:absolute; top:200px;"></div>
+                <div id="area-escolha" style="display:none;"></div>
+                <button id="btn-missao" class="btn" style="display:none; position:absolute; bottom:50px; z-index:10;" onclick="iniciarMissaoAbelha()">Começar Missão</button>
             </div>
         </div>
 
@@ -560,7 +606,7 @@
                 <span class="hud-item">Vidas: <span id="cont-vidas">5</span></span>
             </div>
             <div class="logos-jogo">
-                <img src="logo1.png" alt="L1"><img src="logo2.png" alt="L2"><img src="logo3.png" alt="L3">
+                <img src="logo1.png" alt="L1"><img src="logo.png" alt="L2"><img src="logo3.png" alt="L3">
             </div>
         </div>
 
@@ -570,17 +616,17 @@
                 <img class="personagem" src="principal2.png" alt="Adelita">
                 <div id="balao-dialogo2" class="balao">Muito bem!</div>
                 <div class="seta-avancar" onclick="proximoDialogo2()">➤</div>
-                <button id="btn-compost" class="btn" style="display:none;" onclick="iniciarCompostagem()">Começar</button>
+                <button id="btn-compost" class="btn" style="display:none; position:absolute; bottom:50px;" onclick="iniciarCompostagem()">Começar</button>
             </div>
         </div>
 
         <!-- ========== COMPOSTAGEM ========== -->
         <div id="tela-compostagem" class="tela">
-            <h3 style="color:#3e2723; background:rgba(255,255,255,0.7); padding:8px 20px; border-radius:20px;">Arraste os itens corretos para a composteira</h3>
+            <h3 style="color:#3e2723; background:rgba(255,255,255,0.8); padding:10px 25px; border-radius:30px; margin-bottom:5px;">Arraste os itens corretos para a composteira</h3>
             <div id="composteira" class="composteira" ondragover="event.preventDefault(); this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="soltar(event)">
                 <img src="compostagem.png" alt="Composteira">
             </div>
-            <p id="contador-compost" style="font-weight:bold; background:white; padding:6px 20px; border-radius:20px;">Colocados: 0/4</p>
+            <p id="contador-compost" style="font-weight:bold; background:white; padding:8px 25px; border-radius:30px; margin:5px 0;">Colocados: 0/4</p>
             <div id="itens-compost" class="itens"></div>
         </div>
 
@@ -590,13 +636,13 @@
                 <img class="personagem" src="principal2.png" alt="Adelita">
                 <div id="balao-dialogo3" class="balao">Parabéns!</div>
                 <div class="seta-avancar" onclick="proximoDialogo3()">➤</div>
-                <button id="btn-plantio" class="btn" style="display:none;" onclick="iniciarPlantio()">Começar</button>
+                <button id="btn-plantio" class="btn" style="display:none; position:absolute; bottom:50px;" onclick="iniciarPlantio()">Começar</button>
             </div>
         </div>
 
         <!-- ========== PLANTIO ========== -->
         <div id="tela-plantio" class="tela">
-            <h3 id="titulo-plantio" style="background:rgba(255,255,255,0.7); padding:8px 20px; border-radius:20px;">Escolha uma semente para plantar:</h3>
+            <h3 id="titulo-plantio" style="background:rgba(255,255,255,0.8); padding:10px 25px; border-radius:30px;">Escolha uma semente para plantar:</h3>
             <div id="sementes-container" class="sementes"></div>
             <div id="area-plantio" class="area-plantio" style="display:none;"></div>
         </div>
@@ -607,10 +653,10 @@
                 <img class="personagem" src="principal3.png" alt="Adelita">
                 <div id="balao-final" class="balao">Parabéns!</div>
                 <div class="seta-avancar" onclick="proximoDialogoFinal()">➤</div>
-                <div style="display:flex; gap:15px; margin-top:10px;">
-                    <img src="logo1.png" width="50"><img src="logo2.png" width="50"><img src="logo3.png" width="50">
+                <div style="display:flex; gap:18px; margin-top:15px;">
+                    <img src="logo1.png" width="55"><img src="logo.png" width="55"><img src="logo3.png" width="55">
                 </div>
-                <button id="btn-cert" class="btn" style="display:none;" onclick="mostrarCertificado()">Ver Certificado</button>
+                <button id="btn-cert" class="btn" style="display:none; position:absolute; bottom:50px;" onclick="mostrarCertificado()">Ver Certificado</button>
             </div>
         </div>
 
@@ -632,14 +678,14 @@
                 <p>Por seu empenho e dedicação, recebe o título de:</p>
                 <div class="titulo-heroi">AGROHERÓI DO FUTURO SUSTENTÁVEL</div>
                 <p style="margin-top:15px;">🌱🌾 FIM 🌾🌱</p>
-                <p style="font-size:0.8rem;">Desenvolvido pelo aluno Matheus – 2º D Noturno<br>Colégio Estadual Antonio Tortato – Professora Patrícia Ferro</p>
-                <button class="btn" style="margin-top:10px;" onclick="reiniciar()">Jogar novamente</button>
+                <p style="font-size:0.85rem;">Desenvolvido pelo aluno Matheus – 2º D Noturno<br>Colégio Estadual Antonio Tortato – Professora Patrícia Ferro</p>
+                <button class="btn" style="margin-top:15px;" onclick="reiniciar()">Jogar novamente</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== ESTADO ====================
+        // ==================== ESTADO GLOBAL ====================
         const estado = {
             nome: '',
             personagem: null, // 'menina' ou 'menino'
@@ -659,40 +705,69 @@
             spawnRate: 55,
         };
 
-        const abelha = { x: 80, y: 300, w: 60, h: 50, speed: 6 };
+        const abelha = { x: 80, y: 300, w: 70, h: 60, speed: 7 };
         let canvas, ctx;
-        let imagens = {};
 
-        // ==================== CARREGAMENTO DE IMAGENS ====================
-        function preloadImagens() {
-            const lista = [
-                'abelha.png', 'soja.png', 'milho.png', 'flor.png', 'fogo.png', 'fumaca.png',
-                'sementemilho.png', 'sementetomate.png', 'sementesoja.png',
-                'terra.png', 'regua.png', 'plantinha.png', 'milhocresce.png', 'tomatecrece.png', 'sojacrece.png'
-            ];
-            lista.forEach(src => {
-                const img = new Image();
-                img.src = src;
-                imagens[src] = img;
-            });
+        // ==================== PRÉ‑CARREGAMENTO DAS IMAGENS DO JOGO ====================
+        const imagens = {};
+        function carregarImagem(src) {
+            const img = new Image();
+            img.src = src;
+            imagens[src] = img;
+            return img;
         }
-        preloadImagens();
+        // Imagens essenciais para o jogo da abelha
+        carregarImagem('abelha.png');
+        carregarImagem('soja.png');
+        carregarImagem('milho.png');
+        carregarImagem('flor.png');
+        carregarImagem('fogo.png');
+        carregarImagem('fumaca.png');
+        // Imagens do plantio
+        carregarImagem('sementemilho.png');
+        carregarImagem('sementetomate.png');
+        carregarImagem('sementesoja.png');
+        carregarImagem('terra.png');
+        carregarImagem('regua.png');
+        carregarImagem('plantinha.png');
+        carregarImagem('milhocresce.png');
+        carregarImagem('tomatecrece.png');
+        carregarImagem('sojacrece.png');
 
         // ==================== TROCA DE TELAS ====================
         function mostrarTela(id) {
             document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
-            document.getElementById(id).classList.add('ativa');
+            const novaTela = document.getElementById(id);
+            if (novaTela) novaTela.classList.add('ativa');
+            // Ajustar canvas quando voltar ao jogo da abelha
+            if (id === 'tela-abelha') {
+                redimensionarCanvas();
+                iniciarMissaoAbelha();
+            }
         }
 
+        function redimensionarCanvas() {
+            const container = document.getElementById('tela-abelha');
+            if (!container || !canvas) return;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            abelha.y = canvas.height / 2;
+        }
+
+        // ==================== INICIAR JOGO ====================
         function iniciar() {
             estado.nome = '';
             estado.personagem = null;
             estado.dialogo = 0;
+            estado.flores = 0;
+            estado.vidas = 5;
+            estado.compostColocados = 0;
+            estado.semente = null;
             mostrarTela('tela-dialogo');
             atualizarDialogo();
         }
 
-        // ==================== DIÁLOGO 1 (fases 0‑11) ====================
+        // ==================== DIÁLOGO 1 (índices 0 a 11) ====================
         function atualizarDialogo() {
             const balao = document.getElementById('balao-dialogo');
             const seta = document.getElementById('seta-dialogo');
@@ -713,7 +788,7 @@
                     balao.textContent = 'Olá! Eu sou a Adelita e faço parte dos AgroHeróis! Qual é o seu nome?';
                     areaInput.style.display = 'block';
                     areaInput.innerHTML = `<input type="text" class="input-nome" id="inputNome" placeholder="Digite seu nome..." maxlength="25"><br>
-                        <button class="btn" style="margin-top:10px; padding:10px 30px;" onclick="confirmarNome()">Confirmar</button>`;
+                        <button class="btn" style="margin-top:15px; padding:12px 35px; font-size:1.1rem;" onclick="confirmarNome()">Confirmar</button>`;
                     seta.style.display = 'none';
                     break;
                 case 1:
@@ -734,16 +809,16 @@
                     balao.textContent = 'UAL!!! O tema da nossa aventura é: Agro Forte, Futuro Sustentável: Equilíbrio entre Produção e Meio Ambiente';
                     break;
                 case 3:
-                    balao.textContent = 'Para produzir alimentos e cuidar da natureza, precisamos da ajuda de muitos seres vivos. Um dos mais importantes é a abelha.';
+                    balao.textContent = 'Para produzir alimentos e cuidar da natureza ao mesmo tempo, precisamos da ajuda de muitos seres vivos. Um dos mais importantes é a abelha.';
                     break;
                 case 4:
-                    balao.textContent = 'As abelhas realizam a polinização, processo que ajuda as plantas a produzir flores, frutos e sementes.';
+                    balao.textContent = 'As abelhas realizam a polinização, um processo que ajuda as plantas a produzir flores, frutos e sementes.';
                     break;
                 case 5:
-                    balao.textContent = 'Graças à polinização, temos alimentos como: Maçã, Morango, Melancia, Pepino, Café.';
+                    balao.textContent = 'Graças à polinização, podemos ter alimentos como: Maçã, Morango, Melancia, Pepino, Café.';
                     break;
                 case 6:
-                    balao.textContent = 'Sem as abelhas, a produção de muitos alimentos seria muito menor. Sua missão: ajudar uma abelha a coletar flores!';
+                    balao.textContent = 'Sem as abelhas, a produção de muitos alimentos seria muito menor. Sua missão será ajudar uma abelha a coletar flores!';
                     break;
                 case 7:
                     balao.textContent = 'Como jogar: ↑ Seta para cima: subir | ↓ Seta para baixo: descer';
@@ -776,7 +851,7 @@
 
         function confirmarNome() {
             const input = document.getElementById('inputNome');
-            if (input && input.value.trim()) {
+            if (input && input.value.trim().length > 0) {
                 estado.nome = input.value.trim();
                 estado.dialogo = 1;
                 atualizarDialogo();
@@ -790,7 +865,7 @@
             setTimeout(() => {
                 estado.dialogo = 2;
                 atualizarDialogo();
-            }, 300);
+            }, 350);
         }
 
         // ==================== JOGO DA ABELHA ====================
@@ -798,9 +873,7 @@
             mostrarTela('tela-abelha');
             canvas = document.getElementById('canvas-abelha');
             ctx = canvas.getContext('2d');
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-            abelha.y = canvas.height / 2;
+            redimensionarCanvas();
             estado.flores = 0;
             estado.vidas = 5;
             estado.elementos = [];
@@ -815,6 +888,13 @@
 
         function loop() {
             if (!estado.jogoAtivo) return;
+            if (!canvas || !ctx) return;
+
+            // Prevenir tela preta se o canvas perder dimensões
+            if (canvas.width === 0 || canvas.height === 0) {
+                redimensionarCanvas();
+            }
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             estado.spawnTimer++;
@@ -831,22 +911,28 @@
                     if (el.tipo === 'flor') {
                         estado.flores++;
                         document.getElementById('cont-flores').textContent = estado.flores;
-                        if (estado.flores >= 10) { vitoriaAbelha(); return; }
+                        if (estado.flores >= 10) {
+                            vitoriaAbelha();
+                            return;
+                        }
                     } else {
                         estado.vidas--;
                         document.getElementById('cont-vidas').textContent = estado.vidas;
-                        if (estado.vidas <= 0) { derrotaAbelha(); return; }
+                        if (estado.vidas <= 0) {
+                            derrotaAbelha();
+                            return;
+                        }
                     }
                     estado.elementos.splice(i, 1);
-                } else if (el.x + el.w < -50) {
+                } else if (el.x + el.w / 2 < -30) {
                     estado.elementos.splice(i, 1);
                 } else {
                     desenharElemento(el);
                 }
             }
 
-            if (estado.teclas.cima && abelha.y - abelha.h/2 > 10) abelha.y -= abelha.speed;
-            if (estado.teclas.baixo && abelha.y + abelha.h/2 < canvas.height - 10) abelha.y += abelha.speed;
+            if (estado.teclas.cima && abelha.y - abelha.h / 2 > 10) abelha.y -= abelha.speed;
+            if (estado.teclas.baixo && abelha.y + abelha.h / 2 < canvas.height - 10) abelha.y += abelha.speed;
 
             desenharAbelha();
             estado.animFrame = requestAnimationFrame(loop);
@@ -856,44 +942,66 @@
             const tipos = ['flor', 'flor', 'flor', 'fogo', 'fumaca'];
             const tipo = tipos[Math.floor(Math.random() * tipos.length)];
             const y = 60 + Math.random() * (canvas.height - 140);
-            const tamanho = 50;
+            const tamanho = 55;
             const speed = 2.5 + Math.random() * 3.5;
-            estado.elementos.push({ x: canvas.width + 40, y, w: tamanho, h: tamanho, tipo, speed });
+            // Define a imagem específica para flores
+            let imagemFlor = null;
+            if (tipo === 'flor') {
+                const opcoes = ['soja.png', 'milho.png', 'flor.png'];
+                imagemFlor = opcoes[Math.floor(Math.random() * opcoes.length)];
+            }
+            estado.elementos.push({
+                x: canvas.width + 40,
+                y: y,
+                w: tamanho,
+                h: tamanho,
+                tipo: tipo,
+                speed: speed,
+                imagemFlor: imagemFlor
+            });
         }
 
         function colisao(a, b) {
-            return a.x - a.w/2 < b.x + b.w/2 && a.x + a.w/2 > b.x - b.w/2 &&
-                   a.y - a.h/2 < b.y + b.h/2 && a.y + a.h/2 > b.y - b.h/2;
+            const ax = a.x - a.w / 2;
+            const ay = a.y - a.h / 2;
+            const bx = b.x - b.w / 2;
+            const by = b.y - b.h / 2;
+            return ax < bx + b.w && ax + a.w > bx && ay < by + b.h && ay + a.h > by;
         }
 
         function desenharAbelha() {
             const img = imagens['abelha.png'];
-            if (img && img.complete) {
-                ctx.drawImage(img, abelha.x - abelha.w/2, abelha.y - abelha.h/2, abelha.w, abelha.h);
+            if (img && img.complete && img.naturalWidth > 0) {
+                ctx.drawImage(img, abelha.x - abelha.w / 2, abelha.y - abelha.h / 2, abelha.w, abelha.h);
             } else {
-                ctx.fillStyle = '#fdd835'; ctx.fillRect(abelha.x-20, abelha.y-20, 40, 40);
+                // Fallback
+                ctx.fillStyle = '#fdd835';
+                ctx.fillRect(abelha.x - 20, abelha.y - 20, 40, 40);
             }
         }
 
         function desenharElemento(el) {
             let imgSrc = '';
             if (el.tipo === 'flor') {
-                const flores = ['soja.png', 'milho.png', 'flor.png'];
-                imgSrc = flores[Math.floor(Math.random() * 3)];
-            } else if (el.tipo === 'fogo') imgSrc = 'fogo.png';
-            else if (el.tipo === 'fumaca') imgSrc = 'fumaca.png';
+                imgSrc = el.imagemFlor;
+            } else if (el.tipo === 'fogo') {
+                imgSrc = 'fogo.png';
+            } else if (el.tipo === 'fumaca') {
+                imgSrc = 'fumaca.png';
+            }
             const img = imagens[imgSrc];
-            if (img && img.complete) {
-                ctx.drawImage(img, el.x - el.w/2, el.y - el.h/2, el.w, el.h);
+            if (img && img.complete && img.naturalWidth > 0) {
+                ctx.drawImage(img, el.x - el.w / 2, el.y - el.h / 2, el.w, el.h);
             } else {
-                ctx.fillStyle = el.tipo==='flor'?'#ff7043':el.tipo==='fogo'?'#ff9800':'#9e9e9e';
-                ctx.fillRect(el.x-20, el.y-20, 40, 40);
+                // Fallback
+                ctx.fillStyle = el.tipo === 'flor' ? '#ff7043' : (el.tipo === 'fogo' ? '#ff9800' : '#9e9e9e');
+                ctx.fillRect(el.x - 20, el.y - 20, 40, 40);
             }
         }
 
         function vitoriaAbelha() {
             estado.jogoAtivo = false;
-            cancelAnimationFrame(estado.animFrame);
+            if (estado.animFrame) cancelAnimationFrame(estado.animFrame);
             setTimeout(() => {
                 mostrarTela('tela-dialogo2');
                 estado.dialogo2 = 0;
@@ -903,15 +1011,23 @@
 
         function derrotaAbelha() {
             estado.jogoAtivo = false;
-            cancelAnimationFrame(estado.animFrame);
+            if (estado.animFrame) cancelAnimationFrame(estado.animFrame);
             alert('A abelha perdeu toda a energia! Tente novamente.');
             iniciarMissaoAbelha();
         }
 
-        document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowUp') { estado.teclas.cima = true; e.preventDefault(); }
-            if (e.key === 'ArrowDown') { estado.teclas.baixo = true; e.preventDefault(); }
+        // Controles de teclado e toque
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp') {
+                estado.teclas.cima = true;
+                e.preventDefault();
+            }
+            if (e.key === 'ArrowDown') {
+                estado.teclas.baixo = true;
+                e.preventDefault();
+            }
             if (e.key === 'ArrowRight') {
+                // Avançar diálogos conforme a tela ativa
                 if (document.getElementById('tela-dialogo').classList.contains('ativa')) proximoDialogo();
                 else if (document.getElementById('tela-dialogo2').classList.contains('ativa')) proximoDialogo2();
                 else if (document.getElementById('tela-dialogo3').classList.contains('ativa')) proximoDialogo3();
@@ -919,9 +1035,38 @@
                 e.preventDefault();
             }
         });
-        document.addEventListener('keyup', e => {
+        document.addEventListener('keyup', (e) => {
             if (e.key === 'ArrowUp') estado.teclas.cima = false;
             if (e.key === 'ArrowDown') estado.teclas.baixo = false;
+        });
+
+        // Suporte a touch para movimentar a abelha
+        let touchY = null;
+        document.addEventListener('touchstart', (e) => {
+            if (e.target.closest('#tela-abelha') && e.touches.length > 0) {
+                touchY = e.touches[0].clientY;
+            }
+        });
+        document.addEventListener('touchmove', (e) => {
+            if (touchY !== null && e.target.closest('#tela-abelha') && e.touches.length > 0) {
+                const delta = e.touches[0].clientY - touchY;
+                estado.teclas.cima = delta < -10;
+                estado.teclas.baixo = delta > 10;
+                touchY = e.touches[0].clientY;
+                e.preventDefault();
+            }
+        }, { passive: false });
+        document.addEventListener('touchend', () => {
+            estado.teclas.cima = false;
+            estado.teclas.baixo = false;
+            touchY = null;
+        });
+
+        // Redimensionar canvas quando a janela muda
+        window.addEventListener('resize', () => {
+            if (document.getElementById('tela-abelha').classList.contains('ativa')) {
+                redimensionarCanvas();
+            }
         });
 
         // ==================== DIÁLOGO 2 (compostagem) ====================
@@ -932,15 +1077,28 @@
             btn.style.display = 'none';
             seta.style.display = 'block';
             switch (estado.dialogo2) {
-                case 0: balao.textContent = `Muito bem, ${estado.nome}! Agora vamos aprender sobre compostagem.`; break;
-                case 1: balao.textContent = 'Arraste os materiais corretos para a composteira. Pode: cascas de frutas, legumes, folhas secas.'; break;
-                case 2: balao.textContent = 'Não pode: plástico, vidro, latas. Separe corretamente!'; break;
-                case 3: balao.textContent = 'Clique em COMEÇAR.'; btn.style.display = 'inline-block'; seta.style.display = 'none'; break;
+                case 0:
+                    balao.textContent = `Muito bem, ${estado.nome}! Agora vamos aprender sobre a compostagem. A compostagem transforma restos de alimentos e folhas em adubo natural.`;
+                    break;
+                case 1:
+                    balao.textContent = 'Sua missão: Arraste os materiais corretos para a composteira. Pode colocar: cascas de frutas, cascas de legumes, folhas secas.';
+                    break;
+                case 2:
+                    balao.textContent = 'Não pode colocar: Plástico, Vidro, Latas. Separe os resíduos corretamente!';
+                    break;
+                case 3:
+                    balao.textContent = 'Clique em COMEÇAR para iniciar a missão de compostagem.';
+                    btn.style.display = 'inline-block';
+                    seta.style.display = 'none';
+                    break;
             }
         }
 
         function proximoDialogo2() {
-            if (estado.dialogo2 < 3) { estado.dialogo2++; atualizarDialogo2(); }
+            if (estado.dialogo2 < 3) {
+                estado.dialogo2++;
+                atualizarDialogo2();
+            }
         }
 
         function iniciarCompostagem() {
@@ -997,14 +1155,14 @@
                 document.getElementById('contador-compost').textContent = `Colocados: ${estado.compostColocados}/4`;
                 if (estado.compostColocados >= 4) {
                     setTimeout(() => {
-                        alert('Compostagem concluída!');
+                        alert('Compostagem concluída com sucesso!');
                         mostrarTela('tela-dialogo3');
                         estado.dialogo3 = 0;
                         atualizarDialogo3();
                     }, 600);
                 }
             } else {
-                alert('Este item não pode ir para a composteira!');
+                alert('Este item não pode ir para a composteira! Apenas materiais orgânicos.');
             }
         }
 
@@ -1016,13 +1174,29 @@
             btn.style.display = 'none';
             seta.style.display = 'block';
             switch (estado.dialogo3) {
-                case 0: balao.textContent = `Parabéns, ${estado.nome}! Você separou os resíduos corretamente.`; break;
-                case 1: balao.textContent = 'O solo está preparado! Lembra das abelhas? Elas ajudam as plantas. O adubo da compostagem também.'; break;
-                case 2: balao.textContent = 'Escolha uma semente: Milho, Tomate ou Soja.'; break;
-                case 3: balao.textContent = 'Depois regue sua plantinha. Clique em COMEÇAR.'; btn.style.display = 'inline-block'; seta.style.display = 'none'; break;
+                case 0:
+                    balao.textContent = `Parabéns, ${estado.nome}! Você separou os resíduos corretamente e ajudou a produzir um adubo natural.`;
+                    break;
+                case 1:
+                    balao.textContent = 'Agora o solo está preparado! Lembra das abelhas? Elas ajudam as plantas. O adubo da compostagem também.';
+                    break;
+                case 2:
+                    balao.textContent = 'Sua próxima missão: Escolha uma das 3 sementes para plantar: Milho, Tomate ou Soja.';
+                    break;
+                case 3:
+                    balao.textContent = 'Depois, regue sua plantinha com cuidado. Clique em COMEÇAR.';
+                    btn.style.display = 'inline-block';
+                    seta.style.display = 'none';
+                    break;
             }
         }
-        function proximoDialogo3() { if (estado.dialogo3 < 3) { estado.dialogo3++; atualizarDialogo3(); } }
+
+        function proximoDialogo3() {
+            if (estado.dialogo3 < 3) {
+                estado.dialogo3++;
+                atualizarDialogo3();
+            }
+        }
 
         function iniciarPlantio() {
             mostrarTela('tela-plantio');
@@ -1054,13 +1228,13 @@
 
         function regar() {
             const area = document.getElementById('area-plantio');
-            area.innerHTML = `<div class="terra"><img src="terra.png" alt="Terra"><img src="plantinha.png" alt="Plantinha" style="position:absolute; top:20%; left:50%; transform:translateX(-50%); width:60px;"></div>`;
+            area.innerHTML = `<div class="terra"><img src="terra.png" alt="Terra"><img src="plantinha.png" alt="Plantinha" style="position:absolute; top:25%; left:50%; transform:translateX(-50%); width:70px;"></div>`;
             setTimeout(() => {
                 let imgCrescida = '';
                 if (estado.semente === 'milho') imgCrescida = 'milhocresce.png';
                 else if (estado.semente === 'tomate') imgCrescida = 'tomatecrece.png';
                 else imgCrescida = 'sojacrece.png';
-                area.innerHTML = `<img src="${imgCrescida}" class="planta-crescida" style="width:180px;"><br>
+                area.innerHTML = `<img src="${imgCrescida}" class="planta-crescida" style="width:200px;"><br>
                     <button class="btn" onclick="irParaFinal()">Continuar</button>`;
             }, 1500);
         }
@@ -1079,13 +1253,29 @@
             btn.style.display = 'none';
             seta.style.display = 'block';
             switch (estado.dialogoFinal) {
-                case 0: balao.textContent = `Parabéns, ${estado.nome}! Você ajudou as abelhas, fez compostagem e plantou.`; break;
-                case 1: balao.textContent = 'Você é um verdadeiro AgroHerói do Futuro Sustentável!'; break;
-                case 2: balao.textContent = 'Agro Forte, Futuro Sustentável: equilíbrio entre produção e meio ambiente.'; break;
-                case 3: balao.textContent = 'Clique para receber seu certificado.'; btn.style.display = 'inline-block'; seta.style.display = 'none'; break;
+                case 0:
+                    balao.textContent = `Parabéns, ${estado.nome}! Você ajudou as abelhas, fez compostagem, plantou uma semente e cuidou da sua planta.`;
+                    break;
+                case 1:
+                    balao.textContent = 'Muito obrigada pela sua ajuda! Agora você é um verdadeiro AgroHerói do Futuro Sustentável.';
+                    break;
+                case 2:
+                    balao.textContent = 'Agro Forte, Futuro Sustentável: equilíbrio entre produção e meio ambiente.';
+                    break;
+                case 3:
+                    balao.textContent = 'Clique no botão para receber seu certificado.';
+                    btn.style.display = 'inline-block';
+                    seta.style.display = 'none';
+                    break;
             }
         }
-        function proximoDialogoFinal() { if (estado.dialogoFinal < 3) { estado.dialogoFinal++; atualizarDialogoFinal(); } }
+
+        function proximoDialogoFinal() {
+            if (estado.dialogoFinal < 3) {
+                estado.dialogoFinal++;
+                atualizarDialogoFinal();
+            }
+        }
 
         function mostrarCertificado() {
             mostrarTela('tela-certificado');
@@ -1097,28 +1287,18 @@
             if (estado.animFrame) cancelAnimationFrame(estado.animFrame);
             estado.nome = '';
             estado.personagem = null;
-            estado.flores = 0; estado.vidas = 5;
-            estado.dialogo = 0; estado.dialogo2 = 0; estado.dialogo3 = 0; estado.dialogoFinal = 0;
+            estado.flores = 0;
+            estado.vidas = 5;
+            estado.dialogo = 0;
+            estado.dialogo2 = 0;
+            estado.dialogo3 = 0;
+            estado.dialogoFinal = 0;
+            estado.elementos = [];
             mostrarTela('tela-inicial');
         }
 
-        // Suporte a touch no jogo da abelha
-        let touchY = null;
-        document.getElementById('canvas-abelha')?.addEventListener('touchstart', e => {
-            if (e.touches.length) touchY = e.touches[0].clientY;
-        });
-        document.getElementById('canvas-abelha')?.addEventListener('touchmove', e => {
-            if (touchY && e.touches.length) {
-                const delta = e.touches[0].clientY - touchY;
-                estado.teclas.cima = delta < -10;
-                estado.teclas.baixo = delta > 10;
-                touchY = e.touches[0].clientY;
-                e.preventDefault();
-            }
-        });
-        document.getElementById('canvas-abelha')?.addEventListener('touchend', () => {
-            estado.teclas.cima = false; estado.teclas.baixo = false; touchY = null;
-        });
+        // ==================== INICIALIZAÇÃO ====================
+        console.log('🌾 AgroHeróis pronto! Coloque todas as imagens na mesma pasta.');
     </script>
 </body>
 </html>
