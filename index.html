@@ -6,70 +6,188 @@
   <title>AgroHeróis - Futuro Sustentável</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #1a0a2e; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Comic Sans MS', cursive, sans-serif; }
-    #game {
-      width: 100%; max-width: 960px; height: 90vh; max-height: 700px; position: relative;
-      border-radius: 20px; overflow: hidden; box-shadow: 0 0 0 4px #4a2c6e, 0 20px 60px rgba(0,0,0,0.6);
+    body {
+      background: #1a0a2e; display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; font-family: 'Comic Sans MS', cursive, sans-serif;
     }
-    .screen { position: absolute; top:0; left:0; width:100%; height:100%; display:none; flex-direction:column; align-items:center; justify-content:center; background-size:cover; background-position:center; }
-    .screen.active { display:flex; z-index:1; }
-    /* início */
+    #game {
+      width: 100%; max-width: 960px; height: 90vh; max-height: 700px;
+      position: relative; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 0 0 4px #4a2c6e, 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .screen {
+      position: absolute; top:0; left:0; width:100%; height:100%;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      background-size: cover; background-position: center;
+    }
+    .screen.active { display: flex; z-index: 1; }
+
+    /* TELA INICIAL */
     #screen-start { background-image: url('inicial3.png'); }
-    .btn { padding: 16px 50px; font-size: 1.8em; font-weight:700; background: linear-gradient(135deg,#f0c040,#ff8f00); color:#3e2723; border:none; border-radius:50px; cursor:pointer; letter-spacing:2px; box-shadow:0 8px 30px rgba(240,192,64,0.5); }
-    /* diálogo */
+    .btn {
+      padding: 16px 50px; font-size: 1.8em; font-weight: 700;
+      background: linear-gradient(135deg, #f0c040, #ff8f00); color: #3e2723;
+      border: none; border-radius: 50px; cursor: pointer; letter-spacing: 2px;
+      box-shadow: 0 8px 30px rgba(240,192,64,0.5); transition: 0.2s;
+    }
+    .btn:hover { transform: scale(1.05); }
+
+    /* DIÁLOGO */
     #screen-dialogue { background-image: url('fundo1.png'); }
-    .logos { position:absolute; top:15px; right:20px; display:flex; gap:10px; z-index:5; }
-    .logos img { width:50px; height:50px; object-fit:contain; background:rgba(255,255,255,0.85); border-radius:10px; padding:4px; }
-    .charbox { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); }
-    .charbox img { width:140px; max-height:200px; filter:drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
-    .bubble { position:absolute; bottom:240px; left:50%; transform:translateX(-50%); background:#fff; border-radius:25px; padding:15px 25px; max-width:500px; min-width:260px; box-shadow:0 8px 30px rgba(0,0,0,0.25); z-index:10; text-align:center; border:3px solid #f0c040; line-height:1.5; color:#3e2723; }
-    .bubble:after { content:''; position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); border-left:18px solid transparent; border-right:18px solid transparent; border-top:18px solid #fff; filter:drop-shadow(0 4px 2px rgba(0,0,0,0.1)); }
-    .arrow { position:absolute; bottom:195px; right:45px; font-size:3em; color:#f0c040; cursor:pointer; z-index:11; animation: bounce 0.8s infinite; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
-    @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
-    .name-area { display:flex; gap:8px; margin-top:8px; justify-content:center; }
-    .name-area input { padding:10px 15px; border-radius:30px; border:3px solid #f0c040; text-align:center; font-family:inherit; }
-    .name-area button { padding:10px 20px; background:#f0c040; border:none; border-radius:30px; font-weight:700; cursor:pointer; }
-    /* escolha personagem */
-    .char-options { position:absolute; bottom:30px; display:flex; gap:30px; z-index:15; }
-    .char-card { background:#fffef5; border-radius:20px; padding:12px; text-align:center; cursor:pointer; border:4px solid #e0d5c0; transition:0.3s; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
-    .char-card:hover { transform:translateY(-8px); border-color:#f0c040; }
-    .char-card img { width:90px; height:110px; object-fit:contain; }
-    /* jogo da abelha */
+    .logos {
+      position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; z-index: 5;
+    }
+    .logos img {
+      width: 50px; height: 50px; object-fit: contain;
+      background: rgba(255,255,255,0.85); border-radius: 10px; padding: 4px;
+    }
+    .charbox {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 2;
+    }
+    .charbox img { width: 140px; max-height: 200px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
+    .bubble {
+      position: absolute; bottom: 250px; left: 50%; transform: translateX(-50%);
+      background: #fff; border-radius: 25px; padding: 15px 25px;
+      max-width: 500px; min-width: 260px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      z-index: 10; text-align: center; border: 3px solid #f0c040; line-height: 1.5;
+      color: #3e2723;
+    }
+    .bubble:after {
+      content: ''; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
+      border-left: 18px solid transparent; border-right: 18px solid transparent;
+      border-top: 18px solid #fff; filter: drop-shadow(0 4px 2px rgba(0,0,0,0.1));
+    }
+    .arrow {
+      position: absolute; bottom: 210px; right: 45px; font-size: 3em; color: #f0c040;
+      cursor: pointer; z-index: 11; animation: bounce 0.8s infinite;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+    @keyframes bounce {
+      0%,100%{transform: translateY(0);} 50%{transform: translateY(-12px);}
+    }
+    .name-area {
+      display: flex; gap: 8px; margin-top: 8px; justify-content: center;
+    }
+    .name-area input {
+      padding: 10px 15px; border-radius: 30px; border: 3px solid #f0c040;
+      text-align: center; font-family: inherit;
+    }
+    .name-area button {
+      padding: 10px 20px; background: #f0c040; border: none; border-radius: 30px;
+      font-weight: 700; cursor: pointer;
+    }
+
+    /* ESCOLHA DE PERSONAGEM (menina/menino) */
+    .char-options {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 40px; z-index: 15; background: rgba(255,255,240,0.7);
+      padding: 10px 25px; border-radius: 20px; backdrop-filter: blur(4px);
+      border: 2px solid #f0c040;
+    }
+    .char-card {
+      cursor: pointer; text-align: center; transition: 0.3s;
+    }
+    .char-card img { width: 90px; height: 110px; object-fit: contain; }
+    .char-card:hover { transform: translateY(-8px); }
+    .char-card.selected { outline: 4px solid #4caf50; border-radius: 20px; }
+
+    /* ESCOLHA DE SEMENTES */
+    .seeds {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 25px; z-index: 15; background: rgba(255,255,240,0.7);
+      padding: 10px 25px; border-radius: 20px; backdrop-filter: blur(4px);
+      border: 2px solid #f0c040;
+    }
+    .seed-card {
+      cursor: pointer; text-align: center; transition: 0.3s;
+    }
+    .seed-card img { width: 70px; height: 70px; object-fit: contain; }
+    .seed-card:hover { transform: translateY(-8px); }
+    .seed-card.selected { outline: 4px solid #4caf50; border-radius: 20px; }
+
+    /* PLANTIO: estágios */
+    .plant-stage {
+      position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%);
+      z-index: 12;
+    }
+    .plant-stage img { max-width: 180px; max-height: 180px; }
+    .water {
+      position: absolute; bottom: 50px; right: 80px; cursor: pointer; z-index: 13;
+      animation: wiggle 1.5s infinite; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+    }
+    .water img { width: 70px; }
+    @keyframes wiggle {
+      0%,100%{transform: rotate(0);} 25%{transform: rotate(-10deg);} 75%{transform: rotate(10deg);}
+    }
+    .hint {
+      position: absolute; top: -40px; right: -30px; font-size: 2.5em; color: #f0c040;
+      animation: bounce 0.7s infinite; pointer-events: none;
+    }
+
+    /* JOGO DA ABELHA */
     #screen-bee { background-image: url('cenario1.png'); }
-    canvas { width:100%; height:100%; display:block; }
-    .hud { position:absolute; top:15px; left:20px; display:flex; gap:15px; z-index:10; }
-    .hud span { background:rgba(0,0,0,0.7); color:#fff; padding:6px 16px; border-radius:20px; font-weight:700; border:2px solid #f0c040; }
-    /* compostagem */
-    #screen-compost { background-image: url('cenario4.png'); justify-content:flex-start; padding-top:60px; gap:10px; }
-    .compost-area { display:flex; gap:30px; flex-wrap:wrap; align-items:center; justify-content:center; }
-    .compost-bin { width:160px; height:200px; background:rgba(93,64,55,0.9); border-radius:20px 20px 5px 5px; border:5px dashed #f0c040; background-image:url('compostagem.png'); background-size:contain; background-repeat:no-repeat; background-position:center; transition:0.3s; }
-    .compost-bin.highlight { border-color:#4caf50; box-shadow:0 0 30px rgba(76,175,80,0.6); transform:scale(1.05); }
-    .items { display:flex; gap:12px; flex-wrap:wrap; max-width:380px; }
-    .drag-item { width:75px; height:85px; background:#fffef5; border-radius:15px; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:grab; border:3px solid #ccc; box-shadow:0 4px 12px rgba(0,0,0,0.2); }
-    .drag-item img { width:45px; height:45px; object-fit:contain; }
-    .drag-item .lbl { font-size:0.7em; font-weight:600; color:#3e2723; text-align:center; line-height:1.2; }
-    .drag-item:active { cursor:grabbing; transform:scale(1.1); z-index:100; }
-    .feedback { font-weight:700; color:#fff; background:rgba(0,0,0,0.5); padding:5px 20px; border-radius:20px; }
-    /* plantio */
-    #screen-plant { background-image: url('cenario2.png'); }
-    .seeds { display:flex; gap:25px; flex-wrap:wrap; justify-content:center; }
-    .seed-card { background:#fffef5; border-radius:20px; padding:15px; text-align:center; cursor:pointer; border:4px solid #c8b89a; transition:0.3s; }
-    .seed-card:hover { transform:translateY(-8px); border-color:#f0c040; }
-    .seed-card.selected { border-color:#4caf50; box-shadow:0 0 25px rgba(76,175,80,0.6); transform:scale(1.08); }
-    .seed-card img { width:70px; height:70px; object-fit:contain; }
-    .plant-stage img { max-width:180px; max-height:180px; }
-    .water { cursor:pointer; animation: wiggle 1.5s infinite; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.3)); position:relative; }
-    .water img { width:70px; }
-    @keyframes wiggle { 0%,100%{transform:rotate(0);} 25%{transform:rotate(-10deg);} 75%{transform:rotate(10deg);} }
-    .hint { position:absolute; top:-40px; right:-30px; font-size:2.5em; color:#f0c040; animation:bounce 0.7s infinite; pointer-events:none; }
-    /* certificado */
-    #screen-cert { background:rgba(26,58,26,0.6); }
-    .cert-bg { position:absolute; inset:0; background-image:url('cenario3.png'); background-size:cover; opacity:0.6; }
-    .cert-card { position:relative; z-index:2; background:#fffef5; border-radius:15px; padding:20px; max-width:560px; width:90%; text-align:center; border:6px double #f0c040; box-shadow:0 10px 40px rgba(0,0,0,0.5); }
-    .cert-card h1 { color:#2e7d32; }
-    .cert-name { font-size:1.8em; font-weight:900; color:#ff6f00; text-transform:uppercase; margin:8px 0; }
-    .checks { text-align:left; margin:10px auto; max-width:320px; line-height:2; color:#3e2723; }
-    .cert-title { font-size:1.3em; font-weight:900; color:#2e7d32; margin:10px 0; }
+    canvas { width: 100%; height: 100%; display: block; }
+    .hud {
+      position: absolute; top: 15px; left: 20px; display: flex; gap: 15px; z-index: 10;
+    }
+    .hud span {
+      background: rgba(0,0,0,0.7); color: #fff; padding: 6px 16px;
+      border-radius: 20px; font-weight: 700; border: 2px solid #f0c040;
+    }
+
+    /* COMPOSTAGEM */
+    #screen-compost { background-image: url('cenario4.png'); padding-top: 60px; gap: 10px; }
+    .compost-area {
+      display: flex; gap: 30px; flex-wrap: wrap; align-items: center; justify-content: center;
+    }
+    .compost-bin {
+      width: 160px; height: 200px; background: rgba(93,64,55,0.9);
+      border-radius: 20px 20px 5px 5px; border: 5px dashed #f0c040;
+      background-image: url('compostagem.png'); background-size: contain;
+      background-repeat: no-repeat; background-position: center;
+      transition: 0.3s;
+    }
+    .compost-bin.highlight {
+      border-color: #4caf50; box-shadow: 0 0 30px rgba(76,175,80,0.6); transform: scale(1.05);
+    }
+    .items {
+      display: flex; gap: 12px; flex-wrap: wrap; max-width: 380px;
+    }
+    .drag-item {
+      width: 75px; height: 85px; background: #fffef5; border-radius: 15px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      cursor: grab; border: 3px solid #ccc; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .drag-item img { width: 45px; height: 45px; object-fit: contain; }
+    .drag-item .lbl { font-size: 0.7em; font-weight: 600; color: #3e2723; text-align: center; }
+    .drag-item:active { cursor: grabbing; transform: scale(1.1); z-index: 100; }
+    .feedback {
+      font-weight: 700; color: #fff; background: rgba(0,0,0,0.5); padding: 5px 20px;
+      border-radius: 20px;
+    }
+
+    /* CERTIFICADO */
+    #screen-cert { background: rgba(26,58,26,0.6); }
+    .cert-bg {
+      position: absolute; inset: 0; background-image: url('cenario3.png');
+      background-size: cover; opacity: 0.6;
+    }
+    .cert-card {
+      position: relative; z-index: 2; background: #fffef5; border-radius: 15px;
+      padding: 20px; max-width: 560px; width: 90%; text-align: center;
+      border: 6px double #f0c040; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .cert-card h1 { color: #2e7d32; }
+    .cert-name { font-size: 1.8em; font-weight: 900; color: #ff6f00; text-transform: uppercase; margin: 8px 0; }
+    .checks { text-align: left; margin: 10px auto; max-width: 320px; line-height: 2; color: #3e2723; }
+    .cert-title { font-size: 1.3em; font-weight: 900; color: #2e7d32; margin: 10px 0; }
+
+    @media (max-width: 600px) {
+      .bubble { max-width: 90%; bottom: 220px; }
+      .charbox img { width: 100px; max-height: 160px; }
+      .char-options, .seeds { flex-wrap: wrap; gap: 15px; }
+    }
   </style>
 </head>
 <body>
@@ -79,28 +197,32 @@
     <button class="btn" id="btn-start">▶ COMEÇAR</button>
   </div>
 
-  <!-- DIÁLOGO (usado em todas as fases de história) -->
+  <!-- DIÁLOGO -->
   <div class="screen" id="screen-dialogue">
     <div class="logos" id="logos"><img src="logo1.png"><img src="logo2.png"><img src="logo3.png"></div>
-    <div class="bubble"><span id="speech-text"></span>
+    <div class="bubble">
+      <span id="speech-text"></span>
       <div class="name-area" id="name-area" style="display:none;">
         <input type="text" id="name-input" placeholder="Seu nome" maxlength="20"><button id="btn-ok">✓</button>
       </div>
     </div>
     <div class="arrow" id="arrow">▼</div>
     <div class="charbox"><img id="char-img" src="principal1.png" alt="Adelita"></div>
+
     <!-- escolha personagem -->
     <div class="char-options" id="char-options" style="display:none;">
       <div class="char-card" id="pick-girl"><img src="menina.png"><div>Menina</div></div>
       <div class="char-card" id="pick-boy"><img src="menino.png"><div>Menino</div></div>
     </div>
+
     <!-- escolha sementes -->
     <div class="seeds" id="seeds-row" style="display:none;">
       <div class="seed-card" data-seed="milho"><img src="sementemilho.png"><div>Milho</div></div>
       <div class="seed-card" data-seed="tomate"><img src="sementetomate.png"><div>Tomate</div></div>
       <div class="seed-card" data-seed="soja"><img src="sementesoja.png"><div>Soja</div></div>
     </div>
-    <!-- plantio: terra/planta + regador -->
+
+    <!-- plantio -->
     <div class="plant-stage" id="plant-stage" style="display:none;"><img id="plant-img" src=""></div>
     <div class="water" id="water-can" style="display:none;"><img src="regua.png"><span class="hint">👆</span></div>
   </div>
@@ -141,7 +263,7 @@
 
 <script>
 (function() {
-  // ---------- elementos DOM ----------
+  // DOM
   const screens = {
     start: document.getElementById('screen-start'),
     dialogue: document.getElementById('screen-dialogue'),
@@ -171,7 +293,7 @@
   const feedback = document.getElementById('compost-feedback');
   const certName = document.getElementById('cert-name');
 
-  // ---------- estado do jogo ----------
+  // estado
   let playerName = '', currentPhase = 0, dialogueQueue = [], dialogueIdx = 0;
   let selectedSeed = null, plantWatered = false;
   let compostCorrect = 0, compostWrong = 0;
@@ -179,16 +301,17 @@
   const bee = { x:120, y:300, w:50, h:40 };
   let objects = [], frame = 0;
 
-  // imagens do jogo da abelha
+  // imagens da abelha e obstáculos
   const imgs = {
     abelha: new Image(), soja: new Image(), milho: new Image(), flor: new Image(), fogo: new Image(), fumaca: new Image()
   };
-  imgs.abelha.src = 'abelha.png'; imgs.soja.src = 'soja.png'; imgs.milho.src = 'milho.png'; imgs.flor.src = 'flor.png';
+  imgs.abelha.src = 'B.png';  // ATUALIZADO: abelha agora é B.png
+  imgs.soja.src = 'soja.png'; imgs.milho.src = 'milho.png'; imgs.flor.src = 'flor.png';
   imgs.fogo.src = 'fogo.png'; imgs.fumaca.src = 'fumaca.png';
 
   function showScreen(name) { Object.values(screens).forEach(s => s.classList.remove('active')); screens[name].classList.add('active'); }
 
-  // ---------- sistema de diálogo ----------
+  // ========== DIÁLOGO ==========
   function setupDialogue(phase, dialogues, imgSrc, showLogos=true, showChars=false, showSeeds=false, showPlant=false) {
     currentPhase = phase; dialogueQueue = dialogues; dialogueIdx = 0;
     charImg.src = imgSrc || 'principal1.png';
@@ -222,7 +345,7 @@
     const n = nameInput.value.trim();
     if (n) { playerName = n; nameArea.style.display = 'none'; advanceDialogue(); }
   });
-  nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { btnOk.click(); } });
+  nameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') btnOk.click(); });
 
   function handlePhaseComplete() {
     switch(currentPhase) {
@@ -235,22 +358,20 @@
     }
   }
 
-  // Escolha de personagem
   document.getElementById('pick-girl').onclick = () => { charOptions.style.display = 'none'; currentPhase = 1; startMissionDialogue(); };
   document.getElementById('pick-boy').onclick = () => { charOptions.style.display = 'none'; currentPhase = 1; startMissionDialogue(); };
 
   function startMissionDialogue() {
     setupDialogue(2, [
       'UAL!!! O tema da nossa aventura é: Agro Forte, Futuro Sustentável: Equilíbrio entre Produção e Meio Ambiente',
-      'Precisamos da ajuda das abelhas! Elas fazem a polinização, que ajuda as plantas a produzir flores, frutos e sementes.',
-      'Graças à polinização, temos alimentos como maçã, morango, melancia, pepino, café.',
+      'Precisamos da ajuda das abelhas! Elas fazem a polinização.',
+      'Graças à polinização, temos alimentos como maçã, morango, melancia...',
       'Sua missão: ajude uma abelha a coletar 10 flores, desviando do fogo e da fumaça.',
-      'Controles: ↑ sobe, ↓ desce.',
-      'Clique na seta para começar! 🐝'
+      'Controles: ↑ sobe, ↓ desce. Clique na seta para começar! 🐝'
     ], 'principal1.png', true, false, false, false);
   }
 
-  // ========== JOGO DA ABELHA ==========
+  // ========== JOGO DA ABELHA (B.png) ==========
   function startBeeGame() {
     showScreen('bee'); beeFlowers = 0; beeEnergy = 5; beeActive = true;
     flowerCountEl.textContent = '0'; energyEl.textContent = '5';
@@ -264,9 +385,13 @@
   function spawnObj(startX) {
     const types = ['flower','flower','flower','fire','smoke','flower','fire','smoke'];
     const type = types[Math.floor(Math.random()*types.length)];
-    objects.push({ type, x: startX || beeCanvas.width+Math.random()*200, y:40+Math.random()*(beeCanvas.height-100),
-                   w: type==='flower'?35:40, h: type==='flower'?35:45, speed:2.5+Math.random()*1.5, collected:false,
-                   variant: type==='flower' ? ['soja','milho','flor'][Math.floor(Math.random()*3)] : null });
+    objects.push({
+      type, x: startX || beeCanvas.width+Math.random()*200,
+      y: 40+Math.random()*(beeCanvas.height-100),
+      w: type==='flower'?35:40, h: type==='flower'?35:45,
+      speed: 2.5+Math.random()*1.5, collected: false,
+      variant: type==='flower' ? ['soja','milho','flor'][Math.floor(Math.random()*3)] : null
+    });
   }
 
   function beeLoop() {
@@ -276,7 +401,6 @@
     objects = objects.filter(o => o.x > -80);
     if (frame%40===0 && objects.length<15) spawnObj(beeCanvas.width+150);
 
-    // colisões
     for (let o of objects) {
       if (o.collected) continue;
       if (bee.x < o.x+o.w && bee.x+bee.w > o.x && bee.y < o.y+o.h && bee.y+bee.h > o.y) {
@@ -308,7 +432,7 @@
       setupDialogue(3, [
         'Muito bem, [NOME]! Agora vamos aprender sobre compostagem.',
         'A compostagem transforma restos de alimentos em adubo natural.',
-        'Arraste os materiais corretos para a composteira. Pode: cascas de frutas, legumes, folhas secas. Não pode: plástico, vidro, latas.',
+        'Arraste os materiais corretos para a composteira. Pode: cascas de frutas, legumes. Não pode: plástico, vidro, latas.',
         'Clique na seta para começar! 🗑️'
       ], 'principal2.png', true, false, false, false);
     } else {
@@ -356,15 +480,15 @@
   compostBin.addEventListener('dragleave', () => compostBin.classList.remove('highlight'));
   compostBin.addEventListener('drop', e => {
     e.preventDefault(); compostBin.classList.remove('highlight');
-    const id = e.dataTransfer.getData('text/plain');
-    processDrop(id);
+    processDrop(e.dataTransfer.getData('text/plain'));
   });
 
-  // touch para arrastar (simplificado)
+  // touch drag simplificado
   let touchItem = null;
   itemsContainer.addEventListener('touchstart', e => {
-    if (e.target.closest('.drag-item')) { touchItem = e.target.closest('.drag-item'); touchItem.style.opacity='0.6'; }
-  }, {passive:false});
+    const item = e.target.closest('.drag-item');
+    if (item) { touchItem = item; item.style.opacity = '0.6'; }
+  }, {passive: false});
   itemsContainer.addEventListener('touchend', e => {
     if (!touchItem) return;
     const touch = e.changedTouches[0];
@@ -426,8 +550,8 @@
       plantImg.src = 'plantinha.png';
       speechText.textContent = 'Germinou!';
       setTimeout(() => {
-        const imgsGrown = { milho:'milhocresce.png', tomate:'tomatecrece.png', soja:'sojacrece.png' };
-        plantImg.src = imgsGrown[selectedSeed];
+        const grown = { milho:'milhocresce.png', tomate:'tomatecrece.png', soja:'sojacrece.png' };
+        plantImg.src = grown[selectedSeed];
         speechText.textContent = 'Sua planta cresceu forte! Clique na seta.';
         arrow.style.display = 'block';
         currentPhase = 4.5;
@@ -441,22 +565,20 @@
     certName.textContent = playerName || 'Aventureiro';
   }
 
-  // overrides para fases especiais
   const origAdvance = advanceDialogue;
   advanceDialogue = function() {
-    if (currentPhase === 4.5) { startFinal(); return; }
+    if (currentPhase === 4.5) {
+      setupDialogue(5, [
+        'Parabéns, [NOME]! Você ajudou as abelhas, fez compostagem e plantou.',
+        'Agora você é um verdadeiro AgroHerói do Futuro Sustentável!',
+        'Agro Forte, Futuro Sustentável.',
+        'Desenvolvido por Matheus – 2º D | Colégio Antonio Tortato | Profª Patrícia Ferro | FIM. 🌱🌾'
+      ], 'principal3.png', true, false, false, false);
+      return;
+    }
     if (currentPhase === 4 && seedsRow.style.display === 'flex') return;
     origAdvance();
   };
-
-  function startFinal() {
-    setupDialogue(5, [
-      'Parabéns, [NOME]! Você ajudou as abelhas, fez compostagem e plantou.',
-      'Agora você é um verdadeiro AgroHerói do Futuro Sustentável!',
-      'Agro Forte, Futuro Sustentável.',
-      'Desenvolvido por Matheus – 2º D | Colégio Antonio Tortato | Profª Patrícia Ferro | FIM. 🌱🌾'
-    ], 'principal3.png', true, false, false, false);
-  }
 
   // iniciar
   document.getElementById('btn-start').addEventListener('click', () => {
