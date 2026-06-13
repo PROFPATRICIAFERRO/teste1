@@ -7,88 +7,82 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="game">
-  <!-- TELA INICIAL -->
-  <div class="screen active" id="screen-start">
-    <button class="btn" id="btn-start">▶ COMEÇAR</button>
-  </div>
+  <!-- Navegação por abas -->
+  <nav class="tabs">
+    <button class="tab" data-stage="1" disabled>1. Adelita</button>
+    <button class="tab" data-stage="2" disabled>2. Abelha</button>
+    <button class="tab" data-stage="3" disabled>3. Compostagem</button>
+    <button class="tab" data-stage="4" disabled>4. Plantio</button>
+    <button class="tab" data-stage="5" disabled>5. Certificado</button>
+  </nav>
 
-  <!-- DIÁLOGO -->
-  <div class="screen" id="screen-dialogue">
-    <div class="logos" id="logos">
-      <img src="logo1.png" alt="logo1"><img src="logo2.png" alt="logo2"><img src="logo3.png" alt="logo3">
-    </div>
+  <!-- Etapa 1: Diálogo com Adelita -->
+  <section id="stage-1" class="stage active">
+    <div class="logos"><img src="logo1.png"><img src="logo2.png"><img src="logo3.png"></div>
     <div class="bubble">
       <span id="speech-text"></span>
-      <div class="name-area" id="name-area" style="display:none;">
+      <div id="name-area" style="display:none;">
         <input type="text" id="name-input" placeholder="Seu nome" maxlength="20">
         <button id="btn-ok">✓</button>
       </div>
+      <button id="btn-next-dialogue" class="btn-next" style="display:none;">Próximo ▶</button>
     </div>
-    <div class="arrow" id="arrow">▼</div>
     <div class="charbox"><img id="char-img" src="principal1.png" alt="Adelita"></div>
-
-    <!-- escolha de personagem -->
-    <div class="char-options" id="char-options" style="display:none;">
-      <div class="char-card" id="pick-girl"><img src="menina.png" alt="Menina"><div class="char-label">Menina</div></div>
-      <div class="char-card" id="pick-boy"><img src="menino.png" alt="Menino"><div class="char-label">Menino</div></div>
+    <div id="char-options" style="display:none;">
+      <div class="char-card" id="pick-girl"><img src="menina.png"><div>Menina</div></div>
+      <div class="char-card" id="pick-boy"><img src="menino.png"><div>Menino</div></div>
     </div>
+  </section>
 
-    <!-- escolha de sementes -->
-    <div class="seeds" id="seeds-row" style="display:none;">
-      <div class="seed-card" data-seed="milho"><img src="sementemilho.png" alt="Milho"><div class="seed-label">Milho</div></div>
-      <div class="seed-card" data-seed="tomate"><img src="sementetomate.png" alt="Tomate"><div class="seed-label">Tomate</div></div>
-      <div class="seed-card" data-seed="soja"><img src="sementesoja.png" alt="Soja"><div class="seed-label">Soja</div></div>
-    </div>
-
-    <!-- plantio -->
-    <div class="plant-stage" id="plant-stage" style="display:none;"><img id="plant-img" src="" alt="estágio"></div>
-    <div class="water" id="water-can" style="display:none;"><img src="regua.png" alt="regador"><span class="hint">👆</span></div>
-  </div>
-
-  <!-- JOGO DA ABELHA -->
-  <div class="screen" id="screen-bee">
+  <!-- Etapa 2: Jogo da Abelha -->
+  <section id="stage-2" class="stage">
+    <div class="logos"><img src="logo1.png"><img src="logo2.png"><img src="logo3.png"></div>
     <canvas id="beeCanvas"></canvas>
     <div class="hud">
       <span>🌸 Flores: <b id="flower-count">0</b>/10</span>
       <span>⚡ Energia: <b id="energy-display">5</b></span>
     </div>
-    <div class="logos" style="position:absolute; top:15px; right:20px; z-index:10;">
-      <img src="logo1.png" alt="logo1"><img src="logo2.png" alt="logo2"><img src="logo3.png" alt="logo3">
-    </div>
-  </div>
+    <button id="btn-bee-done" class="btn-next" style="display:none;">Missão concluída! Ir para Compostagem</button>
+  </section>
 
-  <!-- COMPOSTAGEM -->
-  <div class="screen" id="screen-compost">
-    <div class="compost-title">🗑️ Arraste os itens corretos para a composteira!</div>
-    <div class="feedback" id="compost-feedback"></div>
+  <!-- Etapa 3: Compostagem -->
+  <section id="stage-3" class="stage">
+    <h2>🗑️ Arraste os itens corretos para a composteira!</h2>
+    <div id="compost-feedback"></div>
     <div class="compost-area">
       <div class="compost-bin" id="compost-bin"></div>
-      <div class="items" id="items-container"></div>
+      <div id="items-container"></div>
     </div>
-    <div class="counter">
-      ✅ Corretos: <span id="correct-count">0</span>/4 &nbsp;|&nbsp; ❌ Errados: <span id="wrong-count">0</span>
-    </div>
-  </div>
+    <div>✅ Corretos: <span id="correct-count">0</span>/4 | ❌ Errados: <span id="wrong-count">0</span></div>
+    <button id="btn-compost-done" class="btn-next" style="display:none;">Compostagem pronta! Ir para Plantio</button>
+  </section>
 
-  <!-- CERTIFICADO -->
-  <div class="screen" id="screen-cert">
-    <div class="cert-bg"></div>
+  <!-- Etapa 4: Plantio -->
+  <section id="stage-4" class="stage">
+    <div id="seeds-row">
+      <div class="seed-card" data-seed="milho"><img src="sementemilho.png"><div>Milho</div></div>
+      <div class="seed-card" data-seed="tomate"><img src="sementetomate.png"><div>Tomate</div></div>
+      <div class="seed-card" data-seed="soja"><img src="sementesoja.png"><div>Soja</div></div>
+    </div>
+    <div id="plant-stage" style="display:none;"><img id="plant-img" src=""></div>
+    <div id="water-can" style="display:none;"><img src="regua.png"><span>👆</span></div>
+    <button id="btn-plant-done" class="btn-next" style="display:none;">Planta crescida! Ver Certificado</button>
+  </section>
+
+  <!-- Etapa 5: Certificado -->
+  <section id="stage-5" class="stage">
     <div class="cert-card">
       <h1>📜 CERTIFICADO</h1>
       <p>A equipe dos AgroHeróis certifica que</p>
       <div class="cert-name" id="cert-name">[NOME]</div>
       <p>concluiu com sucesso todas as missões do projeto<br><strong>Agro Forte, Futuro Sustentável</strong></p>
-      <div class="checks">
-        ✅ Polinização e abelhas<br>✅ Compostagem<br>✅ Plantio e cuidados<br>✅ Sustentabilidade
-      </div>
+      <div class="checks">✅ Polinização e abelhas<br>✅ Compostagem<br>✅ Plantio e cuidados<br>✅ Sustentabilidade</div>
       <p>Por seu empenho, recebe o título de:</p>
       <div class="cert-title">🌾 AGROHERÓI DO FUTURO SUSTENTÁVEL 🌾</div>
       <small>Desenvolvido por Matheus – 2º D Noturno<br>Colégio Antonio Tortato – Profª Patrícia Ferro<br><strong>FIM. 🌱🌾</strong></small>
     </div>
-  </div>
-</div>
+  </section>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
