@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroHeróis - Agro Forte, Futuro Sustentável</title>
+    <style>
+        :root {
+            --bg: #1a0a2e;
+            --gold: #f0c040;
+            --green: #4caf50;
+            --brown: #6b3a2a;
+            --sky: #87ceeb;
+            --card: #fff8e7;
+            --text: #3e2723;
+            --accent: #ff6f00;
+            --danger: #e53935;
+            --success: #2e7d32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Comic Sans MS', cursive, sans-serif;
+            background: #1a0a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #game-container {
+            width: 100%;
+            max-width: 900px;
+            min-height: 600px;
+            position: relative;
+            background: #2d1b4e;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 4px #4a2c6e, 0 0 0 8px #1a0a2e;
+        }
+
+        /* SCREENS */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+        .screen.active {
+            display: flex;
+            opacity: 1;
+            z-index: 1;
+        }
+        .screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* INITIAL SCREEN */
+        #screen-initial {
+            background: linear-gradient(135deg, #1a3a1a, #2d5a1e, #1a3a1a);
+            background-image: radial-gradient(ellipse at center, #4a8c3f 0%, #1a3a1a 70%);
+        }
+        #screen-initial .initial-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1;
+        }
+        .initial-title {
+            font-size: 2.8em;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 40px rgba(240, 192, 64, 0.5);
+            letter-spacing: 3px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .initial-subtitle {
+            font-size: 1.2em;
+            color: #c8e6c9;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        .btn-start {
+            padding: 18px 60px;
+            font-size: 1.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f0c040, #ff8f00);
+            color: #3e2723;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 30px rgba(240, 192, 64, 0.5);
+            transition: all 0.3s ease;
+            z-index: 2;
+            position: relative;
+        }
+        .btn-start:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 14px 40px rgba(240, 192, 64, 0.7);
+        }
+        .btn-start:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 15px rgba(240, 192, 64, 0.4);
+        }
+
+        /* DIALOGUE SCREEN */
+        #screen-dialogue {
+            background: linear-gradient(180deg, #87ceeb 0%, #c8e6c9 40%, #6b8e5a 100%);
+            background-size: cover;
+        }
+        .dialogue-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .character-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .character-img {
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(180deg, #f5c6a0, #e8b88a);
+            border-radius: 30px 30px 10px 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 4px solid #fff;
+        }
+        .speech-bubble {
+            position: absolute;
+            bottom: 240px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border-radius: 25px;
+            padding: 20px 28px;
+            max-width: 550px;
+            min-width: 300px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+            font-size: 1.1em;
+            color: #3e2723;
+            line-height: 1.5;
+            text-align: center;
+            border: 3px solid #f0c040;
+            position: relative;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #fff;
+            filter: drop-shadow(0 4px 2px rgba(0, 0, 0, 0.1));
+        }
+        .speech-arrow {
+            position: absolute;
+            bottom: 200px;
+            right: 60px;
+            font-size: 3em;
+            color: #f0c040;
+            cursor: pointer;
+            z-index: 11;
+            animation: bounceArrow 0.8s ease infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+        @keyframes bounceArrow {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        .name-input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .name-input {
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            border: 3px solid #f0c040;
+            outline: none;
+            text-align: center;
+            font-family: inherit;
+            background: #fffef5;
+            color: #3e2723;
+            min-width: 200px;
+        }
+        .name-input:focus {
+            border-color: #ff8f00;
+            box-shadow: 0 0 20px rgba(240, 192, 64, 0.5);
+        }
+        .btn-confirm {
+            padding: 12px 25px;
+            background: #f0c040;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1em;
+            color: #3e2723;
+            font-family: inherit;
+        }
+        .logos-row {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 5;
+        }
+        .logo-placeholder {
+            width: 55px;
+            height: 55px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7em;
+            color: #4a2c6e;
+            border: 2px solid #f0c040;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* CHARACTER SELECTION */
+        .char-options {
+            display: flex;
+            gap: 50px;
+            z-index: 5;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .char-card {
+            width: 160px;
+            height: 220px;
+            background: #fffef5;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 90px;
+            border: 4px solid #e0d5c0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .char-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #f0c040;
+            box-shadow: 0 16px 40px rgba(240, 192, 64, 0.4);
+        }
+        .char-card:active {
+            transform: scale(0.95);
+        }
+        .char-label {
+            font-size: 1em;
+            font-weight: 700;
+            color: #3e2723;
+            margin-top: 8px;
+        }
+
+        /* CANVAS GAME SCREEN */
+        #screen-bee-game {
+            background: #1a3a1a;
+            padding: 0;
+        }
+        #beeCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 0;
+        }
+        .game-hud {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            z-index: 10;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .hud-item {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1em;
+            border: 2px solid #f0c040;
+            letter-spacing: 1px;
+        }
+        .hud-energy {
+            color: #ff6f00;
+        }
+
+        /* COMPOSTING SCREEN */
+        #screen-compost {
+            background: linear-gradient(180deg, #5d8a4e, #3d5a30);
+        }
+        .compost-area {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+        .compost-bin {
+            width: 200px;
+            height: 250px;
+            background: #5d4037;
+            border-radius: 20px 20px 5px 5px;
+            border: 5px dashed #f0c040;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .compost-bin.highlight {
+            border-color: #4caf50;
+            background: #6d4c41;
+            box-shadow: 0 0 40px rgba(76, 175, 80, 0.6);
+            transform: scale(1.05);
+        }
+        .items-area {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 400px;
+        }
+        .draggable-item {
+            width: 80px;
+            height: 80px;
+            background: #fffef5;
+            border-radius: 15px;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 45px;
+            border: 3px solid #ccc;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 20;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        .draggable-item.correct-drag {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+        .draggable-item.wrong-drag {
+            border-color: #e53935;
+            background: #ffebee;
+        }
+        .compost-feedback {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            z-index: 5;
+            min-height: 40px;
+        }
+
+        /* PLANTING SCREEN */
+        #screen-planting {
+            background: linear-gradient(180deg, #87ceeb, #c8e6c9, #6b8e5a);
+        }
+        .seeds-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            z-index: 5;
+        }
+        .seed-card {
+            width: 120px;
+            height: 140px;
+            background: #fffef5;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            border: 4px solid #c8b89a;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .seed-card:hover {
+            transform: translateY(-8px);
+            border-color: #f0c040;
+            box-shadow: 0 14px 35px rgba(240, 192, 64, 0.4);
+        }
+        .seed-card.selected {
+            border-color: #4caf50;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.6);
+            transform: scale(1.08);
+        }
+        .plant-stage {
+            font-size: 80px;
+            transition: all 0.5s ease;
+            z-index: 5;
+        }
+        .watering-can {
+            font-size: 70px;
+            cursor: pointer;
+            animation: wiggle 1.5s ease infinite;
+            z-index: 5;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+        }
+        @keyframes wiggle {
+            0%,
+            100% {
+                transform: rotate(0);
+            }
+            25% {
+                transform: rotate(-10deg);
+            }
+            75% {
+                transform: rotate(10deg);
+            }
+        }
+        .arrow-hint {
+            position: absolute;
+            font-size: 2.5em;
+            color: #f0c040;
+            animation: bounceArrow 0.7s ease infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* CERTIFICATE SCREEN */
+        #screen-certificate {
+            background: rgba(26, 58, 26, 0.6);
+            position: relative;
+        }
+        .certificate-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(26, 58, 26, 0.6);
+            z-index: 0;
+        }
+        .certificate-card {
+            position: relative;
+            z-index: 2;
+            background: #fffef5;
+            border-radius: 15px;
+            padding: 30px 25px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            border: 6px double #f0c040;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .certificate-card h1 {
+            font-size: 2em;
+            color: #2e7d32;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        .certificate-card h2 {
+            font-size: 1.4em;
+            color: #4a2c6e;
+            margin: 8px 0;
+        }
+        .certificate-card .cert-name {
+            font-size: 2em;
+            font-weight: 900;
+            color: #ff6f00;
+            margin: 10px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .certificate-card .checkmarks {
+            text-align: left;
+            margin: 15px auto;
+            max-width: 400px;
+            line-height: 2;
+            font-size: 1em;
+            color: #3e2723;
+        }
+        .certificate-card .cert-title {
+            font-size: 1.6em;
+            font-weight: 900;
+            color: #2e7d32;
+            margin: 15px 0;
+            letter-spacing: 2px;
+        }
+        .certificate-card .cert-footer {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            #game-container {
+                border-radius: 10px;
+                min-height: 100vh;
+                max-width: 100%;
+            }
+            .speech-bubble {
+                max-width: 90%;
+                font-size: 0.95em;
+                padding: 15px 18px;
+                bottom: 200px;
+            }
+            .character-img {
+                width: 100px;
+                height: 140px;
+                font-size: 50px;
+            }
+            .btn-start {
+                padding: 14px 40px;
+                font-size: 1.2em;
+            }
+            .initial-title {
+                font-size: 1.8em;
+            }
+            .char-card {
+                width: 120px;
+                height: 170px;
+                font-size: 60px;
+            }
+            .certificate-card {
+                padding: 15px;
+            }
+            .certificate-card h1 {
+                font-size: 1.3em;
+            }
+            .certificate-card .cert-name {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+
+        <!-- ==================== SCREEN: INITIAL ==================== -->
+        <div class="screen active" id="screen-initial">
+            <div class="initial-bg">
+                <div class="initial-title">🌾 AgroHeróis 🌾</div>
+                <div class="initial-subtitle">Agro Forte, Futuro Sustentável</div>
+                <button class="btn-start" id="btn-start-game">▶ COMEÇAR</button>
+            </div>
+        </div>
+
+        <!-- ==================== SCREEN: DIALOGUE (reused for all dialogue phases) ==================== -->
+        <div class="screen" id="screen-dialogue">
+            <div class="logos-row" id="logos-row">
+                <div class="logo-placeholder">🏫<br>Logo1</div>
+                <div class="logo-placeholder">🌱<br>Logo2</div>
+                <div class="logo-placeholder">🐝<br>Logo3</div>
+            </div>
+            <div class="dialogue-bg" id="dialogue-bg"></div>
+            <div class="speech-bubble" id="speech-bubble">
+                <span id="speech-text">Olá!</span>
+                <div class="name-input-container" id="name-input-container" style="display:none;">
+                    <input type="text" class="name-input" id="name-input" placeholder="Digite seu nome..." maxlength="20">
+                    <button class="btn-confirm" id="btn-confirm-name">✓ OK</button>
+                </div>
+            </div>
+            <div class="speech-arrow" id="speech-arrow">▼</div>
+            <div class="character-container">
+                <div class="character-img" id="character-img">👩‍🌾</div>
+            </div>
+            <!-- Character selection overlay -->
+            <div class="char-options" id="char-options" style="display:none; position:absolute; bottom:30px; z-index:15;">
+                <div class="char-card" id="char-girl">
+                    <span>👧</span>
+                    <span class="char-label">Menina</span>
+                </div>
+                <div class="char-card" id="char-boy">
+                    <span>👦</span>
+                    <span class="char-label">Menino</span>
+                </div>
+            </div>
+            <!-- Seed selection overlay -->
+            <div class="seeds-row" id="seeds-row" style="display:none; position:absolute; bottom:40px; z-index:15;">
+                <div class="seed-card" data-seed="milho">
+                    <span>🌽</span>
+                    <span style="font-size:0.8em;font-weight:700;">Milho</span>
+                </div>
+                <div class="seed-card" data-seed="tomate">
+                    <span>🍅</span>
+                    <span style="font-size:0.8em;font-weight:700;">Tomate</span>
+                </div>
+                <div class="seed-card" data-seed="soja">
+                    <span>🫘</span>
+                    <span style="font-size:0.8em;font-weight:700;">Soja</span>
+                </div>
+            </div>
+            <!-- Planting stage area -->
+            <div id="plant-stage-area" style="display:none; position:absolute; bottom:60px; z-index:15; text-align:center;">
+                <div class="plant-stage" id="plant-stage-display">🟫</div>
+            </div>
+            <div id="watering-can-area" style="display:none; position:absolute; bottom:120px; right:80px; z-index:15;">
+                <div class="watering-can" id="watering-can">🪣</div>
+                <div class="arrow-hint" style="top:-40px;left:15px;">👆</div>
+            </div>
+        </div>
+
+        <!-- ==================== SCREEN: BEE GAME ==================== -->
+        <div class="screen" id="screen-bee-game">
+            <canvas id="beeCanvas"></canvas>
+            <div class="game-hud">
+                <div class="hud-item">🌸 Flores: <span id="flower-count">0</span>/10</div>
+                <div class="hud-item hud-energy">⚡ Energia: <span id="energy-display">5</span></div>
+            </div>
+            <div class="logos-row" style="top:15px;right:20px;position:absolute;z-index:10;display:flex;gap:12px;">
+                <div class="logo-placeholder">🏫<br>Logo1</div>
+                <div class="logo-placeholder">🌱<br>Logo2</div>
+                <div class="logo-placeholder">🐝<br>Logo3</div>
+            </div>
+        </div>
+
+        <!-- ==================== SCREEN: COMPOSTING GAME ==================== -->
+        <div class="screen" id="screen-compost">
+            <h2 style="color:#fff;z-index:5;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,0.5);">🗑️ Arraste os itens corretos para a composteira!</h2>
+            <div class="compost-feedback" id="compost-feedback"></div>
+            <div class="compost-area">
+                <div class="compost-bin" id="compost-bin">
+                    🗑️
+                </div>
+                <div class="items-area" id="items-area">
+                    <!-- Items will be populated by JS -->
+                </div>
+            </div>
+            <div style="z-index:5;color:#fff;text-align:center;margin-top:10px;font-weight:700;" id="compost-counter">
+                ✅ Corretos: <span id="compost-correct-count">0</span>/4 &nbsp;|&nbsp; ❌ Errados: <span id="compost-wrong-count">0</span>
+            </div>
+        </div>
+
+        <!-- ==================== SCREEN: CERTIFICATE ==================== -->
+        <div class="screen" id="screen-certificate">
+            <div class="certificate-overlay"></div>
+            <div class="certificate-card" id="certificate-card">
+                <h1>📜 CERTIFICADO</h1>
+                <p style="font-size:1em;color:#3e2723;">A equipe dos AgroHeróis certifica que</p>
+                <div class="cert-name" id="cert-name">[NOME]</div>
+                <p style="color:#3e2723;">concluiu com sucesso todas as missões do projeto</p>
+                <h2>Agro Forte, Futuro Sustentável:<br>Equilíbrio entre Produção e Meio Ambiente</h2>
+                <p style="color:#3e2723;">Demonstrando conhecimento sobre:</p>
+                <div class="checkmarks">
+                    ✅ Polinização e a importância das abelhas<br>
+                    ✅ Compostagem e reciclagem de nutrientes<br>
+                    ✅ Plantio e cuidados com as plantas<br>
+                    ✅ Sustentabilidade e preservação ambiental
+                </div>
+                <p style="color:#3e2723;">Por seu empenho e dedicação, recebe o título de:</p>
+                <div class="cert-title">🌾 AGROHERÓI DO FUTURO SUSTENTÁVEL 🌾</div>
+                <div class="cert-footer">
+                    Desenvolvido pelo aluno Matheus – 2º D Noturno<br>
+                    Colégio Estadual Antonio Tortato<br>
+                    Professora Patrícia Ferro<br>
+                    <strong>FIM. 🌱🌾</strong>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            // ============ DOM REFS ============
+            const container = document.getElementById('game-container');
+            const screenInitial = document.getElementById('screen-initial');
+            const screenDialogue = document.getElementById('screen-dialogue');
+            const screenBeeGame = document.getElementById('screen-bee-game');
+            const screenCompost = document.getElementById('screen-compost');
+            const screenCertificate = document.getElementById('screen-certificate');
+
+            const speechBubble = document.getElementById('speech-bubble');
+            const speechText = document.getElementById('speech-text');
+            const speechArrow = document.getElementById('speech-arrow');
+            const characterImg = document.getElementById('character-img');
+            const nameInputContainer = document.getElementById('name-input-container');
+            const nameInput = document.getElementById('name-input');
+            const btnConfirmName = document.getElementById('btn-confirm-name');
+            const charOptions = document.getElementById('char-options');
+            const logosRow = document.getElementById('logos-row');
+            const seedsRow = document.getElementById('seeds-row');
+            const plantStageArea = document.getElementById('plant-stage-area');
+            const plantStageDisplay = document.getElementById('plant-stage-display');
+            const wateringCanArea = document.getElementById('watering-can-area');
+            const wateringCan = document.getElementById('watering-can');
+            const dialogueBg = document.getElementById('dialogue-bg');
+
+            const beeCanvas = document.getElementById('beeCanvas');
+            const beeCtx = beeCanvas.getContext('2d');
+            const flowerCountEl = document.getElementById('flower-count');
+            const energyDisplay = document.getElementById('energy-display');
+
+            const compostBin = document.getElementById('compost-bin');
+            const itemsArea = document.getElementById('items-area');
+            const compostFeedback = document.getElementById('compost-feedback');
+            const compostCorrectCount = document.getElementById('compost-correct-count');
+            const compostWrongCount = document.getElementById('compost-wrong-count');
+
+            const certName = document.getElementById('cert-name');
+
+            // ============ GAME STATE ============
+            let playerName = '';
+            let playerCharacter = '';
+            let currentDialoguePhase = 0; // 0=intro+name, 1=charSelect, 2=missionExplanation, 3=compostExplanation, 4=plantingExplanation, 5=final
+            let dialogueIndex = 0;
+            let dialogueQueue = [];
+            let selectedSeed = null;
+            let plantWatered = false;
+            let compostCorrectTotal = 0;
+            let compostWrongTotal = 0;
+            let beeGameActive = false;
+            let beeGameFlowersCollected = 0;
+            let beeEnergy = 5;
+            let beeGameAnimationId = null;
+
+            // ============ SCREEN MANAGEMENT ============
+            function showScreen(screen) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                screen.classList.add('active');
+            }
+
+            // ============ DIALOGUE SYSTEM ============
+            function setupDialogueScreen(phase, dialogues, charEmoji, bgStyle, showLogos = true, showCharSelect = false,
+                showSeeds = false, showPlantStage = false, showWateringCan = false) {
+                currentDialoguePhase = phase;
+                dialogueQueue = dialogues;
+                dialogueIndex = 0;
+                characterImg.textContent = charEmoji || '👩‍🌾';
+                dialogueBg.style.background = bgStyle || 'linear-gradient(180deg, #87ceeb 0%, #c8e6c9 40%, #6b8e5a 100%)';
+                logosRow.style.display = showLogos ? 'flex' : 'none';
+                charOptions.style.display = showCharSelect ? 'flex' : 'none';
+                seedsRow.style.display = showSeeds ? 'flex' : 'none';
+                plantStageArea.style.display = showPlantStage ? 'flex' : 'none';
+                wateringCanArea.style.display = showWateringCan ? 'flex' : 'none';
+                nameInputContainer.style.display = 'none';
+                speechArrow.style.display = 'block';
+                showScreen(screenDialogue);
+                displayCurrentDialogue();
+            }
+
+            function displayCurrentDialogue() {
+                if (dialogueIndex < dialogueQueue.length) {
+                    let msg = dialogueQueue[dialogueIndex];
+                    // Replace [NOME] with player name
+                    msg = msg.replace(/\[NOME\]/g, playerName || 'Aventureiro');
+                    speechText.textContent = msg;
+                    speechArrow.style.display = 'block';
+                    // Hide name input unless it's the name-asking dialogue
+                    nameInputContainer.style.display = 'none';
+                } else {
+                    // Dialogue phase complete
+                    speechArrow.style.display = 'none';
+                    handleDialoguePhaseComplete();
+                }
+            }
+
+            function advanceDialogue() {
+                dialogueIndex++;
+                displayCurrentDialogue();
+            }
+
+            speechArrow.addEventListener('click', advanceDialogue);
+
+            // Also allow clicking the speech bubble
+            speechBubble.addEventListener('click', function(e) {
+                if (e.target !== nameInput && e.target !== btnConfirmName) {
+                    advanceDialogue();
+                }
+            });
+
+            // Name confirmation
+            btnConfirmName.addEventListener('click', function() {
+                const name = nameInput.value.trim();
+                if (name.length > 0) {
+                    playerName = name;
+                    nameInputContainer.style.display = 'none';
+                    advanceDialogue();
+                }
+            });
+            nameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const name = nameInput.value.trim();
+                    if (name.length > 0) {
+                        playerName = name;
+                        nameInputContainer.style.display = 'none';
+                        advanceDialogue();
+                    }
+                }
+            });
+
+            function handleDialoguePhaseComplete() {
+                switch (currentDialoguePhase) {
+                    case 0:
+                        // Name was entered, now show character selection
+                        charOptions.style.display = 'flex';
+                        speechText.textContent = 'Escolha seu personagem clicando nele:';
+                        speechArrow.style.display = 'none';
+                        break;
+                    case 1:
+                        // Character selected, show mission explanation dialogues
+                        startMissionExplanation();
+                        break;
+                    case 2:
+                        // Mission explanation done, start bee game
+                        startBeeGame();
+                        break;
+                    case 3:
+                        // Compost explanation done, show composting game
+                        startCompostGame();
+                        break;
+                    case 4:
+                        // Planting explanation done, show seed selection
+                        seedsRow.style.display = 'flex';
+                        plantStageArea.style.display = 'none';
+                        wateringCanArea.style.display = 'none';
+                        selectedSeed = null;
+                        plantWatered = false;
+                        speechText.textContent = 'Escolha uma das 3 sementes para plantar! 🌱';
+                        speechArrow.style.display = 'none';
+                        break;
+                    case 5:
+                        // Final dialogue done, show certificate
+                        showCertificate();
+                        break;
+                }
+            }
+
+            // ============ CHARACTER SELECTION ============
+            document.getElementById('char-girl').addEventListener('click', function() {
+                playerCharacter = 'menina';
+                charOptions.style.display = 'none';
+                currentDialoguePhase = 1;
+                startMissionExplanation();
+            });
+            document.getElementById('char-boy').addEventListener('click', function() {
+                playerCharacter = 'menino';
+                charOptions.style.display = 'none';
+                currentDialoguePhase = 1;
+                startMissionExplanation();
+            });
+
+            // ============ MISSION EXPLANATION DIALOGUES ============
+            function startMissionExplanation() {
+                const dialogues = [
+                    'UAL!!! O tema da nossa aventura é: Agro Forte, Futuro Sustentável: Equilíbrio entre Produção e Meio Ambiente',
+                    'Para produzir alimentos e cuidar da natureza ao mesmo tempo, precisamos da ajuda de muitos seres vivos. Um dos mais importantes é a abelha.',
+                    'As abelhas realizam a polinização, um processo que ajuda as plantas a produzir flores, frutos e sementes. Quando uma abelha visita uma flor, ela transporta o pólen para outras flores, permitindo que novas plantas se desenvolvam.',
+                    'Graças à polinização, podemos ter alimentos como: Maçã, Morango, Melancia, Pepino, Café',
+                    'Sem as abelhas e outros polinizadores, a produção de muitos alimentos seria muito menor. Por isso, sua missão será ajudar uma abelha a coletar flores para espalhar o pólen e contribuir para a produção de alimentos.',
+                    'Como jogar: ↑ Seta para cima: subir | ↓ Seta para baixo: descer',
+                    'Seu objetivo é: Coletar as flores pelo caminho. Algumas flores representam plantas que produzem alimentos que consumimos diariamente. Cada flor coletada ajuda na polinização e aumenta sua pontuação.',
+                    'Mas atenção! Não toque no fogo. Não toque na fumaça. Se a abelha encostar em um desses obstáculos, perderá energia.',
+                    'Quando você coletar 10 flores, ajudará a natureza e mostrará como a polinização é essencial para um agro forte e um futuro sustentável.',
+                    'Clique na seta para começar sua missão. 🐝'
+                ];
+                setupDialogueScreen(2, dialogues, '👩‍🌾', 'linear-gradient(180deg, #87ceeb 0%, #c8e6c9 40%, #6b8e5a 100%)',
+                    true, false, false, false, false);
+                // Show "Começar Missão" button after last dialogue
+                speechArrow.style.display = 'block';
+            }
+
+            // ============ BEE GAME ============
+            function startBeeGame() {
+                showScreen(screenBeeGame);
+                beeGameFlowersCollected = 0;
+                beeEnergy = 5;
+                beeGameActive = true;
+                flowerCountEl.textContent = '0';
+                energyDisplay.textContent = '5';
+                resizeCanvas();
+                initBeeGameObjects();
+                if (beeGameAnimationId) cancelAnimationFrame(beeGameAnimationId);
+                beeGameLoop();
+            }
+
+            function resizeCanvas() {
+                const rect = screenBeeGame.getBoundingClientRect();
+                beeCanvas.width = rect.width || 900;
+                beeCanvas.height = rect.height || 600;
+            }
+
+            // Bee game objects
+            let bee = { x: 120, y: 300, width: 50, height: 40 };
+            let gameObjects = []; // {type:'flower'|'fire'|'smoke', x, y, width, height, speed, collected}
+            let gameSpeed = 2.5;
+            let frameCount = 0;
+
+            function initBeeGameObjects() {
+                gameObjects = [];
+                // Spawn some initial objects spread out
+                for (let i = 0; i < 15; i++) {
+                    spawnGameObject(beeCanvas.width + Math.random() * 600);
+                }
+            }
+
+            function spawnGameObject(startX) {
+                const types = ['flower', 'flower', 'flower', 'fire', 'smoke', 'flower', 'flower', 'fire', 'smoke',
+                'flower'];
+                const type = types[Math.floor(Math.random() * types.length)];
+                const y = 40 + Math.random() * (beeCanvas.height - 100);
+                let width, height;
+                switch (type) {
+                    case 'flower':
+                        width = 35;
+                        height = 35;
+                        break;
+                    case 'fire':
+                        width = 40;
+                        height = 45;
+                        break;
+                    case 'smoke':
+                        width = 50;
+                        height = 40;
+                        break;
+                }
+                gameObjects.push({
+                    type: type,
+                    x: startX || beeCanvas.width + Math.random() * 200,
+                    y: y,
+                    width: width,
+                    height: height,
+                    speed: gameSpeed + Math.random() * 1.5,
+                    collected: false,
+                    flowerVariant: type === 'flower' ? ['soja', 'milho', 'flor'][Math.floor(Math.random() * 3)] :
+                        null
+                });
+            }
+
+            function beeGameLoop() {
+                if (!beeGameActive) return;
+                resizeCanvas();
+                frameCount++;
+                const canvasW = beeCanvas.width;
+                const canvasH = beeCanvas.height;
+
+                // Move game objects
+                for (let obj of gameObjects) {
+                    obj.x -= obj.speed;
+                }
+
+                // Remove off-screen objects and spawn new ones
+                gameObjects = gameObjects.filter(obj => obj.x > -80);
+                if (frameCount % 40 === 0 && gameObjects.length < 18) {
+                    spawnGameObject(canvasW + Math.random() * 150);
+                }
+
+                // Collision detection
+                for (let obj of gameObjects) {
+                    if (obj.collected) continue;
+                    if (rectCollision(bee, obj)) {
+                        if (obj.type === 'flower') {
+                            obj.collected = true;
+                            beeGameFlowersCollected++;
+                            flowerCountEl.textContent = beeGameFlowersCollected;
+                            // Particle effect could go here
+                            if (beeGameFlowersCollected >= 10) {
+                                endBeeGame(true);
+                                return;
+                            }
+                        } else if (obj.type === 'fire' || obj.type === 'smoke') {
+                            obj.collected = true;
+                            beeEnergy--;
+                            energyDisplay.textContent = Math.max(0, beeEnergy);
+                            // Flash effect
+                            if (beeEnergy <= 0) {
+                                endBeeGame(false);
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                // Draw everything
+                beeCtx.clearRect(0, 0, canvasW, canvasH);
+
+                // Background gradient (cenario 1)
+                const bgGrad = beeCtx.createLinearGradient(0, 0, 0, canvasH);
+                bgGrad.addColorStop(0, '#87ceeb');
+                bgGrad.addColorStop(0.5, '#c8e6c9');
+                bgGrad.addColorStop(1, '#5d8a3c');
+                beeCtx.fillStyle = bgGrad;
+                beeCtx.fillRect(0, 0, canvasW, canvasH);
+
+                // Ground
+                beeCtx.fillStyle = '#6b8e5a';
+                beeCtx.fillRect(0, canvasH - 30, canvasW, 30);
+                beeCtx.fillStyle = '#5d7a3e';
+                beeCtx.fillRect(0, canvasH - 35, canvasW, 8);
+
+                // Draw flowers and obstacles
+                for (let obj of gameObjects) {
+                    if (obj.collected) continue;
+                    switch (obj.type) {
+                        case 'flower':
+                            drawFlower(beeCtx, obj);
+                            break;
+                        case 'fire':
+                            drawFire(beeCtx, obj);
+                            break;
+                        case 'smoke':
+                            drawSmoke(beeCtx, obj);
+                            break;
+                    }
+                }
+
+                // Draw bee
+                drawBee(beeCtx, bee);
+
+                // Draw energy hearts
+                for (let i = 0; i < beeEnergy; i++) {
+                    beeCtx.fillStyle = '#ff6f00';
+                    beeCtx.font = '20px sans-serif';
+                    beeCtx.fillText('⚡', canvasW - 30 - i * 30, 45);
+                }
+
+                beeGameAnimationId = requestAnimationFrame(beeGameLoop);
+            }
+
+            function drawFlower(ctx, obj) {
+                const cx = obj.x;
+                const cy = obj.y;
+                // Petals
+                const colors = ['#ff69b4', '#ffa500', '#ffeb3b', '#e91e63', '#ff9800'];
+                const color = obj.flowerVariant === 'soja' ? '#ffeb3b' : obj.flowerVariant === 'milho' ? '#ffa500' :
+                    '#ff69b4';
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i / 5) * Math.PI * 2;
+                    const px = cx + Math.cos(angle) * 12;
+                    const py = cy + Math.sin(angle) * 12;
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(px, py, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                // Center
+                ctx.fillStyle = '#ffeb3b';
+                ctx.beginPath();
+                ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#5d4037';
+                ctx.beginPath();
+                ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+                ctx.fill();
+                // Label
+                ctx.fillStyle = '#333';
+                ctx.font = '9px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(obj.flowerVariant === 'soja' ? 'Soja' : obj.flowerVariant === 'milho' ? 'Milho' : 'Flor', cx,
+                    cy - 20);
+            }
+
+            function drawFire(ctx, obj) {
+                const cx = obj.x;
+                const cy = obj.y;
+                ctx.fillStyle = '#ff4500';
+                ctx.beginPath();
+                ctx.moveTo(cx, cy - 20);
+                ctx.quadraticCurveTo(cx + 15, cy - 5, cx + 10, cy + 15);
+                ctx.quadraticCurveTo(cx, cy + 5, cx - 10, cy + 15);
+                ctx.quadraticCurveTo(cx - 15, cy - 5, cx, cy - 20);
+                ctx.fill();
+                ctx.fillStyle = '#ffeb3b';
+                ctx.beginPath();
+                ctx.arc(cx, cy - 8, 6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🔥', cx, cy);
+            }
+
+            function drawSmoke(ctx, obj) {
+                const cx = obj.x;
+                const cy = obj.y;
+                ctx.fillStyle = 'rgba(128,128,128,0.7)';
+                ctx.beginPath();
+                ctx.arc(cx - 8, cy, 14, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(cx + 8, cy - 5, 12, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(cx, cy - 12, 10, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#555';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('💨', cx, cy + 2);
+            }
+
+            function drawBee(ctx, beeObj) {
+                const cx = beeObj.x;
+                const cy = beeObj.y;
+                // Body
+                ctx.fillStyle = '#ffc107';
+                ctx.beginPath();
+                ctx.ellipse(cx, cy, 22, 16, 0, 0, Math.PI * 2);
+                ctx.fill();
+                // Stripes
+                ctx.fillStyle = '#333';
+                ctx.fillRect(cx - 8, cy - 12, 5, 24);
+                ctx.fillRect(cx + 4, cy - 12, 5, 24);
+                // Head
+                ctx.fillStyle = '#333';
+                ctx.beginPath();
+                ctx.arc(cx + 22, cy - 2, 10, 0, Math.PI * 2);
+                ctx.fill();
+                // Eyes
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(cx + 25, cy - 5, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.arc(cx + 26, cy - 5, 2, 0, Math.PI * 2);
+                ctx.fill();
+                // Wings
+                ctx.fillStyle = 'rgba(200,220,255,0.7)';
+                ctx.beginPath();
+                ctx.ellipse(cx - 5, cy - 20, 14, 8, -0.3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.ellipse(cx + 8, cy - 18, 12, 7, 0.2, 0, Math.PI * 2);
+                ctx.fill();
+                // Antennae
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(cx + 28, cy - 10);
+                ctx.lineTo(cx + 35, cy - 22);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(cx + 24, cy - 10);
+                ctx.lineTo(cx + 30, cy - 20);
+                ctx.stroke();
+                // Label
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🐝', cx, cy + 4);
+            }
+
+            function rectCollision(a, b) {
+                const ax = a.x - a.width / 2;
+                const ay = a.y - a.height / 2;
+                const aw = a.width;
+                const ah = a.height;
+                const bx = b.x - b.width / 2;
+                const by = b.y - b.height / 2;
+                const bw = b.width;
+                const bh = b.height;
+                return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
+            }
+
+            function endBeeGame(success) {
+                beeGameActive = false;
+                if (beeGameAnimationId) cancelAnimationFrame(beeGameAnimationId);
+                if (success) {
+                    // Transition to composting explanation
+                    const dialogues = [
+                        'Muito bem, [NOME]! Agora vamos aprender sobre a compostagem.',
+                        'A compostagem transforma restos de alimentos e folhas em adubo natural, ajudando as plantas a crescerem fortes e saudáveis.',
+                        'Sua missão: Arraste os materiais corretos para a composteira. Pode colocar: Cascas de frutas, Cascas de legumes, Folhas secas.',
+                        'Não pode colocar: Plástico, Vidro, Latas.',
+                        'Separe os resíduos corretamente e ajude a cuidar do meio ambiente!',
+                        'Clique na seta para começar. 🗑️'
+                    ];
+                    setupDialogueScreen(3, dialogues, '👩‍🌾', 'linear-gradient(180deg, #5d8a4e, #3d5a30)', true, false,
+                        false, false, false);
+                    characterImg.textContent = '👩‍🌾'; // principal2
+                } else {
+                    // Retry
+                    alert('Oh não! A abelha perdeu toda a energia. Tente novamente!');
+                    startBeeGame();
+                }
+            }
+
+            // Keyboard controls for bee
+            document.addEventListener('keydown', function(e) {
+                if (!beeGameActive) return;
+                const moveSpeed = 15;
+                if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+                    bee.y = Math.max(40, bee.y - moveSpeed);
+                    e.preventDefault();
+                } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+                    bee.y = Math.min(beeCanvas.height - 40, bee.y + moveSpeed);
+                    e.preventDefault();
+                }
+            });
+
+            // Touch controls for mobile
+            let touchActive = false;
+            beeCanvas.addEventListener('touchstart', function(e) {
+                if (!beeGameActive) return;
+                touchActive = true;
+                const touch = e.touches[0];
+                const rect = beeCanvas.getBoundingClientRect();
+                const touchY = touch.clientY - rect.top;
+                bee.y = Math.max(40, Math.min(beeCanvas.height - 40, touchY));
+                e.preventDefault();
+            });
+            beeCanvas.addEventListener('touchmove', function(e) {
+                if (!beeGameActive || !touchActive) return;
+                const touch = e.touches[0];
+                const rect = beeCanvas.getBoundingClientRect();
+                const touchY = touch.clientY - rect.top;
+                bee.y = Math.max(40, Math.min(beeCanvas.height - 40, touchY));
+                e.preventDefault();
+            });
+            beeCanvas.addEventListener('touchend', function() { touchActive = false; });
+
+            window.addEventListener('resize', () => { if (beeGameActive) resizeCanvas(); });
+
+            // ============ COMPOSTING GAME ============
+            function startCompostGame() {
+                showScreen(screenCompost);
+                compostCorrectTotal = 0;
+                compostWrongTotal = 0;
+                compostCorrectCount.textContent = '0';
+                compostWrongCount.textContent = '0';
+                compostFeedback.textContent = '';
+                compostBin.classList.remove('highlight');
+                populateCompostItems();
+            }
+
+            function populateCompostItems() {
+                itemsArea.innerHTML = '';
+                const items = [
+                    { id: 'melancia', emoji: '🍉', label: 'Melancia', correct: true },
+                    { id: 'banana', emoji: '🍌', label: 'Banana', correct: true },
+                    { id: 'maca', emoji: '🍎', label: 'Maçã', correct: true },
+                    { id: 'ovo', emoji: '🥚', label: 'Ovo (casca)', correct: true },
+                    { id: 'lata', emoji: '🥫', label: 'Lata', correct: false },
+                    { id: 'metal', emoji: '🔩', label: 'Metal', correct: false },
+                ];
+                // Shuffle
+                const shuffled = items.sort(() => Math.random() - 0.5);
+                shuffled.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'draggable-item';
+                    div.draggable = true;
+                    div.dataset.itemId = item.id;
+                    div.dataset.correct = item.correct;
+                    div.innerHTML = `<span style="font-size:40px;">${item.emoji}</span><br><span style="font-size:0.7em;">${item.label}</span>`;
+                    div.addEventListener('dragstart', handleDragStart);
+                    div.addEventListener('dragend', handleDragEnd);
+                    // Touch events
+                    div.addEventListener('touchstart', handleTouchStart, { passive: false });
+                    div.addEventListener('touchmove', handleTouchMove, { passive: false });
+                    div.addEventListener('touchend', handleTouchEnd);
+                    itemsArea.appendChild(div);
+                });
+            }
+
+            let draggedItem = null;
+            let touchDraggedItem = null;
+            let touchClone = null;
+            let touchStartX, touchStartY;
+
+            function handleDragStart(e) {
+                draggedItem = this;
+                this.style.opacity = '0.6';
+                e.dataTransfer.setData('text/plain', this.dataset.itemId);
+                e.dataTransfer.effectAllowed = 'move';
+            }
+
+            function handleDragEnd(e) {
+                this.style.opacity = '1';
+                draggedItem = null;
+                compostBin.classList.remove('highlight');
+            }
+
+            compostBin.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                this.classList.add('highlight');
+            });
+            compostBin.addEventListener('dragleave', function() {
+                this.classList.remove('highlight');
+            });
+            compostBin.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('highlight');
+                const itemId = e.dataTransfer.getData('text/plain');
+                processCompostDrop(itemId);
+                if (draggedItem) {
+                    draggedItem.style.opacity = '0.3';
+                    draggedItem.draggable = false;
+                    draggedItem.style.pointerEvents = 'none';
+                }
+            });
+
+            // Touch-based drag for mobile
+            function handleTouchStart(e) {
+                touchDraggedItem = this;
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                touchClone = this.cloneNode(true);
+                touchClone.style.position = 'fixed';
+                touchClone.style.zIndex = '1000';
+                touchClone.style.pointerEvents = 'none';
+                touchClone.style.opacity = '0.8';
+                touchClone.style.left = touchStartX - 40 + 'px';
+                touchClone.style.top = touchStartY - 40 + 'px';
+                document.body.appendChild(touchClone);
+                e.preventDefault();
+            }
+
+            function handleTouchMove(e) {
+                if (!touchDraggedItem || !touchClone) return;
+                const x = e.touches[0].clientX;
+                const y = e.touches[0].clientY;
+                touchClone.style.left = x - 40 + 'px';
+                touchClone.style.top = y - 40 + 'px';
+                // Check if over compost bin
+                const binRect = compostBin.getBoundingClientRect();
+                if (x > binRect.left && x < binRect.right && y > binRect.top && y < binRect.bottom) {
+                    compostBin.classList.add('highlight');
+                } else {
+                    compostBin.classList.remove('highlight');
+                }
+                e.preventDefault();
+            }
+
+            function handleTouchEnd(e) {
+                if (!touchDraggedItem) return;
+                const x = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : touchStartX;
+                const y = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientY : touchStartY;
+                const binRect = compostBin.getBoundingClientRect();
+                if (x > binRect.left && x < binRect.right && y > binRect.top && y < binRect.bottom) {
+                    processCompostDrop(touchDraggedItem.dataset.itemId);
+                    touchDraggedItem.style.opacity = '0.3';
+                    touchDraggedItem.draggable = false;
+                    touchDraggedItem.style.pointerEvents = 'none';
+                }
+                compostBin.classList.remove('highlight');
+                if (touchClone) {
+                    touchClone.remove();
+                    touchClone = null;
+                }
+                touchDraggedItem = null;
+            }
+
+            function processCompostDrop(itemId) {
+                const itemEl = itemsArea.querySelector(`[data-item-id="${itemId}"]`);
+                const isCorrect = itemEl ? itemEl.dataset.correct === 'true' : null;
+                if (isCorrect === null) return;
+
+                if (isCorrect) {
+                    compostCorrectTotal++;
+                    compostCorrectCount.textContent = compostCorrectTotal;
+                    compostFeedback.textContent = '✅ Correto! Bom para a compostagem!';
+                    compostFeedback.style.color = '#a5d6a7';
+                } else {
+                    compostWrongTotal++;
+                    compostWrongCount.textContent = compostWrongTotal;
+                    compostFeedback.textContent = '❌ Errado! Isso não pode ir na composteira!';
+                    compostFeedback.style.color = '#ef9a9a';
+                }
+
+                // Check if all 4 correct items placed
+                if (compostCorrectTotal >= 4) {
+                    setTimeout(() => {
+                        compostFeedback.textContent = '🌟 Compostagem concluída com sucesso!';
+                        compostFeedback.style.color = '#ffeb3b';
+                        setTimeout(transitionToPlantingExplanation, 1500);
+                    }, 500);
+                }
+            }
+
+            function transitionToPlantingExplanation() {
+                const dialogues = [
+                    'Parabéns, [NOME]! Você separou os resíduos corretamente e ajudou a produzir um adubo natural através da compostagem.',
+                    'Agora o solo já está preparado e cheio de nutrientes! Lembra das abelhas que ajudamos na missão anterior? Elas ajudam as plantas a produzir flores, frutos e sementes. E o adubo da compostagem ajuda essas plantas a crescerem fortes e saudáveis.',
+                    'Sua próxima missão: Escolha uma das 3 sementes para plantar: Milho, Tomate, Soja.',
+                    'Depois, regue sua plantinha com cuidado para ajudá-la a crescer. Com a água, o adubo da compostagem, a luz do sol e a ajuda das abelhas, sua semente irá se desenvolver.',
+                    'Vamos acompanhar cada etapa do crescimento até ela se tornar uma planta forte e saudável! CLIQUE NA SETA PARA COMEÇAR. 🌱'
+                ];
+                setupDialogueScreen(4, dialogues, '👩‍🌾', 'linear-gradient(180deg, #87ceeb, #c8e6c9, #6b8e5a)', true, false,
+                    false, false, false);
+                characterImg.textContent = '👩‍🌾'; // principal1
+            }
+
+            // ============ SEED SELECTION & PLANTING ============
+            document.querySelectorAll('.seed-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    if (currentDialoguePhase !== 4) return;
+                    selectedSeed = this.dataset.seed;
+                    // Highlight selected
+                    document.querySelectorAll('.seed-card').forEach(c => c.classList.remove(
+                        'selected'));
+                    this.classList.add('selected');
+                    seedsRow.style.display = 'none';
+                    // Show soil and watering can
+                    plantStageArea.style.display = 'flex';
+                    plantStageDisplay.textContent = '🟫';
+                    plantWatered = false;
+                    wateringCanArea.style.display = 'flex';
+                    speechText.textContent = 'Agora clique no regador para regar sua semente! 🪣';
+                    speechArrow.style.display = 'none';
+                });
+            });
+
+            wateringCan.addEventListener('click', function() {
+                if (!selectedSeed || plantWatered) return;
+                plantWatered = true;
+                // Show watering animation then plant growth
+                plantStageDisplay.textContent = '💧';
+                wateringCanArea.style.display = 'none';
+                speechText.textContent = 'Regando... 🌊';
+                setTimeout(() => {
+                    // Show sprout
+                    plantStageDisplay.textContent = '🌱';
+                    speechText.textContent = 'A semente germinou!';
+                    setTimeout(() => {
+                        // Show grown plant based on seed
+                        let grownEmoji;
+                        switch (selectedSeed) {
+                            case 'milho':
+                                grownEmoji = '🌾';
+                                break;
+                            case 'tomate':
+                                grownEmoji = '🍅';
+                                break;
+                            case 'soja':
+                                grownEmoji = '🫘';
+                                break;
+                            default:
+                                grownEmoji = '🌻';
+                        }
+                        plantStageDisplay.textContent = grownEmoji;
+                        plantStageDisplay.style.fontSize = '100px';
+                        speechText.textContent =
+                            'Sua planta cresceu forte e saudável! 🌿 Clique na seta para continuar.';
+                        speechArrow.style.display = 'block';
+                        currentDialoguePhase = 4.5; // planting complete
+                    }, 1200);
+                }, 1000);
+            });
+
+            // Override advance for planting phase
+            const originalAdvanceDialogue = advanceDialogue;
+            advanceDialogue = function() {
+                if (currentDialoguePhase === 4.5) {
+                    // Planting complete, go to final dialogue
+                    startFinalDialogue();
+                    return;
+                }
+                if (currentDialoguePhase === 4 && seedsRow.style.display === 'flex') {
+                    // Still choosing seeds, don't advance
+                    return;
+                }
+                originalAdvanceDialogue();
+            };
+
+            function startFinalDialogue() {
+                const dialogues = [
+                    'Parabéns, [NOME]! Você ajudou as abelhas, fez compostagem, plantou uma semente e cuidou da sua planta até ela crescer.',
+                    'Muito obrigada pela sua ajuda! Agora você é um verdadeiro AgroHerói do Futuro Sustentável.',
+                    'Agro Forte, Futuro Sustentável: equilíbrio entre produção e meio ambiente.',
+                    'Desenvolvido pelo aluno Matheus – 2º D Noturno | Colégio Estadual Antonio Tortato | Professora Patrícia Ferro | FIM. 🌱🌾'
+                ];
+                setupDialogueScreen(5, dialogues, '👩‍🌾✨', 'linear-gradient(180deg, #87ceeb, #c8e6c9, #6b8e5a)', true, false,
+                    false, false, false);
+                characterImg.textContent = '👩‍🌾✨'; // principal3
+                logosRow.style.display = 'flex';
+            }
+
+            // ============ CERTIFICATE ============
+            function showCertificate() {
+                showScreen(screenCertificate);
+                certName.textContent = playerName || 'Aventureiro';
+                // Add subtle animation
+                const certCard = document.getElementById('certificate-card');
+                certCard.style.transform = 'scale(0.8)';
+                certCard.style.opacity = '0';
+                certCard.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                setTimeout(() => {
+                    certCard.style.transform = 'scale(1)';
+                    certCard.style.opacity = '1';
+                }, 100);
+            }
+
+            // ============ INITIAL START BUTTON ============
+            document.getElementById('btn-start-game').addEventListener('click', function() {
+                // Start intro dialogue
+                const dialogues = [
+                    'Olá! Eu sou a Adelita e faço parte dos AgroHeróis! Qual é o seu nome?',
+                    'Que nome lindo, [NOME]! Hoje você vai participar de uma missão muito importante. Escolha seu personagem clicando nele.'
+                ];
+                // For the first dialogue, we need to show the name input
+                setupDialogueScreen(0, dialogues, '👩‍🌾',
+                    'linear-gradient(180deg, #87ceeb 0%, #c8e6c9 40%, #6b8e5a 100%)', true, false, false, false, false);
+                // Override to show name input on first dialogue
+                dialogueIndex = 0;
+                speechText.textContent = dialogues[0].replace('[NOME]', '');
+                speechArrow.style.display = 'none';
+                nameInputContainer.style.display = 'flex';
+                nameInput.value = '';
+                nameInput.focus();
+            });
+
+            // Custom dialogue advance for phase 0 (name entry)
+            const origDisplayCurrent = displayCurrentDialogue;
+            displayCurrentDialogue = function() {
+                if (currentDialoguePhase === 0 && dialogueIndex === 0 && playerName === '') {
+                    // Show name input, hide arrow
+                    speechText.textContent = dialogueQueue[0].replace('[NOME]', '');
+                    speechArrow.style.display = 'none';
+                    nameInputContainer.style.display = 'flex';
+                    nameInput.focus();
+                    return;
+                }
+                if (currentDialoguePhase === 0 && dialogueIndex === 1) {
+                    speechText.textContent = dialogueQueue[1].replace('[NOME]', playerName || 'Aventureiro');
+                    speechArrow.style.display = 'none';
+                    nameInputContainer.style.display = 'none';
+                    // Show character selection
+                    charOptions.style.display = 'flex';
+                    return;
+                }
+                origDisplayCurrent();
+            };
+
+            // Handle name confirmation for phase 0
+            btnConfirmName.addEventListener('click', function() {
+                if (currentDialoguePhase === 0 && dialogueIndex === 0) {
+                    const name = nameInput.value.trim();
+                    if (name.length > 0) {
+                        playerName = name;
+                        nameInputContainer.style.display = 'none';
+                        dialogueIndex = 1;
+                        speechText.textContent = dialogueQueue[1].replace('[NOME]', playerName);
+                        speechArrow.style.display = 'none';
+                        charOptions.style.display = 'flex';
+                    }
+                }
+            });
+
+            // ============ INITIAL SETUP ============
+            showScreen(screenInitial);
+            console.log('🌾 AgroHeróis - Jogo carregado!');
+            console.log('👩‍🌾 Adelita aguarda para começar a aventura...');
+            console.log('🐝 Prepare-se para ajudar as abelhas!');
+            console.log('🗑️ A composteira está pronta!');
+            console.log('🌱 As sementes esperam por você!');
+        })();
+    </script>
+</body>
+</html>
