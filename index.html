@@ -1,223 +1,149 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>AgroHeróis do Futuro Sustentável</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroHeróis - Missão Sustentável 🌱</title>
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="game-container">
-    <!-- BARRA DE LOGOS -->
-    <div class="logos-bar" id="logos-bar" style="display:none;">
-      <div class="logo-placeholder logo1">🌱 LOGO 1</div>
-      <div class="logo-placeholder logo2">🌾 LOGO 2</div>
-      <div class="logo-placeholder logo3">🐝 LOGO 3</div>
+    <div id="game-container">
+
+        <!-- Tela Inicial -->
+        <div class="screen active" id="screen-inicial">
+            <div class="bg-inicial"></div>
+            <div class="sol"></div>
+            <div class="nuvens">
+                <div class="nuvem nuvem-1"></div>
+                <div class="nuvem nuvem-2"></div>
+            </div>
+            <h1 class="titulo-inicial">🌾 AgroHeróis 🌾</h1>
+            <p class="subtitulo-inicial">Agro Forte, Futuro Sustentável</p>
+            <div class="logos-iniciais">
+                <div class="logo-placeholder">LOGO<br>1</div>
+                <div class="logo-placeholder">LOGO<br>2</div>
+                <div class="logo-placeholder">LOGO<br>3</div>
+            </div>
+            <button class="btn-comecar" onclick="iniciarJogo()">🌱 COMEÇAR</button>
+        </div>
+
+        <!-- Diálogos iniciais -->
+        <div class="screen" id="screen-dialogos">
+            <div class="dialogo-bg"></div>
+            <div class="personagem-container">
+                <div class="personagem-img" id="personagem-img">👩‍🌾</div>
+                <span class="personagem-nome">Adelita</span>
+            </div>
+            <div class="balao-fala" id="balao-fala">Olá! Eu sou a Adelita...</div>
+            <div class="seta-avancar" id="seta-avancar" onclick="avancarDialogo()">➤</div>
+            <div id="input-area" style="display:none;"></div>
+            <div id="escolha-area" style="display:none;"></div>
+            <button class="btn-generico" id="btn-missao" style="display:none;" onclick="iniciarMissaoAbelha()">🐝 COMEÇAR MISSÃO</button>
+        </div>
+
+        <!-- Jogo da Abelha -->
+        <div class="screen" id="screen-jogo-abelha">
+            <canvas id="canvas-abelha"></canvas>
+            <div class="hud-jogo">
+                <span class="hud-item hud-flores">🌸 Flores: <span id="cont-flores">0</span>/10</span>
+                <span class="hud-item hud-vidas">❤️ Vidas: <span id="cont-vidas">5</span></span>
+            </div>
+            <div class="logos-jogo">
+                <div class="mini-logo">L1</div>
+                <div class="mini-logo">L2</div>
+                <div class="mini-logo">L3</div>
+            </div>
+        </div>
+
+        <!-- Diálogos pós-abelha -->
+        <div class="screen" id="screen-dialogos2">
+            <div class="dialogo-bg"></div>
+            <div class="personagem-container">
+                <div class="personagem-img" style="font-size:3.5rem;">👩‍🌾✨</div>
+                <span class="personagem-nome">Adelita</span>
+            </div>
+            <div class="balao-fala" id="balao-fala2">Muito bem!</div>
+            <div class="seta-avancar" id="seta-avancar2" onclick="avancarDialogo2()">➤</div>
+            <button class="btn-generico" id="btn-compost-missao" style="display:none;" onclick="iniciarCompostagem()">♻️ COMEÇAR</button>
+        </div>
+
+        <!-- Compostagem -->
+        <div class="screen" id="screen-compostagem">
+            <div class="compost-bg"></div>
+            <h3>🗑️ Arraste os itens corretos para a composteira</h3>
+            <div class="composteira-area" id="composteira"
+                 ondragover="event.preventDefault(); this.classList.add('drag-over')"
+                 ondragleave="this.classList.remove('drag-over')"
+                 ondrop="soltarNaComposteira(event)">🪱</div>
+            <div class="contador-compost" id="contador-compost">Colocados: 0/4</div>
+            <div class="itens-arrastaveis" id="itens-arrastaveis"></div>
+        </div>
+
+        <!-- Diálogos pós-compostagem -->
+        <div class="screen" id="screen-dialogos3">
+            <div class="dialogo-bg"></div>
+            <div class="personagem-container">
+                <div class="personagem-img" style="font-size:3.5rem;">👩‍🌾💚</div>
+                <span class="personagem-nome">Adelita</span>
+            </div>
+            <div class="balao-fala" id="balao-fala3">Parabéns!</div>
+            <div class="seta-avancar" id="seta-avancar3" onclick="avancarDialogo3()">➤</div>
+            <button class="btn-generico" id="btn-plantio-missao" style="display:none;" onclick="iniciarPlantio()">🌱 COMEÇAR</button>
+        </div>
+
+        <!-- Plantio -->
+        <div class="screen" id="screen-plantio">
+            <h3 id="titulo-plantio">Escolha uma semente para plantar:</h3>
+            <div class="sementes-container" id="sementes-container"></div>
+            <div id="area-plantio" style="display:none;"></div>
+        </div>
+
+        <!-- Diálogo final -->
+        <div class="screen" id="screen-dialogos-final">
+            <div class="dialogo-bg"></div>
+            <div class="personagem-container">
+                <div class="personagem-img" style="font-size:3.5rem;">👩‍🌾🏆</div>
+                <span class="personagem-nome">Adelita</span>
+            </div>
+            <div class="balao-fala" id="balao-fala-final">Parabéns!</div>
+            <div class="seta-avancar" id="seta-avancar-final" onclick="avancarDialogoFinal()">➤</div>
+            <div id="logos-finais" style="display:flex; gap:15px; margin-top:10px;">
+                <div class="logo-placeholder" style="width:50px;height:50px;font-size:0.6rem;">L1</div>
+                <div class="logo-placeholder" style="width:50px;height:50px;font-size:0.6rem;">L2</div>
+                <div class="logo-placeholder" style="width:50px;height:50px;font-size:0.6rem;">L3</div>
+            </div>
+            <button class="btn-generico" id="btn-certificado" style="display:none;" onclick="mostrarCertificado()">🏅 VER CERTIFICADO</button>
+        </div>
+
+        <!-- Certificado -->
+        <div class="screen" id="screen-certificado">
+            <div class="certificado-card">
+                <span style="font-size:2.5rem;">📜</span>
+                <h2>CERTIFICADO</h2>
+                <p>A equipe dos AgroHeróis certifica que</p>
+                <div class="nome-destaque" id="cert-nome">[NOME]</div>
+                <p>concluiu com sucesso todas as missões do projeto</p>
+                <p style="font-weight:bold; color:#2d5a27;">Agro Forte, Futuro Sustentável</p>
+                <div class="checklist">
+                    ✓ Polinização e abelhas<br>
+                    ✓ Compostagem e reciclagem<br>
+                    ✓ Plantio e cuidados<br>
+                    ✓ Sustentabilidade
+                </div>
+                <p>Por seu empenho, recebe o título de:</p>
+                <div class="titulo-heroi">🌟 AGROHERÓI DO FUTURO SUSTENTÁVEL 🌟</div>
+                <div class="selo">🏅</div>
+                <p style="font-size:0.7rem; color:#888;">
+                    Desenvolvido pelo aluno Matheus – 2º D Noturno<br>
+                    Colégio Estadual Antonio Tortato | Professora Patrícia Ferro
+                </p>
+                <button class="btn-generico" onclick="reiniciarJogo()">🔄 JOGAR NOVAMENTE</button>
+            </div>
+        </div>
     </div>
 
-    <!-- ÁREA PRINCIPAL -->
-    <div id="main-area">
-
-      <!-- TELA INICIAL -->
-      <div class="screen active bg-inicial" id="screen-inicial">
-        <div style="text-align:center;color:#3E2723;">
-          <div style="font-size:70px;margin-bottom:5px;">🌍🌱🐝</div>
-          <h1 style="font-family:var(--fonte-titulo);font-size:26px;color:#2E7D32;text-shadow:1px 1px 0 #fff;">
-            Agro Forte, Futuro Sustentável
-          </h1>
-          <p style="font-size:15px;color:#5D4037;margin:5px 0;">Equilíbrio entre Produção e Meio Ambiente</p>
-          <div style="width:180px;height:120px;background:linear-gradient(180deg,#A5D6A7,#66BB6A,#2E7D32);border-radius:20px;margin:10px auto;display:flex;align-items:center;justify-content:center;font-size:50px;border:4px solid #fff;box-shadow:var(--sombra);">
-            🌾
-          </div>
-          <p style="font-size:12px;color:#795548;">imagem: inicial3.png</p>
-        </div>
-        <button class="btn-comecar" onclick="iniciarJogo()" style="margin-top:10px;">
-          ▶ COMEÇAR
-        </button>
-      </div>
-
-      <!-- TELA APRESENTAÇÃO -->
-      <div class="screen bg-fundo1" id="screen-apresentacao">
-        <div style="position:absolute;top:15px;left:50%;transform:translateX(-50%);font-size:12px;color:#fff;background:rgba(0,0,0,0.5);padding:4px 12px;border-radius:10px;">fundo: 1.png</div>
-        <div class="adelita-img" id="adelita-apresentacao" style="position:absolute;bottom:100px;left:30px;">
-          👩‍🌾<br>Adelita<br><small>principal1.png</small>
-        </div>
-        <div class="balao-container" id="balao-apresentacao">
-          <div class="balao-fala" id="balao-texto">Clique na seta →</div>
-          <div class="seta-avancar" id="seta-avancar-ap" onclick="avancarFala()">▶</div>
-        </div>
-        <div id="input-nome-container" class="hidden" style="position:absolute;bottom:40px;z-index:35;text-align:center;">
-          <input type="text" class="input-nome" id="input-nome-jogador" placeholder="Digite seu nome..." maxlength="25">
-          <br>
-          <button class="btn-confirmar" onclick="confirmarNome()">✓ Confirmar</button>
-        </div>
-      </div>
-
-      <!-- TELA ESCOLHA PERSONAGEM -->
-      <div class="screen bg-fundo1" id="screen-escolha-personagem">
-        <h3 style="color:#fff;text-shadow:2px 2px 4px #000;margin-bottom:15px;font-size:20px;">Escolha seu personagem:</h3>
-        <div style="display:flex;gap:30px;flex-wrap:wrap;justify-content:center;">
-          <div class="personagem-img menina-bg" onclick="escolherPersonagem('menina')" title="Menina">
-            👧<br><small style="font-size:11px;">menina.png</small>
-          </div>
-          <div class="personagem-img menino-bg" onclick="escolherPersonagem('menino')" title="Menino">
-            👦<br><small style="font-size:11px;">menino.png</small>
-          </div>
-        </div>
-      </div>
-
-      <!-- TELA FALAS PÓS-ESCOLHA -->
-      <div class="screen bg-fundo1" id="screen-falas-missao">
-        <div class="adelita-img" style="position:absolute;bottom:100px;left:30px;">
-          👩‍🌾<br>Adelita<br><small>principal1.png</small>
-        </div>
-        <div class="balao-container">
-          <div class="balao-fala" id="balao-falas-missao">...</div>
-          <div class="seta-avancar" id="seta-falas-missao" onclick="avancarFalaMissao()">▶</div>
-        </div>
-        <button class="btn-comecar hidden" id="btn-comecar-missao1" onclick="iniciarMissao1()" style="position:absolute;bottom:25px;">🎮 COMEÇAR MISSÃO</button>
-      </div>
-
-      <!-- MISSÃO 1 - JOGO DA ABELHA -->
-      <div class="screen" id="screen-missao1" style="background:#000;">
-        <div id="missao1-game-area">
-          <div id="abelha">🐝</div>
-          <div id="missao1-hud">
-            <span class="hud-item hud-flores">🌸 Flores: <b id="contador-flores">0</b>/10</span>
-            <span class="hud-item hud-energia">⚡ Energia: <b id="contador-energia">5</b></span>
-          </div>
-        </div>
-        <div id="missao1-concluida" class="hidden conclusao-overlay">
-          <h2 style="color:#FFD54F;font-size:28px;">🎉 Missão Concluída!</h2>
-          <p style="color:#fff;font-size:18px;">Você coletou 10 flores! 🌸</p>
-          <button class="btn-comecar" onclick="concluirMissao1()">Continuar ▶</button>
-        </div>
-        <div id="missao1-falha" class="hidden conclusao-overlay">
-          <h2 style="color:#ff5252;font-size:28px;">😢 Energia esgotada!</h2>
-          <p style="color:#fff;font-size:16px;">Tente novamente!</p>
-          <button class="btn-comecar" onclick="reiniciarMissao1()">🔄 Tentar Novamente</button>
-        </div>
-      </div>
-
-      <!-- TELA FALAS PÓS-MISSÃO1 -->
-      <div class="screen bg-cenario1" id="screen-falas-pos-m1">
-        <div style="position:absolute;top:10px;font-size:11px;color:#fff;background:rgba(0,0,0,0.4);padding:3px 10px;border-radius:8px;">cenário 1.png</div>
-        <div class="adelita-img" style="position:absolute;bottom:100px;left:30px;background:linear-gradient(180deg,#FFCC80,#FF7043,#BF360C);">
-          👩‍🌾<br>Adelita<br><small>principal2.png</small>
-        </div>
-        <div class="balao-container">
-          <div class="balao-fala" id="balao-pos-m1">...</div>
-          <div class="seta-avancar" id="seta-pos-m1" onclick="avancarFalaPosM1()">▶</div>
-        </div>
-        <button class="btn-comecar hidden" id="btn-comecar-missao2" onclick="iniciarMissao2()" style="position:absolute;bottom:25px;">🎮 COMEÇAR COMPOSTAGEM</button>
-      </div>
-
-      <!-- MISSÃO 2 - COMPOSTAGEM -->
-      <div class="screen bg-cenario4" id="screen-missao2">
-        <div style="position:absolute;top:8px;font-size:11px;color:#fff;background:rgba(0,0,0,0.4);padding:3px 10px;border-radius:8px;">cenário 4.png</div>
-        <div id="composteira-area">
-          <div class="composteira" id="composteira-drop" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="soltarNaComposteira(event)">
-            🪣<br><small style="font-size:12px;">compostagem.png</small>
-          </div>
-          <p style="color:#fff;margin:5px 0;font-weight:bold;">Arraste os itens corretos para a composteira!</p>
-          <div class="itens-arrastaveis" id="itens-compostagem">
-            <div class="item-arrastavel correto" draggable="true" data-item="melancia" ondragstart="arrastarItem(event)">🍉<br><small>melancia.png</small></div>
-            <div class="item-arrastavel correto" draggable="true" data-item="banana" ondragstart="arrastarItem(event)">🍌<br><small>banana.png</small></div>
-            <div class="item-arrastavel correto" draggable="true" data-item="maca" ondragstart="arrastarItem(event)">🍎<br><small>maca.png</small></div>
-            <div class="item-arrastavel correto" draggable="true" data-item="ovo" ondragstart="arrastarItem(event)">🥚<br><small>ovo.png</small></div>
-            <div class="item-arrastavel incorreto" draggable="true" data-item="lata" ondragstart="arrastarItem(event)">🥫<br><small>lata.png</small></div>
-            <div class="item-arrastavel incorreto" draggable="true" data-item="metal" ondragstart="arrastarItem(event)">🔩<br><small>metal.png</small></div>
-          </div>
-        </div>
-        <div id="missao2-concluida" class="hidden conclusao-overlay">
-          <h2 style="color:#FFD54F;font-size:26px;">✅ Compostagem concluída!</h2>
-          <p style="color:#fff;">Você separou os resíduos corretamente!</p>
-          <button class="btn-comecar" onclick="concluirMissao2()">Continuar ▶</button>
-        </div>
-      </div>
-
-      <!-- TELA FALAS PÓS-MISSÃO2 -->
-      <div class="screen bg-cenario2" id="screen-falas-pos-m2">
-        <div style="position:absolute;top:10px;font-size:11px;color:#fff;background:rgba(0,0,0,0.4);padding:3px 10px;border-radius:8px;">cenário 2.png</div>
-        <div class="adelita-img" style="position:absolute;bottom:100px;left:30px;">
-          👩‍🌾<br>Adelita<br><small>principal1.png</small>
-        </div>
-        <div class="balao-container">
-          <div class="balao-fala" id="balao-pos-m2">...</div>
-          <div class="seta-avancar" id="seta-pos-m2" onclick="avancarFalaPosM2()">▶</div>
-        </div>
-        <button class="btn-comecar hidden" id="btn-comecar-missao3" onclick="iniciarMissao3()" style="position:absolute;bottom:25px;">🌱 COMEÇAR PLANTIO</button>
-      </div>
-
-      <!-- MISSÃO 3 - PLANTIO -->
-      <div class="screen bg-cenario2" id="screen-missao3">
-        <div id="missao3-escolha">
-          <h3 style="color:#fff;text-shadow:2px 2px 4px #000;margin-bottom:12px;">Escolha uma semente:</h3>
-          <div class="sementes-container">
-            <div class="semente-card" onclick="plantarSemente('milho')">🌽<span>Milho<br><small>sementemilho.png</small></span></div>
-            <div class="semente-card" onclick="plantarSemente('tomate')">🍅<span>Tomate<br><small>sementetomate.png</small></span></div>
-            <div class="semente-card" onclick="plantarSemente('soja')">🫘<span>Soja<br><small>sementesoja.png</small></span></div>
-          </div>
-        </div>
-        <div id="missao3-plantio" class="hidden flex-col">
-          <div style="font-size:80px;" id="terra-plantio">🟫<br><small style="font-size:13px;">terra.png</small></div>
-          <div class="seta-indicadora">⬇️</div>
-          <div class="regador" id="regador-plantio" onclick="regarPlanta()" title="Clique para regar!">🪣<br><small style="font-size:12px;">regua.png</small></div>
-          <p style="color:#fff;font-size:13px;">Clique no regador para regar sua semente!</p>
-        </div>
-        <div id="missao3-crescendo" class="hidden flex-col">
-          <div class="planta-crescendo" id="planta-final">🌱</div>
-          <p style="color:#fff;font-weight:bold;font-size:16px;" id="nome-planta-final"></p>
-        </div>
-        <button class="btn-comecar hidden" id="btn-finalizar-m3" onclick="finalizarMissao3()" style="position:absolute;bottom:25px;">✨ Ver Resultado</button>
-      </div>
-
-      <!-- TELA FINAL -->
-      <div class="screen bg-cenario1" id="screen-final">
-        <div class="adelita-img" style="position:absolute;bottom:100px;left:30px;background:linear-gradient(180deg,#FFCC80,#FF8A65,#D84315);">
-          👩‍🌾<br>Adelita<br><small>principal3.png</small>
-        </div>
-        <div class="balao-container">
-          <div class="balao-fala" id="balao-final">...</div>
-          <div class="seta-avancar" id="seta-final" onclick="avancarFalaFinal()">▶</div>
-        </div>
-        <button class="btn-comecar hidden" id="btn-certificado" onclick="mostrarCertificado()" style="position:absolute;bottom:25px;">🏆 Ver Certificado</button>
-      </div>
-
-      <!-- TELA CERTIFICADO -->
-      <div class="screen bg-cenario3" id="screen-certificado" style="background-color:rgba(255,248,225,0.6);">
-        <div class="overlay-transparente"></div>
-        <div class="certificado" id="certificado-final">
-          <span style="font-size:14px;color:#8D6E63;">🌱🌾🐝</span>
-          <h2>C E R T I F I C A D O</h2>
-          <p style="font-size:14px;">A equipe dos AgroHeróis certifica que</p>
-          <p class="nome-jogador" id="cert-nome">[NOME]</p>
-          <p style="font-size:13px;">concluiu com sucesso todas as missões do projeto</p>
-          <p style="font-weight:bold;color:#2E7D32;font-size:15px;">Agro Forte, Futuro Sustentável:<br>Equilíbrio entre Produção e Meio Ambiente</p>
-          <p style="font-size:12px;">Demonstrando conhecimento sobre:</p>
-          <div class="checklist">
-            ✅ Polinização e a importância das abelhas<br>
-            ✅ Compostagem e reciclagem de nutrientes<br>
-            ✅ Plantio e cuidados com as plantas<br>
-            ✅ Sustentabilidade e preservação ambiental
-          </div>
-          <p style="font-size:13px;">Por seu empenho e dedicação, recebe o título de:</p>
-          <h1>🌟 AGROHERÓI DO<br>FUTURO SUSTENTÁVEL 🌟</h1>
-          <div class="selo">🏅</div>
-          <p style="font-size:10px;color:#8D6E63;margin-top:8px;">
-            Desenvolvido pelo aluno Matheus – 2º D Noturno<br>
-            Colégio Estadual Antonio Tortato<br>
-            Professora Patrícia Ferro
-          </p>
-          <p style="font-size:18px;margin-top:5px;">FIM. 🌱🌾🐝</p>
-          <p style="font-size:9px;color:#999;">cenário 3.png (transparência 60%)</p>
-        </div>
-      </div>
-
-    </div><!-- fim main-area -->
-  </div><!-- fim game-container -->
-
-  <script src="script.js"></script>
+    <!-- JavaScript externo -->
+    <script src="script.js"></script>
 </body>
 </html>
