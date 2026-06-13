@@ -12,7 +12,7 @@
         }
 
         body {
-            background: #1c1c1c;
+            background: #121212;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,8 +30,9 @@
             height: 100vh;
             max-height: 700px;
             overflow: hidden;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
             border-radius: 12px;
+            background: #000;
         }
 
         .tela {
@@ -63,21 +64,20 @@
         .logos-inicio {
             display: flex;
             gap: 30px;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
         }
 
         .logos-inicio img {
             width: 90px;
             height: 90px;
             object-fit: contain;
-            filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35));
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
             animation: flutuar 3s ease-in-out infinite;
         }
 
         .logos-inicio img:nth-child(2) {
             animation-delay: 0.4s;
         }
-
         .logos-inicio img:nth-child(3) {
             animation-delay: 0.8s;
         }
@@ -111,12 +111,11 @@
             transform: translateY(-4px);
             box-shadow: 0 14px 40px rgba(239, 108, 0, 0.75);
         }
-
         .btn:active {
             transform: scale(0.96);
         }
 
-        /* ========== TELAS DE DIÁLOGO ========== */
+        /* ========== DIÁLOGOS ========== */
         .dialogo-container {
             position: relative;
             width: 100%;
@@ -166,7 +165,6 @@
             border-bottom: 20px solid white;
             z-index: 4;
         }
-
         .balao::after {
             content: '';
             position: absolute;
@@ -189,7 +187,6 @@
             z-index: 10;
             animation: piscar 1.2s infinite;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            user-select: none;
         }
 
         @keyframes piscar {
@@ -249,7 +246,7 @@
             box-shadow: 0 0 30px rgba(249, 168, 37, 0.6);
         }
 
-        /* ========== TELA JOGO ABELHA ========== */
+        /* ========== JOGO ABELHA ========== */
         #tela-abelha {
             background-image: url('cenario1.png');
         }
@@ -350,13 +347,12 @@
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
             transition: transform 0.2s;
             border: 3px solid #ccc;
+            position: relative;
         }
 
         .item:active {
             cursor: grabbing;
-            transform: scale(1.1);
         }
-
         .item.colocado {
             opacity: 0.5;
             pointer-events: none;
@@ -368,6 +364,7 @@
             width: 65px;
             height: 65px;
             object-fit: contain;
+            pointer-events: none;
         }
 
         /* ========== PLANTIO ========== */
@@ -419,7 +416,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .terra img {
             width: 100%;
             height: 100%;
@@ -435,7 +431,6 @@
             transition: transform 0.2s;
             animation: balanco 2s ease-in-out infinite;
         }
-
         @keyframes balanco {
             0%,
             100% {
@@ -448,7 +443,6 @@
                 transform: rotate(8deg);
             }
         }
-
         .regador:hover {
             transform: scale(1.2) rotate(-10deg);
         }
@@ -456,7 +450,6 @@
         .planta-crescida {
             animation: crescer 1.5s ease-out;
         }
-
         @keyframes crescer {
             0% {
                 transform: scale(0);
@@ -485,7 +478,6 @@
             box-shadow: 0 12px 50px rgba(0, 0, 0, 0.6);
             animation: pop 0.7s ease-out;
         }
-
         @keyframes pop {
             0% {
                 transform: scale(0.5) rotate(-6deg);
@@ -544,7 +536,7 @@
             }
             .escolha-personagem {
                 gap: 30px;
-                top: 50px;
+                top: 40px;
             }
             .item {
                 width: 70px;
@@ -565,18 +557,12 @@
             .certificado {
                 padding: 20px 15px;
             }
-            .certificado h2 {
-                font-size: 1.5rem;
-            }
-            .nome-destaque {
-                font-size: 1.5rem;
-            }
         }
     </style>
 </head>
 <body>
     <div id="game">
-        <!-- ========== TELA INICIAL ========== -->
+        <!-- TELA INICIAL -->
         <div id="tela-inicial" class="tela ativa">
             <div class="logos-inicio">
                 <img src="logo1.png" alt="Logo 1">
@@ -586,19 +572,19 @@
             <button class="btn" onclick="iniciar()">Começar</button>
         </div>
 
-        <!-- ========== DIÁLOGO PRINCIPAL (fases 1‑12) ========== -->
+        <!-- DIÁLOGO PRINCIPAL -->
         <div id="tela-dialogo" class="tela" style="background-image: url('fundo1.png');">
             <div class="dialogo-container">
                 <img id="img-personagem" class="personagem" src="principal1.png" alt="Adelita">
                 <div id="balao-dialogo" class="balao">Olá! Eu sou a Adelita...</div>
                 <div id="seta-dialogo" class="seta-avancar" onclick="proximoDialogo()">➤</div>
-                <div id="area-input" style="display:none; z-index:5; position:absolute; top:200px;"></div>
+                <div id="area-input" style="display:none; position:absolute; top:200px; z-index:5;"></div>
                 <div id="area-escolha" style="display:none;"></div>
-                <button id="btn-missao" class="btn" style="display:none; position:absolute; bottom:50px; z-index:10;" onclick="iniciarMissaoAbelha()">Começar Missão</button>
+                <button id="btn-missao" class="btn" style="display:none; position:absolute; bottom:50px;" onclick="iniciarMissaoAbelha()">Começar Missão</button>
             </div>
         </div>
 
-        <!-- ========== JOGO DA ABELHA ========== -->
+        <!-- JOGO DA ABELHA -->
         <div id="tela-abelha" class="tela">
             <canvas id="canvas-abelha"></canvas>
             <div class="hud">
@@ -606,11 +592,11 @@
                 <span class="hud-item">Vidas: <span id="cont-vidas">5</span></span>
             </div>
             <div class="logos-jogo">
-                <img src="logo1.png" alt="L1"><img src="logo.png" alt="L2"><img src="logo3.png" alt="L3">
+                <img src="logo1.png"><img src="logo.png"><img src="logo3.png">
             </div>
         </div>
 
-        <!-- ========== DIÁLOGO PÓS‑ABELHA (compostagem) ========== -->
+        <!-- DIÁLOGO PÓS-ABELHA -->
         <div id="tela-dialogo2" class="tela" style="background-image: url('fundo1.png');">
             <div class="dialogo-container">
                 <img class="personagem" src="principal2.png" alt="Adelita">
@@ -620,17 +606,17 @@
             </div>
         </div>
 
-        <!-- ========== COMPOSTAGEM ========== -->
+        <!-- COMPOSTAGEM -->
         <div id="tela-compostagem" class="tela">
-            <h3 style="color:#3e2723; background:rgba(255,255,255,0.8); padding:10px 25px; border-radius:30px; margin-bottom:5px;">Arraste os itens corretos para a composteira</h3>
-            <div id="composteira" class="composteira" ondragover="event.preventDefault(); this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="soltar(event)">
+            <h3 style="color:#3e2723; background:rgba(255,255,255,0.8); padding:10px 25px; border-radius:30px;">Arraste os itens corretos para a composteira</h3>
+            <div id="composteira" class="composteira">
                 <img src="compostagem.png" alt="Composteira">
             </div>
-            <p id="contador-compost" style="font-weight:bold; background:white; padding:8px 25px; border-radius:30px; margin:5px 0;">Colocados: 0/4</p>
+            <p id="contador-compost" style="font-weight:bold; background:white; padding:8px 25px; border-radius:30px;">Colocados: 0/4</p>
             <div id="itens-compost" class="itens"></div>
         </div>
 
-        <!-- ========== DIÁLOGO PÓS‑COMPOSTAGEM (plantio) ========== -->
+        <!-- DIÁLOGO PÓS-COMPOSTAGEM -->
         <div id="tela-dialogo3" class="tela" style="background-image: url('fundo1.png');">
             <div class="dialogo-container">
                 <img class="personagem" src="principal2.png" alt="Adelita">
@@ -640,14 +626,14 @@
             </div>
         </div>
 
-        <!-- ========== PLANTIO ========== -->
+        <!-- PLANTIO -->
         <div id="tela-plantio" class="tela">
             <h3 id="titulo-plantio" style="background:rgba(255,255,255,0.8); padding:10px 25px; border-radius:30px;">Escolha uma semente para plantar:</h3>
             <div id="sementes-container" class="sementes"></div>
             <div id="area-plantio" class="area-plantio" style="display:none;"></div>
         </div>
 
-        <!-- ========== DIÁLOGO FINAL ========== -->
+        <!-- DIÁLOGO FINAL -->
         <div id="tela-dialogo-final" class="tela" style="background-image: url('fundo1.png');">
             <div class="dialogo-container">
                 <img class="personagem" src="principal3.png" alt="Adelita">
@@ -660,7 +646,7 @@
             </div>
         </div>
 
-        <!-- ========== CERTIFICADO ========== -->
+        <!-- CERTIFICADO -->
         <div id="tela-certificado" class="tela">
             <div class="certificado">
                 <h2>CERTIFICADO</h2>
@@ -685,10 +671,39 @@
     </div>
 
     <script>
-        // ==================== ESTADO GLOBAL ====================
+        // ==================== CARREGAMENTO GARANTIDO DAS IMAGENS ====================
+        const IMAGENS = {};
+        const listaImagens = [
+            'abelha.png', 'soja.png', 'milho.png', 'flor.png', 'fogo.png', 'fumaca.png',
+            'sementemilho.png', 'sementetomate.png', 'sementesoja.png',
+            'terra.png', 'regua.png', 'plantinha.png',
+            'milhocresce.png', 'tomatecrece.png', 'sojacrece.png',
+            'melancia.png', 'bana.png', 'maca.png', 'ovo.png', 'lata.png', 'metal.png'
+        ];
+
+        function carregarImagens() {
+            const promises = listaImagens.map(src => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        IMAGENS[src] = img;
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        console.warn(`Imagem não encontrada: ${src}`);
+                        IMAGENS[src] = null;
+                        resolve();
+                    };
+                    img.src = src;
+                });
+            });
+            return Promise.all(promises);
+        }
+
+        // ==================== ESTADO ====================
         const estado = {
             nome: '',
-            personagem: null, // 'menina' ou 'menino'
+            personagem: null,
             dialogo: 0,
             dialogo2: 0,
             dialogo3: 0,
@@ -708,42 +723,49 @@
         const abelha = { x: 80, y: 300, w: 70, h: 60, speed: 7 };
         let canvas, ctx;
 
-        // ==================== PRÉ‑CARREGAMENTO DAS IMAGENS DO JOGO ====================
-        const imagens = {};
-        function carregarImagem(src) {
-            const img = new Image();
-            img.src = src;
-            imagens[src] = img;
-            return img;
-        }
-        // Imagens essenciais para o jogo da abelha
-        carregarImagem('abelha.png');
-        carregarImagem('soja.png');
-        carregarImagem('milho.png');
-        carregarImagem('flor.png');
-        carregarImagem('fogo.png');
-        carregarImagem('fumaca.png');
-        // Imagens do plantio
-        carregarImagem('sementemilho.png');
-        carregarImagem('sementetomate.png');
-        carregarImagem('sementesoja.png');
-        carregarImagem('terra.png');
-        carregarImagem('regua.png');
-        carregarImagem('plantinha.png');
-        carregarImagem('milhocresce.png');
-        carregarImagem('tomatecrece.png');
-        carregarImagem('sojacrece.png');
+        // ==================== INÍCIO (aguarda imagens) ====================
+        let imagensProntas = false;
+        carregarImagens().then(() => {
+            imagensProntas = true;
+            console.log('🌾 Todas as imagens carregadas. AgroHeróis pronto!');
+        });
 
-        // ==================== TROCA DE TELAS ====================
+        function iniciar() {
+            if (!imagensProntas) {
+                alert('Aguarde o carregamento das imagens...');
+                return;
+            }
+            estado.nome = '';
+            estado.personagem = null;
+            estado.dialogo = 0;
+            mostrarTela('tela-dialogo');
+            atualizarDialogo();
+        }
+
         function mostrarTela(id) {
             document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
-            const novaTela = document.getElementById(id);
-            if (novaTela) novaTela.classList.add('ativa');
-            // Ajustar canvas quando voltar ao jogo da abelha
+            const nova = document.getElementById(id);
+            if (nova) nova.classList.add('ativa');
             if (id === 'tela-abelha') {
-                redimensionarCanvas();
-                iniciarMissaoAbelha();
+                iniciarCanvasAbelha();
             }
+        }
+
+        // ==================== CANVAS DA ABELHA ====================
+        function iniciarCanvasAbelha() {
+            canvas = document.getElementById('canvas-abelha');
+            ctx = canvas.getContext('2d');
+            redimensionarCanvas();
+            estado.jogoAtivo = true;
+            estado.flores = 0;
+            estado.vidas = 5;
+            estado.elementos = [];
+            estado.spawnTimer = 0;
+            estado.spawnRate = 55;
+            document.getElementById('cont-flores').textContent = '0';
+            document.getElementById('cont-vidas').textContent = '5';
+            if (estado.animFrame) cancelAnimationFrame(estado.animFrame);
+            loop();
         }
 
         function redimensionarCanvas() {
@@ -754,147 +776,11 @@
             abelha.y = canvas.height / 2;
         }
 
-        // ==================== INICIAR JOGO ====================
-        function iniciar() {
-            estado.nome = '';
-            estado.personagem = null;
-            estado.dialogo = 0;
-            estado.flores = 0;
-            estado.vidas = 5;
-            estado.compostColocados = 0;
-            estado.semente = null;
-            mostrarTela('tela-dialogo');
-            atualizarDialogo();
-        }
-
-        // ==================== DIÁLOGO 1 (índices 0 a 11) ====================
-        function atualizarDialogo() {
-            const balao = document.getElementById('balao-dialogo');
-            const seta = document.getElementById('seta-dialogo');
-            const areaInput = document.getElementById('area-input');
-            const areaEscolha = document.getElementById('area-escolha');
-            const btnMissao = document.getElementById('btn-missao');
-            const imgPersonagem = document.getElementById('img-personagem');
-
-            areaInput.style.display = 'none';
-            areaEscolha.style.display = 'none';
-            btnMissao.style.display = 'none';
-            seta.style.display = 'block';
-            imgPersonagem.src = 'principal1.png';
-
-            const idx = estado.dialogo;
-            switch (idx) {
-                case 0:
-                    balao.textContent = 'Olá! Eu sou a Adelita e faço parte dos AgroHeróis! Qual é o seu nome?';
-                    areaInput.style.display = 'block';
-                    areaInput.innerHTML = `<input type="text" class="input-nome" id="inputNome" placeholder="Digite seu nome..." maxlength="25"><br>
-                        <button class="btn" style="margin-top:15px; padding:12px 35px; font-size:1.1rem;" onclick="confirmarNome()">Confirmar</button>`;
-                    seta.style.display = 'none';
-                    break;
-                case 1:
-                    balao.textContent = `Que nome lindo, ${estado.nome}! Hoje você vai participar de uma missão muito importante! Escolha seu personagem clicando nele.`;
-                    areaEscolha.style.display = 'block';
-                    areaEscolha.innerHTML = `
-                        <div class="escolha-personagem">
-                            <div class="card-personagem ${estado.personagem==='menina'?'selecionado':''}" onclick="escolherPersonagem('menina', this)">
-                                <img src="menina.png" alt="Menina">
-                            </div>
-                            <div class="card-personagem ${estado.personagem==='menino'?'selecionado':''}" onclick="escolherPersonagem('menino', this)">
-                                <img src="menino.png" alt="Menino">
-                            </div>
-                        </div>`;
-                    seta.style.display = 'none';
-                    break;
-                case 2:
-                    balao.textContent = 'UAL!!! O tema da nossa aventura é: Agro Forte, Futuro Sustentável: Equilíbrio entre Produção e Meio Ambiente';
-                    break;
-                case 3:
-                    balao.textContent = 'Para produzir alimentos e cuidar da natureza ao mesmo tempo, precisamos da ajuda de muitos seres vivos. Um dos mais importantes é a abelha.';
-                    break;
-                case 4:
-                    balao.textContent = 'As abelhas realizam a polinização, um processo que ajuda as plantas a produzir flores, frutos e sementes.';
-                    break;
-                case 5:
-                    balao.textContent = 'Graças à polinização, podemos ter alimentos como: Maçã, Morango, Melancia, Pepino, Café.';
-                    break;
-                case 6:
-                    balao.textContent = 'Sem as abelhas, a produção de muitos alimentos seria muito menor. Sua missão será ajudar uma abelha a coletar flores!';
-                    break;
-                case 7:
-                    balao.textContent = 'Como jogar: ↑ Seta para cima: subir | ↓ Seta para baixo: descer';
-                    break;
-                case 8:
-                    balao.textContent = 'Coletar as flores pelo caminho. Cada flor coletada ajuda na polinização e aumenta sua pontuação.';
-                    break;
-                case 9:
-                    balao.textContent = 'Atenção! Não toque no fogo nem na fumaça. Se encostar, perderá energia.';
-                    break;
-                case 10:
-                    balao.textContent = 'Quando coletar 10 flores, mostrará como a polinização é essencial!';
-                    break;
-                case 11:
-                    balao.textContent = 'Clique no botão para começar sua missão.';
-                    btnMissao.style.display = 'inline-block';
-                    seta.style.display = 'none';
-                    break;
-            }
-        }
-
-        function proximoDialogo() {
-            if (estado.dialogo === 1 && !estado.nome) return;
-            if (estado.dialogo === 1 && !estado.personagem) return;
-            if (estado.dialogo < 11) {
-                estado.dialogo++;
-                atualizarDialogo();
-            }
-        }
-
-        function confirmarNome() {
-            const input = document.getElementById('inputNome');
-            if (input && input.value.trim().length > 0) {
-                estado.nome = input.value.trim();
-                estado.dialogo = 1;
-                atualizarDialogo();
-            }
-        }
-
-        function escolherPersonagem(tipo, el) {
-            estado.personagem = tipo;
-            document.querySelectorAll('.card-personagem').forEach(c => c.classList.remove('selecionado'));
-            el.classList.add('selecionado');
-            setTimeout(() => {
-                estado.dialogo = 2;
-                atualizarDialogo();
-            }, 350);
-        }
-
-        // ==================== JOGO DA ABELHA ====================
-        function iniciarMissaoAbelha() {
-            mostrarTela('tela-abelha');
-            canvas = document.getElementById('canvas-abelha');
-            ctx = canvas.getContext('2d');
-            redimensionarCanvas();
-            estado.flores = 0;
-            estado.vidas = 5;
-            estado.elementos = [];
-            estado.spawnTimer = 0;
-            estado.spawnRate = 55;
-            estado.jogoAtivo = true;
-            document.getElementById('cont-flores').textContent = '0';
-            document.getElementById('cont-vidas').textContent = '5';
-            if (estado.animFrame) cancelAnimationFrame(estado.animFrame);
-            loop();
-        }
-
         function loop() {
             if (!estado.jogoAtivo) return;
-            if (!canvas || !ctx) return;
-
-            // Prevenir tela preta se o canvas perder dimensões
-            if (canvas.width === 0 || canvas.height === 0) {
+            if (!canvas || canvas.width === 0 || canvas.height === 0) {
                 redimensionarCanvas();
             }
-
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             estado.spawnTimer++;
@@ -944,7 +830,6 @@
             const y = 60 + Math.random() * (canvas.height - 140);
             const tamanho = 55;
             const speed = 2.5 + Math.random() * 3.5;
-            // Define a imagem específica para flores
             let imagemFlor = null;
             if (tipo === 'flor') {
                 const opcoes = ['soja.png', 'milho.png', 'flor.png'];
@@ -952,56 +837,38 @@
             }
             estado.elementos.push({
                 x: canvas.width + 40,
-                y: y,
+                y,
                 w: tamanho,
                 h: tamanho,
-                tipo: tipo,
-                speed: speed,
-                imagemFlor: imagemFlor
+                tipo,
+                speed,
+                imagemFlor
             });
         }
 
         function colisao(a, b) {
-            const ax = a.x - a.w / 2;
-            const ay = a.y - a.h / 2;
-            const bx = b.x - b.w / 2;
-            const by = b.y - b.h / 2;
-            return ax < bx + b.w && ax + a.w > bx && ay < by + b.h && ay + a.h > by;
+            return a.x - a.w / 2 < b.x + b.w / 2 && a.x + a.w / 2 > b.x - b.w / 2 &&
+                a.y - a.h / 2 < b.y + b.h / 2 && a.y + a.h / 2 > b.y - b.h / 2;
         }
 
         function desenharAbelha() {
-            const img = imagens['abelha.png'];
-            if (img && img.complete && img.naturalWidth > 0) {
-                ctx.drawImage(img, abelha.x - abelha.w / 2, abelha.y - abelha.h / 2, abelha.w, abelha.h);
-            } else {
-                // Fallback
-                ctx.fillStyle = '#fdd835';
-                ctx.fillRect(abelha.x - 20, abelha.y - 20, 40, 40);
-            }
+            const img = IMAGENS['abelha.png'];
+            if (img) ctx.drawImage(img, abelha.x - abelha.w / 2, abelha.y - abelha.h / 2, abelha.w, abelha.h);
+            else { ctx.fillStyle = '#fdd835';
+                ctx.fillRect(abelha.x - 20, abelha.y - 20, 40, 40); }
         }
 
         function desenharElemento(el) {
-            let imgSrc = '';
-            if (el.tipo === 'flor') {
-                imgSrc = el.imagemFlor;
-            } else if (el.tipo === 'fogo') {
-                imgSrc = 'fogo.png';
-            } else if (el.tipo === 'fumaca') {
-                imgSrc = 'fumaca.png';
-            }
-            const img = imagens[imgSrc];
-            if (img && img.complete && img.naturalWidth > 0) {
-                ctx.drawImage(img, el.x - el.w / 2, el.y - el.h / 2, el.w, el.h);
-            } else {
-                // Fallback
-                ctx.fillStyle = el.tipo === 'flor' ? '#ff7043' : (el.tipo === 'fogo' ? '#ff9800' : '#9e9e9e');
-                ctx.fillRect(el.x - 20, el.y - 20, 40, 40);
-            }
+            let src = el.tipo === 'flor' ? el.imagemFlor : (el.tipo === 'fogo' ? 'fogo.png' : 'fumaca.png');
+            const img = IMAGENS[src];
+            if (img) ctx.drawImage(img, el.x - el.w / 2, el.y - el.h / 2, el.w, el.h);
+            else { ctx.fillStyle = el.tipo === 'flor' ? '#ff7043' : (el.tipo === 'fogo' ? '#ff9800' : '#9e9e9e');
+                ctx.fillRect(el.x - 20, el.y - 20, 40, 40); }
         }
 
         function vitoriaAbelha() {
             estado.jogoAtivo = false;
-            if (estado.animFrame) cancelAnimationFrame(estado.animFrame);
+            cancelAnimationFrame(estado.animFrame);
             setTimeout(() => {
                 mostrarTela('tela-dialogo2');
                 estado.dialogo2 = 0;
@@ -1011,23 +878,18 @@
 
         function derrotaAbelha() {
             estado.jogoAtivo = false;
-            if (estado.animFrame) cancelAnimationFrame(estado.animFrame);
+            cancelAnimationFrame(estado.animFrame);
             alert('A abelha perdeu toda a energia! Tente novamente.');
-            iniciarMissaoAbelha();
+            iniciarCanvasAbelha();
         }
 
-        // Controles de teclado e toque
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp') {
-                estado.teclas.cima = true;
-                e.preventDefault();
-            }
-            if (e.key === 'ArrowDown') {
-                estado.teclas.baixo = true;
-                e.preventDefault();
-            }
+        // Controles de teclado
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowUp') { estado.teclas.cima = true;
+                e.preventDefault(); }
+            if (e.key === 'ArrowDown') { estado.teclas.baixo = true;
+                e.preventDefault(); }
             if (e.key === 'ArrowRight') {
-                // Avançar diálogos conforme a tela ativa
                 if (document.getElementById('tela-dialogo').classList.contains('ativa')) proximoDialogo();
                 else if (document.getElementById('tela-dialogo2').classList.contains('ativa')) proximoDialogo2();
                 else if (document.getElementById('tela-dialogo3').classList.contains('ativa')) proximoDialogo3();
@@ -1035,19 +897,17 @@
                 e.preventDefault();
             }
         });
-        document.addEventListener('keyup', (e) => {
+        document.addEventListener('keyup', e => {
             if (e.key === 'ArrowUp') estado.teclas.cima = false;
             if (e.key === 'ArrowDown') estado.teclas.baixo = false;
         });
 
-        // Suporte a touch para movimentar a abelha
+        // Suporte touch para mover a abelha
         let touchY = null;
-        document.addEventListener('touchstart', (e) => {
-            if (e.target.closest('#tela-abelha') && e.touches.length > 0) {
-                touchY = e.touches[0].clientY;
-            }
+        document.addEventListener('touchstart', e => {
+            if (e.target.closest('#tela-abelha') && e.touches.length > 0) touchY = e.touches[0].clientY;
         });
-        document.addEventListener('touchmove', (e) => {
+        document.addEventListener('touchmove', e => {
             if (touchY !== null && e.target.closest('#tela-abelha') && e.touches.length > 0) {
                 const delta = e.touches[0].clientY - touchY;
                 estado.teclas.cima = delta < -10;
@@ -1062,45 +922,114 @@
             touchY = null;
         });
 
-        // Redimensionar canvas quando a janela muda
         window.addEventListener('resize', () => {
-            if (document.getElementById('tela-abelha').classList.contains('ativa')) {
-                redimensionarCanvas();
-            }
+            if (document.getElementById('tela-abelha').classList.contains('ativa')) redimensionarCanvas();
         });
 
-        // ==================== DIÁLOGO 2 (compostagem) ====================
-        function atualizarDialogo2() {
-            const balao = document.getElementById('balao-dialogo2');
-            const seta = document.querySelector('#tela-dialogo2 .seta-avancar');
-            const btn = document.getElementById('btn-compost');
-            btn.style.display = 'none';
+        // ==================== DIÁLOGOS ====================
+        function atualizarDialogo() {
+            const balao = document.getElementById('balao-dialogo');
+            const seta = document.getElementById('seta-dialogo');
+            const areaInput = document.getElementById('area-input');
+            const areaEscolha = document.getElementById('area-escolha');
+            const btnMissao = document.getElementById('btn-missao');
+            document.getElementById('img-personagem').src = 'principal1.png';
+
+            areaInput.style.display = 'none';
+            areaEscolha.style.display = 'none';
+            btnMissao.style.display = 'none';
             seta.style.display = 'block';
-            switch (estado.dialogo2) {
+
+            switch (estado.dialogo) {
                 case 0:
-                    balao.textContent = `Muito bem, ${estado.nome}! Agora vamos aprender sobre a compostagem. A compostagem transforma restos de alimentos e folhas em adubo natural.`;
+                    balao.textContent = 'Olá! Eu sou a Adelita e faço parte dos AgroHeróis! Qual é o seu nome?';
+                    areaInput.style.display = 'block';
+                    areaInput.innerHTML = `<input type="text" class="input-nome" id="inputNome" placeholder="Digite seu nome..." maxlength="25"><br>
+                    <button class="btn" style="margin-top:15px; padding:12px 35px; font-size:1.1rem;" onclick="confirmarNome()">Confirmar</button>`;
+                    seta.style.display = 'none';
                     break;
                 case 1:
-                    balao.textContent = 'Sua missão: Arraste os materiais corretos para a composteira. Pode colocar: cascas de frutas, cascas de legumes, folhas secas.';
+                    balao.textContent = `Que nome lindo, ${estado.nome}! Hoje você vai participar de uma missão muito importante! Escolha seu personagem clicando nele.`;
+                    areaEscolha.style.display = 'block';
+                    areaEscolha.innerHTML = `
+                    <div class="escolha-personagem">
+                        <div class="card-personagem ${estado.personagem==='menina'?'selecionado':''}" onclick="escolherPersonagem('menina', this)">
+                            <img src="menina.png" alt="Menina">
+                        </div>
+                        <div class="card-personagem ${estado.personagem==='menino'?'selecionado':''}" onclick="escolherPersonagem('menino', this)">
+                            <img src="menino.png" alt="Menino">
+                        </div>
+                    </div>`;
+                    seta.style.display = 'none';
                     break;
                 case 2:
-                    balao.textContent = 'Não pode colocar: Plástico, Vidro, Latas. Separe os resíduos corretamente!';
+                    balao.textContent =
+                        'UAL!!! O tema da nossa aventura é: Agro Forte, Futuro Sustentável: Equilíbrio entre Produção e Meio Ambiente';
                     break;
                 case 3:
-                    balao.textContent = 'Clique em COMEÇAR para iniciar a missão de compostagem.';
-                    btn.style.display = 'inline-block';
+                    balao.textContent =
+                        'Para produzir alimentos e cuidar da natureza ao mesmo tempo, precisamos da ajuda de muitos seres vivos. Um dos mais importantes é a abelha.';
+                    break;
+                case 4:
+                    balao.textContent =
+                        'As abelhas realizam a polinização, um processo que ajuda as plantas a produzir flores, frutos e sementes.';
+                    break;
+                case 5:
+                    balao.textContent = 'Graças à polinização, podemos ter alimentos como: Maçã, Morango, Melancia, Pepino, Café.';
+                    break;
+                case 6:
+                    balao.textContent =
+                        'Sem as abelhas, a produção de muitos alimentos seria muito menor. Sua missão será ajudar uma abelha a coletar flores!';
+                    break;
+                case 7:
+                    balao.textContent = 'Como jogar: ↑ Seta para cima: subir | ↓ Seta para baixo: descer';
+                    break;
+                case 8:
+                    balao.textContent =
+                        'Coletar as flores pelo caminho. Cada flor coletada ajuda na polinização e aumenta sua pontuação.';
+                    break;
+                case 9:
+                    balao.textContent = 'Atenção! Não toque no fogo nem na fumaça. Se encostar, perderá energia.';
+                    break;
+                case 10:
+                    balao.textContent = 'Quando coletar 10 flores, mostrará como a polinização é essencial!';
+                    break;
+                case 11:
+                    balao.textContent = 'Clique no botão para começar sua missão.';
+                    btnMissao.style.display = 'inline-block';
                     seta.style.display = 'none';
                     break;
             }
         }
 
-        function proximoDialogo2() {
-            if (estado.dialogo2 < 3) {
-                estado.dialogo2++;
-                atualizarDialogo2();
+        function proximoDialogo() {
+            if ((estado.dialogo === 1 && !estado.nome) || (estado.dialogo === 1 && !estado.personagem)) return;
+            if (estado.dialogo < 11) {
+                estado.dialogo++;
+                atualizarDialogo();
             }
         }
 
+        function confirmarNome() {
+            const input = document.getElementById('inputNome');
+            if (input && input.value.trim().length > 0) {
+                estado.nome = input.value.trim();
+                estado.dialogo = 1;
+                atualizarDialogo();
+            }
+        }
+
+        function escolherPersonagem(tipo, el) {
+            estado.personagem = tipo;
+            document.querySelectorAll('.card-personagem').forEach(c => c.classList.remove('selecionado'));
+            el.classList.add('selecionado');
+            setTimeout(() => {
+                estado.dialogo = 2;
+                atualizarDialogo();
+            }, 350);
+        }
+
+        // ==================== COMPOSTAGEM ====================
         function iniciarCompostagem() {
             mostrarTela('tela-compostagem');
             estado.compostColocados = 0;
@@ -1119,7 +1048,6 @@
                 { id: 'lata', src: 'lata.png', correto: false },
                 { id: 'metal', src: 'metal.png', correto: false }
             ];
-            // embaralhar
             for (let i = itens.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [itens[i], itens[j]] = [itens[j], itens[i]];
@@ -1137,8 +1065,70 @@
                     div.classList.add('dragging');
                 });
                 div.addEventListener('dragend', () => div.classList.remove('dragging'));
+                // Suporte a touch
+                div.addEventListener('touchstart', touchStartItem);
+                div.addEventListener('touchmove', touchMoveItem);
+                div.addEventListener('touchend', touchEndItem);
                 container.appendChild(div);
             });
+        }
+
+        let itemArrastando = null;
+        let cloneItem = null;
+        let offsetX = 0,
+            offsetY = 0;
+
+        function touchStartItem(e) {
+            if (this.classList.contains('colocado')) return;
+            itemArrastando = this;
+            const touch = e.touches[0];
+            const rect = this.getBoundingClientRect();
+            offsetX = touch.clientX - rect.left;
+            offsetY = touch.clientY - rect.top;
+            cloneItem = this.cloneNode(true);
+            cloneItem.style.position = 'fixed';
+            cloneItem.style.zIndex = '1000';
+            cloneItem.style.width = this.offsetWidth + 'px';
+            cloneItem.style.height = this.offsetHeight + 'px';
+            cloneItem.style.pointerEvents = 'none';
+            cloneItem.style.opacity = '0.8';
+            document.body.appendChild(cloneItem);
+            this.style.opacity = '0.4';
+            e.preventDefault();
+        }
+
+        function touchMoveItem(e) {
+            if (!itemArrastando || !cloneItem) return;
+            const touch = e.touches[0];
+            cloneItem.style.left = (touch.clientX - offsetX) + 'px';
+            cloneItem.style.top = (touch.clientY - offsetY) + 'px';
+            const composteira = document.getElementById('composteira');
+            const rect = composteira.getBoundingClientRect();
+            if (touch.clientX > rect.left && touch.clientX < rect.right &&
+                touch.clientY > rect.top && touch.clientY < rect.bottom) {
+                composteira.classList.add('drag-over');
+            } else {
+                composteira.classList.remove('drag-over');
+            }
+            e.preventDefault();
+        }
+
+        function touchEndItem(e) {
+            if (!itemArrastando) return;
+            const composteira = document.getElementById('composteira');
+            composteira.classList.remove('drag-over');
+            const touch = e.changedTouches[0];
+            const rect = composteira.getBoundingClientRect();
+            if (touch.clientX > rect.left && touch.clientX < rect.right &&
+                touch.clientY > rect.top && touch.clientY < rect.bottom) {
+                soltarItem(itemArrastando.dataset.id);
+            }
+            if (cloneItem) {
+                document.body.removeChild(cloneItem);
+                cloneItem = null;
+            }
+            itemArrastando.style.opacity = '1';
+            itemArrastando = null;
         }
 
         function soltar(event) {
@@ -1146,6 +1136,10 @@
             const composteira = document.getElementById('composteira');
             composteira.classList.remove('drag-over');
             const id = event.dataTransfer.getData('text/plain');
+            soltarItem(id);
+        }
+
+        function soltarItem(id) {
             const itemEl = document.querySelector(`.item[data-id="${id}"]`);
             if (!itemEl || itemEl.classList.contains('colocado')) return;
             const correto = itemEl.dataset.correto === 'true';
@@ -1155,49 +1149,18 @@
                 document.getElementById('contador-compost').textContent = `Colocados: ${estado.compostColocados}/4`;
                 if (estado.compostColocados >= 4) {
                     setTimeout(() => {
-                        alert('Compostagem concluída com sucesso!');
+                        alert('Compostagem concluída!');
                         mostrarTela('tela-dialogo3');
                         estado.dialogo3 = 0;
                         atualizarDialogo3();
                     }, 600);
                 }
             } else {
-                alert('Este item não pode ir para a composteira! Apenas materiais orgânicos.');
+                alert('Este item não pode ir para a composteira!');
             }
         }
 
-        // ==================== DIÁLOGO 3 (plantio) ====================
-        function atualizarDialogo3() {
-            const balao = document.getElementById('balao-dialogo3');
-            const seta = document.querySelector('#tela-dialogo3 .seta-avancar');
-            const btn = document.getElementById('btn-plantio');
-            btn.style.display = 'none';
-            seta.style.display = 'block';
-            switch (estado.dialogo3) {
-                case 0:
-                    balao.textContent = `Parabéns, ${estado.nome}! Você separou os resíduos corretamente e ajudou a produzir um adubo natural.`;
-                    break;
-                case 1:
-                    balao.textContent = 'Agora o solo está preparado! Lembra das abelhas? Elas ajudam as plantas. O adubo da compostagem também.';
-                    break;
-                case 2:
-                    balao.textContent = 'Sua próxima missão: Escolha uma das 3 sementes para plantar: Milho, Tomate ou Soja.';
-                    break;
-                case 3:
-                    balao.textContent = 'Depois, regue sua plantinha com cuidado. Clique em COMEÇAR.';
-                    btn.style.display = 'inline-block';
-                    seta.style.display = 'none';
-                    break;
-            }
-        }
-
-        function proximoDialogo3() {
-            if (estado.dialogo3 < 3) {
-                estado.dialogo3++;
-                atualizarDialogo3();
-            }
-        }
-
+        // ==================== PLANTIO ====================
         function iniciarPlantio() {
             mostrarTela('tela-plantio');
             estado.semente = null;
@@ -1206,9 +1169,9 @@
             document.getElementById('area-plantio').style.display = 'none';
             const container = document.getElementById('sementes-container');
             container.innerHTML = `
-                <div class="semente ${estado.semente==='milho'?'selecionado':''}" onclick="escolherSemente('milho', this)"><img src="sementemilho.png" alt="Milho"></div>
-                <div class="semente ${estado.semente==='tomate'?'selecionado':''}" onclick="escolherSemente('tomate', this)"><img src="sementetomate.png" alt="Tomate"></div>
-                <div class="semente ${estado.semente==='soja'?'selecionado':''}" onclick="escolherSemente('soja', this)"><img src="sementesoja.png" alt="Soja"></div>`;
+            <div class="semente ${estado.semente==='milho'?'selecionado':''}" onclick="escolherSemente('milho', this)"><img src="sementemilho.png" alt="Milho"></div>
+            <div class="semente ${estado.semente==='tomate'?'selecionado':''}" onclick="escolherSemente('tomate', this)"><img src="sementetomate.png" alt="Tomate"></div>
+            <div class="semente ${estado.semente==='soja'?'selecionado':''}" onclick="escolherSemente('soja', this)"><img src="sementesoja.png" alt="Soja"></div>`;
         }
 
         function escolherSemente(tipo, el) {
@@ -1220,10 +1183,10 @@
             const area = document.getElementById('area-plantio');
             area.style.display = 'flex';
             area.innerHTML = `
-                <div class="terra">
-                    <img src="terra.png" alt="Terra">
-                    <img class="regador" src="regua.png" alt="Regador" onclick="regar()">
-                </div>`;
+            <div class="terra">
+                <img src="terra.png" alt="Terra">
+                <img class="regador" src="regua.png" alt="Regador" onclick="regar()">
+            </div>`;
         }
 
         function regar() {
@@ -1235,7 +1198,7 @@
                 else if (estado.semente === 'tomate') imgCrescida = 'tomatecrece.png';
                 else imgCrescida = 'sojacrece.png';
                 area.innerHTML = `<img src="${imgCrescida}" class="planta-crescida" style="width:200px;"><br>
-                    <button class="btn" onclick="irParaFinal()">Continuar</button>`;
+                <button class="btn" onclick="irParaFinal()">Continuar</button>`;
             }, 1500);
         }
 
@@ -1245,7 +1208,60 @@
             atualizarDialogoFinal();
         }
 
-        // ==================== DIÁLOGO FINAL ====================
+        // ==================== DIÁLOGOS SECUNDÁRIOS ====================
+        function atualizarDialogo2() {
+            const balao = document.getElementById('balao-dialogo2');
+            const seta = document.querySelector('#tela-dialogo2 .seta-avancar');
+            const btn = document.getElementById('btn-compost');
+            btn.style.display = 'none';
+            seta.style.display = 'block';
+            switch (estado.dialogo2) {
+                case 0:
+                    balao.textContent = `Muito bem, ${estado.nome}! Agora vamos aprender sobre a compostagem.`;
+                    break;
+                case 1:
+                    balao.textContent =
+                        'Arraste os materiais corretos para a composteira. Pode: cascas de frutas, legumes, folhas secas.';
+                    break;
+                case 2:
+                    balao.textContent = 'Não pode: plástico, vidro, latas.';
+                    break;
+                case 3:
+                    balao.textContent = 'Clique em COMEÇAR.';
+                    btn.style.display = 'inline-block';
+                    seta.style.display = 'none';
+                    break;
+            }
+        }
+        function proximoDialogo2() { if (estado.dialogo2 < 3) { estado.dialogo2++;
+                atualizarDialogo2(); } }
+
+        function atualizarDialogo3() {
+            const balao = document.getElementById('balao-dialogo3');
+            const seta = document.querySelector('#tela-dialogo3 .seta-avancar');
+            const btn = document.getElementById('btn-plantio');
+            btn.style.display = 'none';
+            seta.style.display = 'block';
+            switch (estado.dialogo3) {
+                case 0:
+                    balao.textContent = `Parabéns, ${estado.nome}! Você separou os resíduos corretamente.`;
+                    break;
+                case 1:
+                    balao.textContent = 'O solo está preparado! Lembra das abelhas? Elas ajudam as plantas.';
+                    break;
+                case 2:
+                    balao.textContent = 'Escolha uma semente: Milho, Tomate ou Soja.';
+                    break;
+                case 3:
+                    balao.textContent = 'Regue sua plantinha. Clique em COMEÇAR.';
+                    btn.style.display = 'inline-block';
+                    seta.style.display = 'none';
+                    break;
+            }
+        }
+        function proximoDialogo3() { if (estado.dialogo3 < 3) { estado.dialogo3++;
+                atualizarDialogo3(); } }
+
         function atualizarDialogoFinal() {
             const balao = document.getElementById('balao-final');
             const seta = document.querySelector('#tela-dialogo-final .seta-avancar');
@@ -1254,28 +1270,23 @@
             seta.style.display = 'block';
             switch (estado.dialogoFinal) {
                 case 0:
-                    balao.textContent = `Parabéns, ${estado.nome}! Você ajudou as abelhas, fez compostagem, plantou uma semente e cuidou da sua planta.`;
+                    balao.textContent = `Parabéns, ${estado.nome}! Você ajudou as abelhas, fez compostagem e plantou.`;
                     break;
                 case 1:
-                    balao.textContent = 'Muito obrigada pela sua ajuda! Agora você é um verdadeiro AgroHerói do Futuro Sustentável.';
+                    balao.textContent = 'Você é um verdadeiro AgroHerói do Futuro Sustentável!';
                     break;
                 case 2:
                     balao.textContent = 'Agro Forte, Futuro Sustentável: equilíbrio entre produção e meio ambiente.';
                     break;
                 case 3:
-                    balao.textContent = 'Clique no botão para receber seu certificado.';
+                    balao.textContent = 'Clique para receber seu certificado.';
                     btn.style.display = 'inline-block';
                     seta.style.display = 'none';
                     break;
             }
         }
-
-        function proximoDialogoFinal() {
-            if (estado.dialogoFinal < 3) {
-                estado.dialogoFinal++;
-                atualizarDialogoFinal();
-            }
-        }
+        function proximoDialogoFinal() { if (estado.dialogoFinal < 3) { estado.dialogoFinal++;
+                atualizarDialogoFinal(); } }
 
         function mostrarCertificado() {
             mostrarTela('tela-certificado');
@@ -1293,12 +1304,8 @@
             estado.dialogo2 = 0;
             estado.dialogo3 = 0;
             estado.dialogoFinal = 0;
-            estado.elementos = [];
             mostrarTela('tela-inicial');
         }
-
-        // ==================== INICIALIZAÇÃO ====================
-        console.log('🌾 AgroHeróis pronto! Coloque todas as imagens na mesma pasta.');
     </script>
 </body>
 </html>
