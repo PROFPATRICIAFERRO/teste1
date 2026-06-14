@@ -1,33 +1,55 @@
 document.addEventListener("DOMContentLoaded", function() {
     // =============================================
-    // 0. CONTROLE DE MÚSICA
+    // 0. CONTROLE DE MÚSICA (com verificação de erro)
     // =============================================
     const botaoMusica = document.getElementById("btnMusica");
     const audio = document.getElementById("musicaFundo");
     let musicaTocando = false;
 
     if (botaoMusica && audio) {
+        // Evento de erro caso o MP3 não seja encontrado
+        audio.addEventListener("error", function(e) {
+            console.error("Erro ao carregar o arquivo de música. Verifique se 'Agros_em_Ação.mp3' está na mesma pasta.");
+            botaoMusica.style.opacity = "0.5";
+            botaoMusica.title = "Música não disponível";
+            botaoMusica.disabled = true;
+        });
+
+        audio.addEventListener("canplaythrough", function() {
+            console.log("Música carregada com sucesso!");
+            botaoMusica.disabled = false;
+            botaoMusica.style.opacity = "1";
+        });
+
         botaoMusica.addEventListener("click", function() {
             if (musicaTocando) {
                 audio.pause();
-                botaoMusica.textContent = "🎵";  // emoji sem som
+                botaoMusica.textContent = "🎵";
                 musicaTocando = false;
+                console.log("Música pausada");
             } else {
-                // Tenta tocar (navegadores permitem após interação do usuário)
+                // Toca a música (requer interação do usuário, já garantida)
                 audio.play().then(() => {
                     musicaTocando = true;
-                    botaoMusica.textContent = "🔊";  // emoji com som
-                }).catch(e => console.log("Erro ao tocar música:", e));
+                    botaoMusica.textContent = "🔊";
+                    console.log("Música tocando");
+                }).catch(err => {
+                    console.error("Erro ao tocar música:", err);
+                    alert("Não foi possível tocar a música. Verifique o arquivo e tente novamente.");
+                });
             }
         });
+
         // Pré-carrega o áudio
         audio.load();
-        // Inicialmente ícone de música desligada
+        // Ícone inicial
         botaoMusica.textContent = "🎵";
+    } else {
+        console.warn("Botão ou elemento de áudio não encontrado.");
     }
 
     // =============================================
-    // 1. CORREÇÕES VISUAIS (logos em linha, abelha fallback, adelita transparente)
+    // 1. CORREÇÕES VISUAIS (abelha fallback, adelita transparente)
     // =============================================
     const abelhaImg = document.getElementById('abelha');
     let abelhaElement = abelhaImg;
@@ -66,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 2. TRANSIÇÃO DA TELA INICIAL PARA INTRODUÇÃO
+    // 2. TRANSIÇÃO DA TELA INICIAL
     // =============================================
     const telaInicial = document.getElementById("telaInicial");
     const introducao = document.getElementById("introducao");
@@ -83,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 3. DIÁLOGOS DA INTRODUÇÃO
+    // 3. DIÁLOGOS DA INTRODUÇÃO (idênticos ao anterior)
     // =============================================
     let nomeJogador = "";
     let personagemEscolhido = "";
@@ -157,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // =============================================
-    // 4. FASE ABELHA (com fallback para emoji)
+    // 4. FASE ABELHA (código completo)
     // =============================================
     let jogoRodando = false;
     let floresColetadas = 0;
@@ -289,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 5. COMPOSTAGEM (diálogos e fase)
+    // 5. COMPOSTAGEM (mesmo código anterior)
     // =============================================
     const transicaoCompostagem = document.getElementById("transicaoCompostagem");
     const textoCompostagemDiv = document.getElementById("textoCompostagem");
@@ -378,7 +400,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 6. PLANTIO (diálogos e fase)
+    // 6. PLANTIO
     // =============================================
     const transicaoPlantio = document.getElementById("transicaoPlantio");
     const textoPlantioDiv = document.getElementById("textoPlantio");
@@ -520,5 +542,5 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame - música integrada");
+    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame - música com verificação de erro");
 });
