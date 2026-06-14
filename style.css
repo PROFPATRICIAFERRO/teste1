@@ -11,7 +11,7 @@
 body {
     overflow: hidden;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #000;
+    background: #1a3c2c; /* cor de fundo para as bordas */
 }
 
 /* ==========================
@@ -33,6 +33,7 @@ body {
     opacity: 1;
 }
 
+/* Fundo padrão (para as outras telas) */
 .fundo {
     width: 100%;
     height: 100%;
@@ -42,8 +43,61 @@ body {
     left: 0;
 }
 
+/* Fundo da tela inicial - sem corte, centralizado */
+.fundo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a3c2c; /* cor para preencher bordas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fundo-inicial {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;  /* imagem inteira, sem cortes */
+    object-position: center;
+}
+
 /* ==========================
-   LOGOS
+   LOGOS (TELA INICIAL)
+========================== */
+.logos-iniciais {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 20;
+    display: flex;
+    gap: 20px;
+}
+
+.logo-animada {
+    height: 80px;
+    animation: pulsarBrilho 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 5px gold);
+}
+
+@keyframes pulsarBrilho {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px gold);
+    }
+    50% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 20px #ffd700);
+    }
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px gold);
+    }
+}
+
+/* ==========================
+   LOGOS (DEMAIS TELAS)
 ========================== */
 .logos {
     position: absolute;
@@ -55,8 +109,36 @@ body {
 }
 
 .logos img {
-    height: 60px;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+    height: 80px;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
+    transition: transform 0.3s;
+}
+
+.logos img:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================
+   RODAPÉ (TELA INICIAL)
+========================== */
+.rodape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2f9e44;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 20;
+    border-top: 2px solid #1e6b2f;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+}
+
+.rodape p {
+    margin: 2px 0;
 }
 
 /* ==========================
@@ -66,18 +148,20 @@ body {
     background: #2f9e44;
     color: white;
     border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
+    padding: 15px 40px;
+    border-radius: 60px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 28px;
     font-weight: bold;
-    transition: transform 0.2s, background 0.2s;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    z-index: 30;
 }
 
 .botao:hover {
     transform: scale(1.05);
     background: #1e6b2f;
+    box-shadow: 0 0 15px #2f9e44;
 }
 
 .centro {
@@ -85,7 +169,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 10;
+    z-index: 30;
 }
 
 /* ==========================
@@ -101,21 +185,21 @@ body {
 }
 
 /* ==========================
-   CAIXA DE DIÁLOGO
+   CAIXA DE DIÁLOGO (mais próxima da Adelita)
 ========================== */
 .caixaDialogo {
     position: absolute;
-    right: 40px;
+    left: 320px;
     bottom: 40px;
-    width: 650px;
+    width: 550px;
     min-height: 220px;
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.97);
     border-radius: 30px;
     padding: 25px;
     z-index: 20;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.8);
 }
 
 #textoDialogo, #textoTransicao, #textoCompostagem, #textoPlantio {
@@ -137,7 +221,7 @@ body {
     border-radius: 50%;
     font-size: 28px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: 0.2s;
 }
 
 .seta:hover {
@@ -159,7 +243,6 @@ body {
     border-radius: 40px;
     border: 2px solid #ccc;
     outline: none;
-    transition: 0.2s;
 }
 
 #nomeJogador:focus {
@@ -217,8 +300,6 @@ body {
 ========================== */
 #abelha {
     position: absolute;
-    left: 150px;
-    top: 300px;
     width: 110px;
     z-index: 15;
     animation: flutuar 0.3s infinite alternate;
@@ -279,21 +360,39 @@ body {
     transform: scale(1.1);
 }
 
-/* ==========================
-   PLANTIO
-========================== */
-#sementes {
+.contador-compostagem {
     position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    top: 100px;
+    bottom: 20px;
+    left: 20px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     z-index: 10;
 }
 
+/* ==========================
+   PLANTIO - SEMENTES LATERALIZADAS
+========================== */
+#sementes {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    z-index: 10;
+    background: rgba(255,255,255,0.8);
+    padding: 20px;
+    border-radius: 40px;
+    backdrop-filter: blur(5px);
+}
+
 .semente {
-    width: 140px;
+    width: 130px;
     cursor: pointer;
     transition: 0.2s;
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
@@ -307,20 +406,20 @@ body {
     position: relative;
     width: 100%;
     height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 #terra {
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
     width: 320px;
+    margin-bottom: 80px;
 }
 
 #regador {
     position: absolute;
     top: 280px;
-    right: 120px;
+    right: 150px;
     width: 140px;
     cursor: pointer;
     animation: balancar 1s infinite;
@@ -330,6 +429,16 @@ body {
     0% { transform: rotate(0deg); }
     50% { transform: rotate(10deg); }
     100% { transform: rotate(0deg); }
+}
+
+.seta-regador {
+    position: absolute;
+    top: 280px;
+    right: 100px;
+    font-size: 40px;
+    animation: piscar 1s infinite;
+    display: none;
+    z-index: 15;
 }
 
 @keyframes piscar {
@@ -395,40 +504,35 @@ body {
 ========================== */
 @media (max-width: 900px) {
     .caixaDialogo {
+        left: 20px;
         width: 90%;
-        right: 5%;
         bottom: 20px;
-        padding: 15px;
-    }
-    #textoDialogo {
-        font-size: 18px;
     }
     .adelita {
         height: 300px;
+    }
+    .logos img, .logo-animada {
+        height: 50px;
+    }
+    .logos-iniciais {
+        gap: 10px;
+        top: 10px;
         left: 10px;
     }
-    .logos img {
-        height: 40px;
+    .rodape {
+        font-size: 12px;
+        padding: 8px;
     }
-    .item {
-        width: 70px;
-    }
-    #composteira {
-        width: 200px;
+    .botao {
+        font-size: 22px;
+        padding: 10px 30px;
     }
     .semente {
-        width: 100px;
+        width: 90px;
     }
-}
-
-/* ==========================
-   ANIMAÇÕES EXTRAS
-========================== */
-@keyframes crescer {
-    from { transform: scale(0.2); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-.crescendo {
-    animation: crescer 0.5s ease-out;
+    #sementes {
+        left: 10px;
+        padding: 10px;
+        gap: 15px;
+    }
 }
