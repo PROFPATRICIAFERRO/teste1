@@ -1,416 +1,434 @@
 /* ==========================
-   RESET
+   RESET E BASE
 ========================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none; /* Evita seleção de texto durante o jogo */
 }
 
-body{
-    overflow:hidden;
-    font-family:Arial, Helvetica, sans-serif;
-    background:#000;
+body {
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000;
 }
 
 /* ==========================
    TELAS
 ========================== */
-
-.tela{
-    width:100vw;
-    height:100vh;
-    position:absolute;
-    top:0;
-    left:0;
-    display:none;
+.tela {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.tela.ativa{
-    display:block;
+.tela.ativa {
+    display: block;
+    opacity: 1;
 }
 
-.fundo{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    position:absolute;
-    top:0;
-    left:0;
+.fundo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* ==========================
    LOGOS
 ========================== */
-
-.logos{
-    position:absolute;
-    top:10px;
-    left:10px;
-    z-index:10;
-    display:flex;
-    gap:10px;
+.logos {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+    display: flex;
+    gap: 15px;
 }
 
-.logos img{
-    height:70px;
-}
-
-/* ==========================
-   BOTÕES
-========================== */
-
-.botao{
-    background:#2f9e44;
-    color:white;
-    border:none;
-    padding:15px 35px;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:22px;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.botao:hover{
-    transform:scale(1.05);
-}
-
-.centro{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    z-index:10;
+.logos img {
+    height: 60px;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
 }
 
 /* ==========================
-   ADELITA
+   BOTÕES GERAIS
 ========================== */
+.botao {
+    background: #2f9e44;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
 
-.adelita{
-    position:absolute;
-    left:50px;
-    bottom:20px;
-    height:520px;
-    z-index:5;
+.botao:hover {
+    transform: scale(1.05);
+    background: #1e6b2f;
+}
+
+.centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
 }
 
 /* ==========================
-   BALÃO DE FALA
+   PERSONAGEM ADELITA
 ========================== */
-
-.caixaDialogo{
-    position:absolute;
-    right:40px;
-    bottom:40px;
-    width:650px;
-    min-height:220px;
-    background:white;
-    border-radius:20px;
-    padding:25px;
-    z-index:20;
-    box-shadow:0 0 20px rgba(0,0,0,.3);
-}
-
-#textoDialogo{
-    font-size:26px;
-    line-height:1.5;
-    color:#222;
-}
-
-.seta{
-    position:absolute;
-    right:20px;
-    bottom:15px;
-    border:none;
-    background:#2f9e44;
-    color:white;
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    font-size:28px;
-    cursor:pointer;
-}
-
-.seta:hover{
-    transform:scale(1.1);
+.adelita {
+    position: absolute;
+    left: 30px;
+    bottom: 20px;
+    height: 480px;
+    z-index: 5;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
 }
 
 /* ==========================
-   NOME
+   CAIXA DE DIÁLOGO
 ========================== */
-
-#entradaNome{
-    margin-top:20px;
+.caixaDialogo {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+    width: 650px;
+    min-height: 220px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 30px;
+    padding: 25px;
+    z-index: 20;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.5);
 }
 
-#nomeJogador{
-    width:100%;
-    padding:15px;
-    font-size:22px;
-    border-radius:10px;
-    border:2px solid #999;
+#textoDialogo, #textoTransicao, #textoCompostagem, #textoPlantio {
+    font-size: 24px;
+    line-height: 1.4;
+    color: #1e3a2f;
+    margin-bottom: 20px;
+}
+
+.seta {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    border: none;
+    background: #2f9e44;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.seta:hover {
+    transform: scale(1.1);
+    background: #1e6b2f;
+}
+
+/* ==========================
+   CAMPO NOME
+========================== */
+#entradaNome {
+    margin-top: 20px;
+}
+
+#nomeJogador {
+    width: 100%;
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 40px;
+    border: 2px solid #ccc;
+    outline: none;
+    transition: 0.2s;
+}
+
+#nomeJogador:focus {
+    border-color: #2f9e44;
 }
 
 /* ==========================
    ESCOLHA PERSONAGEM
 ========================== */
-
-#escolhaPersonagem{
-    display:none;
-    text-align:center;
+#escolhaPersonagem {
+    display: none;
+    text-align: center;
 }
 
-#escolhaPersonagem h3{
-    margin-bottom:15px;
+#escolhaPersonagem h3 {
+    margin-bottom: 15px;
+    color: #2f9e44;
 }
 
-.personagemEscolha{
-    width:220px;
-    margin:10px;
-    cursor:pointer;
-    transition:.3s;
+.personagemEscolha {
+    width: 180px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 20px;
 }
 
-.personagemEscolha:hover{
-    transform:scale(1.08);
+.personagemEscolha:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 15px green;
 }
 
 /* ==========================
-   HUD DA ABELHA
+   HUD FASE ABELHA
 ========================== */
-
-#hud{
-    position:absolute;
-    top:100px;
-    left:20px;
-    z-index:30;
-    background:white;
-    padding:15px;
-    border-radius:15px;
-    font-size:24px;
-    font-weight:bold;
+#hud {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    z-index: 30;
+    background: rgba(255,255,255,0.9);
+    padding: 12px 20px;
+    border-radius: 40px;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-#contadorFlores{
-    margin-bottom:10px;
+#contadorFlores {
+    margin-bottom: 5px;
 }
 
 /* ==========================
    ABELHA
 ========================== */
-
-#abelha{
-    position:absolute;
-    left:150px;
-    top:300px;
-    width:130px;
-    z-index:15;
-    animation:voar 0.4s infinite alternate;
+#abelha {
+    position: absolute;
+    left: 150px;
+    top: 300px;
+    width: 110px;
+    z-index: 15;
+    animation: flutuar 0.3s infinite alternate;
 }
 
-@keyframes voar{
-    from{
-        transform:translateY(-6px);
-    }
-    to{
-        transform:translateY(6px);
-    }
+@keyframes flutuar {
+    from { transform: translateY(-5px); }
+    to   { transform: translateY(5px); }
 }
 
 /* ==========================
-   OBJETOS FASE 1
+   OBJETOS DA FASE 1
 ========================== */
-
-.objeto{
-    position:absolute;
-    width:90px;
-}
-
-.flor{
-    width:90px;
-}
-
-.fogo{
-    width:120px;
-}
-
-.fumaca{
-    width:120px;
+.objeto {
+    position: absolute;
+    width: 80px;
+    transition: left 0.05s linear;
 }
 
 /* ==========================
    COMPOSTAGEM
 ========================== */
-
-#composteiraArea{
-    position:absolute;
-    right:80px;
-    top:180px;
+#composteiraArea {
+    position: absolute;
+    right: 80px;
+    top: 180px;
 }
 
-#composteira{
-    width:350px;
+#composteira {
+    width: 320px;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
 }
 
-#itensCompostagem{
-    position:absolute;
-    left:50px;
-    bottom:80px;
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    width:700px;
+#itensCompostagem {
+    position: absolute;
+    left: 40px;
+    bottom: 80px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 650px;
+    background: rgba(255,255,240,0.8);
+    padding: 15px;
+    border-radius: 30px;
 }
 
-.item{
-    width:120px;
-    cursor:grab;
-    transition:.3s;
+.item {
+    width: 100px;
+    cursor: grab;
+    transition: 0.2s;
 }
 
-.item:hover{
-    transform:scale(1.1);
+.item:active {
+    cursor: grabbing;
+}
+
+.item:hover {
+    transform: scale(1.1);
 }
 
 /* ==========================
    PLANTIO
 ========================== */
-
-#sementes{
-    position:absolute;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    gap:60px;
-    top:100px;
+#sementes {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    top: 100px;
+    z-index: 10;
 }
 
-.semente{
-    width:180px;
-    cursor:pointer;
-    transition:.3s;
+.semente {
+    width: 140px;
+    cursor: pointer;
+    transition: 0.2s;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
 }
 
-.semente:hover{
-    transform:scale(1.1);
+.semente:hover {
+    transform: scale(1.08);
 }
 
-#terra{
-    position:absolute;
-    bottom:100px;
-    left:50%;
-    transform:translateX(-50%);
-    width:350px;
+#areaPlantio {
+    position: relative;
+    width: 100%;
+    height: 70vh;
 }
 
-#regador{
-    position:absolute;
-    top:300px;
-    right:150px;
-    width:180px;
-    cursor:pointer;
-    animation:pulsar 1s infinite;
+#terra {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
 }
 
-@keyframes pulsar{
-    0%{
-        transform:scale(1);
-    }
-    50%{
-        transform:scale(1.1);
-    }
-    100%{
-        transform:scale(1);
-    }
+#regador {
+    position: absolute;
+    top: 280px;
+    right: 120px;
+    width: 140px;
+    cursor: pointer;
+    animation: balancar 1s infinite;
 }
 
-#plantinha{
-    position:absolute;
-    bottom:180px;
-    left:50%;
-    transform:translateX(-50%);
-    width:180px;
-    display:none;
+@keyframes balancar {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
 }
 
-/* ==========================
-   FINAL
-========================== */
-
-#mensagemFinal{
-    font-size:24px;
-    line-height:1.7;
+@keyframes piscar {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
 }
 
-.certificadoFundo{
-    opacity:.6;
+#plantinha {
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    display: none;
+}
+
+#plantaFinal {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    transition: width 0.1s linear;
 }
 
 /* ==========================
    CERTIFICADO
 ========================== */
-
-#certificado{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:900px;
-    background:white;
-    padding:50px;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 0 30px rgba(0,0,0,.3);
+.certificadoFundo {
+    opacity: 0.6;
 }
 
-#certificado h1{
-    color:#2f9e44;
-    margin-bottom:25px;
+#certificado {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    max-width: 900px;
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border: 8px solid #2f9e44;
 }
 
-#certificado h2{
-    margin-bottom:20px;
+#certificado h1 {
+    color: #2f9e44;
+    margin-bottom: 20px;
 }
 
-#certificado p{
-    font-size:22px;
-    line-height:1.6;
-}
-
-#certificado ul{
-    margin-top:20px;
-    margin-bottom:20px;
-    text-align:left;
-    display:inline-block;
-    font-size:22px;
-}
-
-#certificado h3{
-    color:#2f9e44;
-    margin-bottom:25px;
+#certificado ul {
+    text-align: left;
+    display: inline-block;
+    font-size: 18px;
+    margin: 20px 0;
 }
 
 /* ==========================
    RESPONSIVO
 ========================== */
+@media (max-width: 900px) {
+    .caixaDialogo {
+        width: 90%;
+        right: 5%;
+        bottom: 20px;
+        padding: 15px;
+    }
+    #textoDialogo {
+        font-size: 18px;
+    }
+    .adelita {
+        height: 300px;
+        left: 10px;
+    }
+    .logos img {
+        height: 40px;
+    }
+    .item {
+        width: 70px;
+    }
+    #composteira {
+        width: 200px;
+    }
+    .semente {
+        width: 100px;
+    }
+}
 
-@media(max-width:900px){
-    .caixaDialogo{
-        width:90%;
-        left:5%;
-        right:5%;
-    }
-    .adelita{
-        height:350px;
-    }
-    .logos img{
-        height:50px;
-    }
-    #certificado{
-        width:95%;
-        padding:20px;
-    }
+/* ==========================
+   ANIMAÇÕES EXTRAS
+========================== */
+@keyframes crescer {
+    from { transform: scale(0.2); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.crescendo {
+    animation: crescer 0.5s ease-out;
 }
