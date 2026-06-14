@@ -5,7 +5,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    user-select: none; /* Evita seleção de texto durante o jogo */
+    user-select: none;
 }
 
 body {
