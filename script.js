@@ -1,6 +1,6 @@
 // =====================================
 // JOGO AGROHERÓIS - VERSÃO COMPLETA
-// VELOCIDADE DOS OBJETOS REDUZIDA
+// VELOCIDADE MUITO LENTA (3px/frame, 2s intervalo)
 // =====================================
 
 // --- VARIÁVEIS GLOBAIS ---
@@ -163,8 +163,8 @@ function iniciarFaseAbelha() {
     abelhaImg.style.top = "300px";
     atualizarHUD();
     if (intervaloObjetos) clearInterval(intervaloObjetos);
-    // AUMENTEI O INTERVALO PARA 1700ms (mais lento)
-    intervaloObjetos = setInterval(criarObjeto, 2300);
+    // INTERVALO MAIS LONGO: 2 segundos
+    intervaloObjetos = setInterval(criarObjeto, 2000);
     animacaoLoop = requestAnimationFrame(loopJogo);
 }
 
@@ -217,8 +217,8 @@ function loopJogo() {
     const objetos = document.querySelectorAll(".objeto");
     objetos.forEach(obj => {
         let x = parseInt(obj.style.left);
-        // REDUZI A VELOCIDADE DE 8 PARA 4 (mais lento)
-        x -= 4;
+        // VELOCIDADE MUITO LENTA: 3 pixels por frame
+        x -= 3;
         obj.style.left = x + "px";
         if (x < -150) obj.remove();
         if (colidiu(abelhaImg, obj)) {
@@ -509,4 +509,4 @@ btnPDF.addEventListener("click", () => {
     win.print();
 });
 
-console.log("✅ Jogo AgroHeróis carregado com sucesso (velocidade reduzida)!");
+console.log("✅ Jogo AgroHeróis carregado com sucesso (velocidade muito lenta: 3px/frame)");
