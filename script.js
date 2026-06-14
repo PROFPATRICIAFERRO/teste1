@@ -1,5 +1,51 @@
 document.addEventListener("DOMContentLoaded", function() {
     // =============================================
+    // 0. CORREÇÕES VISUAIS (logos em linha, abelha fallback)
+    // =============================================
+    // Garantir que as logos iniciais fiquem em linha (horizontal)
+    const logosIniciais = document.querySelector('.logos-iniciais');
+    if (logosIniciais) {
+        logosIniciais.style.display = 'flex';
+        logosIniciais.style.flexDirection = 'row';
+        logosIniciais.style.flexWrap = 'wrap';
+        logosIniciais.style.gap = '20px';
+    }
+
+    // Verificar se a imagem da abelha carregou, senão usar emoji
+    const abelhaImg = document.getElementById('abelha');
+    if (abelhaImg) {
+        abelhaImg.onerror = function() {
+            // Se falhar, cria um elemento de texto com emoji
+            const emojiBee = document.createElement('div');
+            emojiBee.id = 'abelha-emoji';
+            emojiBee.textContent = '🐝';
+            emojiBee.style.position = 'absolute';
+            emojiBee.style.fontSize = '80px';
+            emojiBee.style.width = 'auto';
+            emojiBee.style.height = 'auto';
+            emojiBee.style.zIndex = '15';
+            emojiBee.style.animation = 'flutuar 0.3s infinite alternate';
+            // Copiar posição
+            emojiBee.style.left = abelhaImg.style.left;
+            emojiBee.style.top = abelhaImg.style.top;
+            abelhaImg.style.display = 'none';
+            abelhaImg.parentNode.appendChild(emojiBee);
+            // Atualizar referência para o novo elemento
+            window.abelhaElement = emojiBee;
+        };
+        // Se carregar normalmente, usa a imagem
+        abelhaImg.onload = function() {
+            window.abelhaElement = abelhaImg;
+        };
+    }
+
+    // Garantir que a personagem principal1.png fique sem fundo branco
+    const adelita = document.querySelector('.adelita');
+    if (adelita) {
+        adelita.style.mixBlendMode = 'multiply';
+    }
+
+    // =============================================
     // 1. TRANSIÇÃO DA TELA INICIAL PARA INTRODUÇÃO
     // =============================================
     const telaInicial = document.getElementById("telaInicial");
@@ -91,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // =============================================
-    // 3. FASE ABELHA (velocidade ajustada: 2.8 px/frame)
+    // 3. FASE ABELHA (com fallback para emoji)
     // =============================================
     let jogoRodando = false;
     let floresColetadas = 0;
@@ -100,12 +146,21 @@ document.addEventListener("DOMContentLoaded", function() {
     let intervaloObjetos;
     let animacaoLoop;
     const faseAbelha = document.getElementById("faseAbelha");
-    const abelhaImg = document.getElementById("abelha");
+    // Pega o elemento que representa a abelha (pode ser imagem ou emoji)
+    let abelhaElement = document.getElementById("abelha");
     const objetosJogo = document.getElementById("objetosJogo");
     const contadorFloresSpan = document.getElementById("contadorFlores");
     const vidasSpan = document.getElementById("vidas");
     const sucessoAbelha = document.getElementById("sucessoAbelha");
     const msgSucesso = document.getElementById("msgSucesso");
+
+    // Função para atualizar a posição do elemento (imagem ou emoji)
+    function setAbelhaTop(top) {
+        if (abelhaElement) abelhaElement.style.top = top + "px";
+    }
+    function setAbelhaLeft(left) {
+        if (abelhaElement) abelhaElement.style.left = left + "px";
+    }
 
     function iniciarFaseAbelha() {
         faseAbelha.classList.add("ativa");
@@ -113,11 +168,12 @@ document.addEventListener("DOMContentLoaded", function() {
         floresColetadas = 0;
         vidas = 3;
         posYAbelha = window.innerHeight / 2 - 50;
-        abelhaImg.style.left = (window.innerWidth * 0.15) + "px";
-        abelhaImg.style.top = posYAbelha + "px";
+        const leftPos = (window.innerWidth * 0.15) + "px";
+        setAbelhaLeft(leftPos);
+        setAbelhaTop(posYAbelha);
         atualizarHUD();
         if (intervaloObjetos) clearInterval(intervaloObjetos);
-        intervaloObjetos = setInterval(criarObjeto, 2000); // intervalo um pouco menor (2s)
+        intervaloObjetos = setInterval(criarObjeto, 2000);
         animacaoLoop = requestAnimationFrame(loopJogo);
     }
 
@@ -151,10 +207,10 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!jogoRodando) return;
         if (e.key === "ArrowUp") {
             posYAbelha = Math.max(20, posYAbelha - 30);
-            abelhaImg.style.top = posYAbelha + "px";
+            setAbelhaTop(posYAbelha);
         } else if (e.key === "ArrowDown") {
             posYAbelha = Math.min(window.innerHeight - 80, posYAbelha + 30);
-            abelhaImg.style.top = posYAbelha + "px";
+            setAbelhaTop(posYAbelha);
         }
     });
 
@@ -169,11 +225,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const objetos = document.querySelectorAll(".objeto");
         objetos.forEach(obj => {
             let x = parseFloat(obj.style.left);
-            // VELOCIDADE AJUSTADA: 2.8 pixels por frame (um pouco mais veloz)
             x -= 2.8;
             obj.style.left = x + "px";
             if (x + obj.offsetWidth < 0) obj.remove();
-            if (colidiu(abelhaImg, obj)) {
+            if (abelhaElement && colidiu(abelhaElement, obj)) {
                 if (obj.dataset.tipo === "flor") {
                     floresColetadas++;
                     atualizarHUD();
@@ -209,10 +264,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const btnProxCompostagem = document.getElementById("btnProxCompostagem");
-    btnProxCompostagem.addEventListener("click", function() {
-        sucessoAbelha.classList.remove("ativa");
-        iniciarDialogosCompostagem();
-    });
+    if (btnProxCompostagem) {
+        btnProxCompostagem.addEventListener("click", function() {
+            sucessoAbelha.classList.remove("ativa");
+            iniciarDialogosCompostagem();
+        });
+    }
 
     // =============================================
     // 4. COMPOSTAGEM (diálogos e fase)
@@ -427,20 +484,24 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnCertificado = document.getElementById("btnCertificado");
     const certificadoTela = document.getElementById("certificadoTela");
     const nomeCertificadoSpan = document.getElementById("nomeCertificado");
-    btnCertificado.addEventListener("click", function() {
-        document.getElementById("telaFinal").classList.remove("ativa");
-        certificadoTela.classList.add("ativa");
-        nomeCertificadoSpan.innerText = nomeJogador;
-    });
+    if (btnCertificado) {
+        btnCertificado.addEventListener("click", function() {
+            document.getElementById("telaFinal").classList.remove("ativa");
+            certificadoTela.classList.add("ativa");
+            nomeCertificadoSpan.innerText = nomeJogador;
+        });
+    }
 
     const btnPDF = document.getElementById("baixarPDF");
-    btnPDF.addEventListener("click", function() {
-        const conteudo = `<html><head><title>Certificado</title><style>body{font-family:Arial;text-align:center;padding:40px}.cert{border:10px solid #2f9e44;background:white;padding:40px;max-width:800px;margin:auto;border-radius:20px}h1{color:#2f9e44}ul{text-align:left;display:inline-block}</style></head><body><div class="cert"><h1>CERTIFICADO DE AGROHERÓI</h1><p>A equipe dos AgroHeróis certifica que</p><h2>${nomeJogador}</h2><p>concluiu com sucesso todas as missões do projeto<br>Agro Forte, Futuro Sustentável</p><p>Demonstrando conhecimento sobre:</p><ul><li>Polinização</li><li>Compostagem</li><li>Plantio</li><li>Sustentabilidade</li></ul><h3>AGROHERÓI DO FUTURO SUSTENTÁVEL</h3><p>Adelita – AgroHeróis</p></div></body></html>`;
-        const win = window.open();
-        win.document.write(conteudo);
-        win.document.close();
-        win.print();
-    });
+    if (btnPDF) {
+        btnPDF.addEventListener("click", function() {
+            const conteudo = `<html><head><title>Certificado</title><style>body{font-family:Arial;text-align:center;padding:40px}.cert{border:10px solid #2f9e44;background:white;padding:40px;max-width:800px;margin:auto;border-radius:20px}h1{color:#2f9e44}ul{text-align:left;display:inline-block}</style></head><body><div class="cert"><h1>CERTIFICADO DE AGROHERÓI</h1><p>A equipe dos AgroHeróis certifica que</p><h2>${nomeJogador}</h2><p>concluiu com sucesso todas as missões do projeto<br>Agro Forte, Futuro Sustentável</p><p>Demonstrando conhecimento sobre:</p><ul><li>Polinização</li><li>Compostagem</li><li>Plantio</li><li>Sustentabilidade</li></ul><h3>AGROHERÓI DO FUTURO SUSTENTÁVEL</h3><p>Adelita – AgroHeróis</p></div></body></html>`;
+            const win = window.open();
+            win.document.write(conteudo);
+            win.document.close();
+            win.print();
+        });
+    }
 
-    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame");
+    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame - abelha com fallback");
 });
