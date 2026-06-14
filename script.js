@@ -14,7 +14,7 @@ let animacaoLoop;
 let intervaloObjetos;
 let acertosCompostagem = 0;
 let sementeEscolhida = "";
-let audioContext; // para sons
+let audioContext;
 
 // --- ELEMENTOS DOM ---
 const telaInicial = document.getElementById("telaInicial");
@@ -61,7 +61,7 @@ const certificadoTela = document.getElementById("certificadoTela");
 const nomeCertificadoSpan = document.getElementById("nomeCertificado");
 const btnPDF = document.getElementById("baixarPDF");
 
-// --- SONS SIMPLES (Web Audio API) ---
+// --- SONS ---
 function tocarSom(frequencia, duracao = 0.2, tipo = "sine") {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -77,33 +77,12 @@ function tocarSom(frequencia, duracao = 0.2, tipo = "sine") {
     gain.gain.exponentialRampToValueAtTime(0.0001, agora + duracao);
     osc.start(agora);
     osc.stop(agora + duracao);
-    // reativar audio context após user gesture
     if (audioContext.state === "suspended") audioContext.resume();
 }
-
 function somColeta() { tocarSom(880, 0.15, "sine"); }
 function somErro() { tocarSom(440, 0.3, "sawtooth"); }
 function somAcerto() { tocarSom(660, 0.2, "sine"); }
 function somConcluir() { tocarSom(523.25, 0.4, "sine"); tocarSom(659.25, 0.4, "sine"); }
-
-// --- PRÉ-CARREGAMENTO DE IMAGENS (opcional, mas garante cache) ---
-const imagensParaCarregar = [
-    "inicio3.png", "1.png", "2.png", "3.png", "4.png",
-    "principal1.png", "principal2.png", "principal3.png",
-    "menina.png", "menino.png", "b.png", "flor.png", "milho.png", "soja.png",
-    "fogo.png", "fumaca.png", "compostagem.png", "melancia.png", "banana.png",
-    "maca.png", "ovo.png", "lata.png", "metal.png", "sementemilho.png",
-    "sementetomate.png", "sementesoja.png", "terra.png", "regador.png",
-    "plantinha.png", "milhocresce.png", "tomatecresce.png", "sojacresce.png",
-    "logo1.png", "kogo.png", "logo3.png"
-];
-function precarregarImagens() {
-    imagensParaCarregar.forEach(img => {
-        const novaImg = new Image();
-        novaImg.src = `assets/images/${img}`;
-    });
-}
-precarregarImagens();
 
 // --- DIÁLOGOS DA INTRODUÇÃO (12 falas) ---
 const falasIntroducao = [
@@ -154,7 +133,6 @@ btnProximo.addEventListener("click", () => {
         return alert("Escolha um personagem.");
     }
     if (falaAtual === 11) {
-        // ir para fase abelha
         intro.classList.remove("ativa");
         iniciarFaseAbelha();
         return;
@@ -200,13 +178,13 @@ function criarObjeto() {
     if (rand === 0 || rand === 1) {
         const tiposFlor = ["flor.png", "milho.png", "soja.png"];
         const florEscolhida = tiposFlor[Math.floor(Math.random() * 3)];
-        objeto.src = `assets/images/${florEscolhida}`;
+        objeto.src = florEscolhida;
         objeto.dataset.tipo = "flor";
     } else if (rand === 2) {
-        objeto.src = "assets/images/fogo.png";
+        objeto.src = "fogo.png";
         objeto.dataset.tipo = "fogo";
     } else {
-        objeto.src = "assets/images/fumaca.png";
+        objeto.src = "fumaça.png";
         objeto.dataset.tipo = "fumaca";
     }
     objeto.classList.add("objeto");
@@ -409,7 +387,6 @@ btnIniciarPlantio.addEventListener("click", () => {
 // --- FASE PLANTIO ---
 function iniciarPlantioFase() {
     plantioTela.classList.add("ativa");
-    // mostrar sementes
     sementes.forEach(s => s.style.display = "inline-block");
     regador.style.display = "none";
     plantinha.style.display = "none";
@@ -445,8 +422,8 @@ function crescerPlanta() {
     let srcPlanta = "";
     if (sementeEscolhida === "milho") srcPlanta = "milhocresce.png";
     else if (sementeEscolhida === "tomate") srcPlanta = "tomatecresce.png";
-    else srcPlanta = "sojacresce.png";
-    plantaFinal.src = `assets/images/${srcPlanta}`;
+    else srcPlanta = "sojacrece.png";
+    plantaFinal.src = srcPlanta;
     plantaFinal.id = "plantaFinal";
     plantaFinal.style.position = "absolute";
     plantaFinal.style.bottom = "80px";
