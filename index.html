@@ -3,277 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AgroHeróis - Agro Forte, Futuro Sustentável</title>
-
 <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
-<!-- ========================= -->
 <!-- TELA INICIAL -->
-<!-- ========================= -->
-
 <section id="telaInicial" class="tela ativa">
-
-    <img src="assets/images/inicio3.png" class="fundo">
-
+    <img src="assets/images/3.png" class="fundo">
     <div class="centro">
-        <button id="btnComecar" class="botao">
-            COMEÇAR
-        </button>
+        <button id="btnComecar" class="botao">COMEÇAR</button>
     </div>
-
 </section>
 
-<!-- ========================= -->
 <!-- INTRODUÇÃO -->
-<!-- ========================= -->
-
 <section id="introducao" class="tela">
-
     <img src="assets/images/1.png" class="fundo">
-
     <div class="logos">
         <img src="assets/images/logo1.png">
-        <img src="assets/images/kogo.png">
+        <img src="assets/images/logo.png">
         <img src="assets/images/logo3.png">
     </div>
-
-    <img src="assets/images/principal1.png"
-         class="adelita">
-
+    <img src="assets/images/principal1.png" class="adelita">
     <div class="caixaDialogo">
-
         <div id="textoDialogo"></div>
-
         <div id="entradaNome">
-
-            <input type="text"
-                   id="nomeJogador"
-                   placeholder="Digite seu nome">
-
+            <input type="text" id="nomeJogador" placeholder="Digite seu nome">
         </div>
-
         <div id="escolhaPersonagem">
-
             <h3>Escolha seu personagem</h3>
-
-            <img src="assets/images/menina.png"
-                 id="menina"
-                 class="personagemEscolha">
-
-            <img src="assets/images/menino.png"
-                 id="menino"
-                 class="personagemEscolha">
-
+            <img src="assets/images/menina.png" id="menina" class="personagemEscolha">
+            <img src="assets/images/menino.png" id="menino" class="personagemEscolha">
         </div>
-
-        <button id="btnProximo"
-                class="seta">
-            ➜
-        </button>
-
+        <button id="btnProximo" class="seta">➜</button>
     </div>
-
 </section>
 
-<!-- ========================= -->
 <!-- FASE ABELHA -->
-<!-- ========================= -->
-
 <section id="faseAbelha" class="tela">
-
     <img src="assets/images/1.png" class="fundo">
-
     <div class="logos">
         <img src="assets/images/logo1.png">
-        <img src="assets/images/kogo.png">
+        <img src="assets/images/logo.png">
         <img src="assets/images/logo3.png">
     </div>
-
     <div id="hud">
-
-        <div id="contadorFlores">
-            Flores: 0 / 10
-        </div>
-
-        <div id="vidas">
-            Vidas: 3
-        </div>
-
+        <div id="contadorFlores">Flores: 0 / 10</div>
+        <div id="vidas">Vidas: 3</div>
     </div>
-
-    <img src="assets/images/b.png"
-         id="abelha">
-
+    <img src="assets/images/abelha.png" id="abelha">
     <div id="objetosJogo"></div>
-
 </section>
 
-<!-- ========================= -->
 <!-- COMPOSTAGEM -->
-<!-- ========================= -->
-
 <section id="compostagemTela" class="tela">
-
-    <img src="assets/images/4.png"
-         class="fundo">
-
+    <img src="assets/images/4.png" class="fundo">
     <div id="composteiraArea">
-
-        <img src="assets/images/compostagem.png"
-             id="composteira">
-
+        <img src="assets/images/compostagem.png" id="composteira">
     </div>
-
     <div id="itensCompostagem">
-
-        <img src="assets/images/melancia.png"
-             draggable="true"
-             class="item">
-
-        <img src="assets/images/banana.png"
-             draggable="true"
-             class="item">
-
-        <img src="assets/images/maca.png"
-             draggable="true"
-             class="item">
-
-        <img src="assets/images/ovo.png"
-             draggable="true"
-             class="item">
-
-        <img src="assets/images/lata.png"
-             draggable="true"
-             class="item">
-
-        <img src="assets/images/metal.png"
-             draggable="true"
-             class="item">
-
+        <img src="assets/images/melancia.png" draggable="true" class="item">
+        <img src="assets/images/banana.png" draggable="true" class="item">
+        <img src="assets/images/maca.png" draggable="true" class="item">
+        <img src="assets/images/ovo.png" draggable="true" class="item">
+        <img src="assets/images/lata.png" draggable="true" class="item">
+        <img src="assets/images/metal.png" draggable="true" class="item">
     </div>
-
 </section>
 
-<!-- ========================= -->
 <!-- PLANTIO -->
-<!-- ========================= -->
-
 <section id="plantioTela" class="tela">
-
-    <img src="assets/images/2.png"
-         class="fundo">
-
+    <img src="assets/images/2.png" class="fundo">
     <div id="sementes">
-
-        <img src="assets/images/sementemilho.png"
-             class="semente"
-             data-semente="milho">
-
-        <img src="assets/images/sementetomate.png"
-             class="semente"
-             data-semente="tomate">
-
-        <img src="assets/images/sementesoja.png"
-             class="semente"
-             data-semente="soja">
-
+        <img src="assets/images/sementemilho.png" class="semente" data-semente="milho">
+        <img src="assets/images/sementetomate.png" class="semente" data-semente="tomate">
+        <img src="assets/images/sementesoja.png" class="semente" data-semente="soja">
     </div>
-
     <div id="areaPlantio">
-
-        <img src="assets/images/terra.png"
-             id="terra">
-
-        <img src="assets/images/regador.png"
-             id="regador"
-             style="display:none;">
-
-        <img src="assets/images/plantinha.png"
-             id="plantinha"
-             style="display:none;">
-
+        <img src="assets/images/terra.png" id="terra">
+        <img src="assets/images/regua.png" id="regador" style="display:none;">
+        <img src="assets/images/plantinha.png" id="plantinha" style="display:none;">
     </div>
-
 </section>
 
-<!-- ========================= -->
 <!-- TELA FINAL -->
-<!-- ========================= -->
-
 <section id="telaFinal" class="tela">
-
-    <img src="assets/images/1.png"
-         class="fundo">
-
+    <img src="assets/images/1.png" class="fundo">
     <div class="logos">
         <img src="assets/images/logo1.png">
-        <img src="assets/images/kogo.png">
+        <img src="assets/images/logo.png">
         <img src="assets/images/logo3.png">
     </div>
-
-    <img src="assets/images/principal3.png"
-         class="adelita">
-
+    <img src="assets/images/principal3.png" class="adelita">
     <div class="caixaDialogo">
-
         <h2>Parabéns!</h2>
-
         <p id="mensagemFinal"></p>
-
-        <button id="btnCertificado"
-                class="botao">
-            VER CERTIFICADO
-        </button>
-
+        <button id="btnCertificado" class="botao">VER CERTIFICADO</button>
     </div>
-
 </section>
 
-<!-- ========================= -->
 <!-- CERTIFICADO -->
-<!-- ========================= -->
-
 <section id="certificadoTela" class="tela">
-
-    <img src="assets/images/3.png"
-         class="fundo certificadoFundo">
-
+    <img src="assets/images/3.png" class="fundo certificadoFundo">
     <div id="certificado">
-
         <h1>CERTIFICADO DE AGROHERÓI</h1>
-
         <h2 id="nomeCertificado"></h2>
-
-        <p>
-            Concluiu com sucesso todas as missões
-            do projeto Agro Forte, Futuro Sustentável.
-        </p>
-
+        <p>Concluiu com sucesso todas as missões do projeto Agro Forte, Futuro Sustentável.</p>
         <ul>
             <li>Polinização</li>
             <li>Compostagem</li>
             <li>Plantio</li>
             <li>Sustentabilidade</li>
         </ul>
-
-        <h3>
-            AGROHERÓI DO FUTURO SUSTENTÁVEL
-        </h3>
-
-        <button id="baixarPDF"
-                class="botao">
-            BAIXAR CERTIFICADO
-        </button>
-
+        <h3>AGROHERÓI DO FUTURO SUSTENTÁVEL</h3>
+        <button id="baixarPDF" class="botao">BAIXAR CERTIFICADO</button>
     </div>
-
 </section>
 
 <script src="script.js"></script>
-
 </body>
 </html>
