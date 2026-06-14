@@ -212,11 +212,9 @@ body{
 }
 
 @keyframes voar{
-
     from{
         transform:translateY(-6px);
     }
-
     to{
         transform:translateY(6px);
     }
@@ -318,15 +316,12 @@ body{
 }
 
 @keyframes pulsar{
-
     0%{
         transform:scale(1);
     }
-
     50%{
         transform:scale(1.1);
     }
-
     100%{
         transform:scale(1);
     }
@@ -403,24 +398,19 @@ body{
 ========================== */
 
 @media(max-width:900px){
-
     .caixaDialogo{
         width:90%;
         left:5%;
         right:5%;
     }
-
     .adelita{
         height:350px;
     }
-
     .logos img{
         height:50px;
     }
-
     #certificado{
         width:95%;
         padding:20px;
     }
-
 }
