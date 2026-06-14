@@ -37,7 +37,7 @@ body {
     left: 0;
 }
 
-/* TELA INICIAL - CENTRALIZA A IMAGEM 3.png */
+/* TELA INICIAL - FUNDO 3.png */
 .fundo-inicial-container {
     position: absolute;
     top: 0;
@@ -55,7 +55,7 @@ body {
     object-fit: contain;
 }
 
-/* LOGOS INICIAIS - ESTRUTURA LADO A LADO */
+/* LOGOS INICIAIS */
 .logos-iniciais {
     position: absolute;
     top: 20px;
@@ -76,7 +76,7 @@ body {
     align-items: flex-start;
 }
 .logo-animada {
-    height: 240px;          /* 3x maior */
+    height: 240px;
     width: auto;
     animation: pulsarBrilho 1.5s ease-in-out infinite;
     filter: drop-shadow(0 0 8px gold);
@@ -87,7 +87,7 @@ body {
     100% { transform: scale(1); filter: drop-shadow(0 0 2px gold); }
 }
 
-/* LOGOS DEMAIS TELAS */
+/* LOGOS OUTRAS TELAS */
 .logos {
     position: absolute;
     top: 15px;
@@ -101,7 +101,7 @@ body {
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
 }
 
-/* BOTÃO DE MÚSICA */
+/* BOTÃO FLUTUANTE DE MÚSICA */
 .botao-musica {
     position: fixed;
     bottom: 20px;
@@ -141,7 +141,7 @@ body {
     margin: 2px 0;
 }
 
-/* BOTÕES GERAIS */
+/* BOTÕES */
 .botao {
     background: #2f9e44;
     color: white;
@@ -166,7 +166,7 @@ body {
     z-index: 30;
 }
 
-/* PERSONAGEM ADELITA (remove fundo branco) */
+/* ADELITA (remove fundo branco) */
 .adelita {
     position: absolute;
     left: 30px;
