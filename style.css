@@ -37,55 +37,60 @@ body {
     left: 0;
 }
 
-/* TELA INICIAL - FUNDO AGORA É 3.png (sem corte) */
+/* ========== TELA INICIAL ========== */
 .fundo-inicial-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #1a3c2c;
-    background-image: url('3.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: #1a3c2c; /* fundo verde nas bordas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fundo-inicial-container img {
+    max-width: 80%;      /* imagem menor (não cobre toda a tela) */
+    max-height: 80%;
+    object-fit: contain;
 }
 
-/* LOGOS INICIAIS */
+/* LOGOS INICIAIS - MUITO MAIORES */
 .logos-iniciais {
     position: absolute;
     top: 20px;
     left: 20px;
     z-index: 20;
     display: flex;
-    gap: 20px;
+    gap: 30px;
 }
 .logo-animada {
-    height: 80px;
+    height: 140px;       /* antes 80px, agora muito maior */
+    width: auto;
     animation: pulsarBrilho 1.5s ease-in-out infinite;
-    filter: drop-shadow(0 0 5px gold);
+    filter: drop-shadow(0 0 8px gold);
 }
 @keyframes pulsarBrilho {
     0% { transform: scale(1); filter: drop-shadow(0 0 2px gold); }
-    50% { transform: scale(1.08); filter: drop-shadow(0 0 20px #ffd700); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 0 25px #ffd700); }
     100% { transform: scale(1); filter: drop-shadow(0 0 2px gold); }
 }
 
-/* LOGOS OUTRAS TELAS */
+/* LOGOS DEMAIS TELAS (também aumentadas) */
 .logos {
     position: absolute;
     top: 15px;
     left: 15px;
     z-index: 10;
     display: flex;
-    gap: 15px;
+    gap: 20px;
 }
 .logos img {
-    height: 80px;
+    height: 100px;       /* maiores */
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
 }
 
-/* RODAPÉ */
+/* RODAPÉ (sem mudanças) */
 .rodape {
     position: absolute;
     bottom: 0;
@@ -129,7 +134,7 @@ body {
     z-index: 30;
 }
 
-/* ADELITA */
+/* ========== PERSONAGEM ADELITA (remove fundo branco) ========== */
 .adelita {
     position: absolute;
     left: 30px;
@@ -137,9 +142,12 @@ body {
     height: 480px;
     z-index: 5;
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+    /* Tenta remover fundo branco (funciona em PNG com fundo branco sólido) */
+    mix-blend-mode: multiply;
+    /* Caso não funcione, comente a linha acima e use background: transparent */
 }
 
-/* CAIXA DE DIÁLOGO */
+/* CAIXA DE DIÁLOGO (mais perto da Adelita) */
 .caixaDialogo {
     position: absolute;
     left: 320px;
@@ -359,7 +367,7 @@ body {
 @media (max-width: 900px) {
     .caixaDialogo { left: 20px; width: 90%; bottom: 20px; }
     .adelita { height: 300px; }
-    .logos img, .logo-animada { height: 50px; }
+    .logos img, .logo-animada { height: 70px; }  /* ainda grandes, mas responsivo */
     .botao { font-size: 22px; padding: 10px 30px; }
     .semente { width: 90px; }
 }
