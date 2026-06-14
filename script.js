@@ -1,35 +1,42 @@
 document.addEventListener("DOMContentLoaded", function() {
     // =============================================
-    // CONTROLE DE MÚSICA (VERSÃO ROBUSTA)
+    // CONTROLE DE MÚSICA (com musica.mp3)
     // =============================================
     const botaoMusica = document.getElementById("btnMusica");
     const audio = document.getElementById("musicaFundo");
     let musicaTocando = false;
 
     if (botaoMusica && audio) {
+        // Verifica se o áudio pode ser carregado
         audio.addEventListener("canplaythrough", () => {
-            console.log("✅ Música carregada com sucesso.");
+            console.log("✅ Música carregada com sucesso (musica.mp3).");
             botaoMusica.disabled = false;
         });
         audio.addEventListener("error", (e) => {
-            console.error("❌ Erro ao carregar a música. Verifique o arquivo 'musica.mp3'.", e);
+            console.error("❌ Erro ao carregar musica.mp3. Verifique o arquivo.", e);
             botaoMusica.disabled = true;
             botaoMusica.style.opacity = "0.5";
-            botaoMusica.title = "Arquivo de música não encontrado";
+            botaoMusica.title = "Arquivo musica.mp3 não encontrado";
         });
+
+        // Tenta carregar o áudio
         audio.load();
+
+        // Clique do botão: toca ou pausa
         botaoMusica.addEventListener("click", function() {
             if (musicaTocando) {
                 audio.pause();
                 botaoMusica.textContent = "🎵";
                 musicaTocando = false;
+                console.log("Música pausada");
             } else {
                 audio.play().then(() => {
                     musicaTocando = true;
                     botaoMusica.textContent = "🔊";
+                    console.log("Música tocando");
                 }).catch(err => {
                     console.error("Erro ao tentar tocar música:", err);
-                    alert("Não foi possível reproduzir a música. Verifique se o arquivo 'musica.mp3' está na mesma pasta.");
+                    alert("Não foi possível reproduzir a música. Verifique se o arquivo 'musica.mp3' está na mesma pasta e não está corrompido.");
                 });
             }
         });
@@ -533,5 +540,5 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    console.log("Jogo carregado - música pronta (clique no botão 🎵 para ativar).");
+    console.log("Jogo carregado - música pronta (clique no botão 🎵 para ativar musica.mp3).");
 });
