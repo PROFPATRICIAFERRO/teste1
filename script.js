@@ -1,12 +1,12 @@
 // =====================================
-// JOGO AGROHERÓIS - VERSÃO COMPLETA
-// VELOCIDADE MUITO LENTA: 1.5px/frame, intervalo 2.5s
+// JOGO AGROHERÓIS - VERSÃO ESTÁVEL
+// VELOCIDADE CONSTANTE 0.5px/frame, INTERVALO 3s
+// SEMENTES LATERALIZADAS NO CSS
 // =====================================
 
 // --- VARIÁVEIS GLOBAIS ---
 let nomeJogador = "";
 let personagemEscolhido = "";
-let faseAbelhaAtiva = false;
 let jogoRodando = false;
 let floresColetadas = 0;
 let vidas = 3;
@@ -17,7 +17,7 @@ let acertosCompostagem = 0;
 let sementeEscolhida = "";
 let audioContext;
 
-// --- ELEMENTOS DOM ---
+// --- ELEMENTOS DOM (mesmos IDs do HTML) ---
 const telaInicial = document.getElementById("telaInicial");
 const intro = document.getElementById("introducao");
 const faseAbelha = document.getElementById("faseAbelha");
@@ -33,9 +33,6 @@ const abelhaImg = document.getElementById("abelha");
 const objetosJogo = document.getElementById("objetosJogo");
 const contadorFloresSpan = document.getElementById("contadorFlores");
 const vidasSpan = document.getElementById("vidas");
-const transicao1 = document.getElementById("transicao1");
-const textoTransicao = document.getElementById("textoTransicao");
-const btnContinuarTransicao = document.getElementById("btnContinuarTransicao");
 const sucessoAbelha = document.getElementById("sucessoAbelha");
 const msgSucesso = document.getElementById("msgSucesso");
 const btnProxCompostagem = document.getElementById("btnProxCompostagem");
@@ -62,7 +59,7 @@ const certificadoTela = document.getElementById("certificadoTela");
 const nomeCertificadoSpan = document.getElementById("nomeCertificado");
 const btnPDF = document.getElementById("baixarPDF");
 
-// --- SONS ---
+// --- SONS (Web Audio) ---
 function tocarSom(frequencia, duracao = 0.2, tipo = "sine") {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -106,7 +103,6 @@ function mostrarFalaIntroducao() {
     let texto = falasIntroducao[falaAtual];
     texto = texto.replace("[NOME]", nomeJogador);
     textoDialogo.innerText = texto;
-
     if (falaAtual === 0) {
         entradaNomeDiv.style.display = "block";
         escolhaPersonagemDiv.style.display = "none";
@@ -153,19 +149,26 @@ menino.addEventListener("click", () => {
     menina.style.border = "none";
 });
 
-// --- FASE ABELHA ---
+// =============================================
+// FASE ABELHA - VELOCIDADE CONSTANTE E MUITO LENTA
+// =============================================
 function iniciarFaseAbelha() {
     faseAbelha.classList.add("ativa");
     jogoRodando = true;
     floresColetadas = 0;
     vidas = 3;
-    // Ajusta posição inicial da abelha baseado na altura da tela
+
+    // Posiciona a abelha a 15% da largura da tela (mais à esquerda)
+    const abelhaX = window.innerWidth * 0.15;
+    abelhaImg.style.left = abelhaX + "px";
+    // Centraliza verticalmente
     posYAbelha = window.innerHeight / 2 - 50;
     abelhaImg.style.top = posYAbelha + "px";
+    
     atualizarHUD();
     if (intervaloObjetos) clearInterval(intervaloObjetos);
-    // Intervalo maior: 2.5 segundos
-    intervaloObjetos = setInterval(criarObjeto, 2500);
+    // Intervalo de criação: 3 segundos (bem espaçado)
+    intervaloObjetos = setInterval(criarObjeto, 3000);
     animacaoLoop = requestAnimationFrame(loopJogo);
 }
 
@@ -193,17 +196,18 @@ function criarObjeto() {
     objeto.classList.add("objeto");
     // Posição inicial: borda direita da janela
     objeto.style.left = window.innerWidth + "px";
-    objeto.style.top = Math.random() * (window.innerHeight - 100) + 50 + "px";
+    const maxTop = window.innerHeight - 100;
+    objeto.style.top = Math.random() * maxTop + 20 + "px";
     objetosJogo.appendChild(objeto);
 }
 
 document.addEventListener("keydown", (e) => {
     if (!jogoRodando) return;
     if (e.key === "ArrowUp") {
-        posYAbelha = Math.max(50, posYAbelha - 30);
+        posYAbelha = Math.max(20, posYAbelha - 30);
         abelhaImg.style.top = posYAbelha + "px";
     } else if (e.key === "ArrowDown") {
-        posYAbelha = Math.min(window.innerHeight - 100, posYAbelha + 30);
+        posYAbelha = Math.min(window.innerHeight - 80, posYAbelha + 30);
         abelhaImg.style.top = posYAbelha + "px";
     }
 });
@@ -218,12 +222,13 @@ function loopJogo() {
     if (!jogoRodando) return;
     const objetos = document.querySelectorAll(".objeto");
     objetos.forEach(obj => {
-        let x = parseInt(obj.style.left);
-        // VELOCIDADE MUITO LENTA: 1.5 pixels por frame
-        x -= 1.5;
+        let x = parseFloat(obj.style.left);
+        // Velocidade CONSTANTE e MUITO LENTA: 0.5 pixel por frame
+        x -= 0.5;
         obj.style.left = x + "px";
-        // Remove quando sair completamente da tela pela esquerda
+        // Remove quando sair completamente pela esquerda
         if (x + obj.offsetWidth < 0) obj.remove();
+        
         if (colidiu(abelhaImg, obj)) {
             if (obj.dataset.tipo === "flor") {
                 floresColetadas++;
@@ -281,7 +286,6 @@ function iniciarDialogosCompostagem() {
     btnProxFalaCompostagem.style.display = "block";
     btnIniciarCompostagem.style.display = "none";
 }
-
 function mostrarFalaCompostagem() {
     let txt = falasCompostagem[falaCompAtual].replace("[NOME]", nomeJogador);
     textoCompostagemDiv.innerText = txt;
@@ -293,7 +297,6 @@ function mostrarFalaCompostagem() {
         btnIniciarCompostagem.style.display = "none";
     }
 }
-
 btnProxFalaCompostagem.addEventListener("click", () => {
     if (falaCompAtual < falasCompostagem.length - 1) {
         falaCompAtual++;
@@ -320,7 +323,6 @@ function iniciarCompostagem() {
     composteiraImg.addEventListener("dragover", (e) => e.preventDefault());
     composteiraImg.addEventListener("drop", dropNaComposteira);
 }
-
 let dragSrc = null;
 function dragStart(e) {
     dragSrc = e.target;
@@ -328,7 +330,6 @@ function dragStart(e) {
 }
 function dropNaComposteira(e) {
     e.preventDefault();
-    const src = e.dataTransfer.getData("text/plain");
     const itemClicado = dragSrc;
     if (!itemClicado) return;
     const isCorreto = itemClicado.getAttribute("data-correto") === "true";
@@ -358,7 +359,6 @@ const falasPlantio = [
     "Depois, regue sua plantinha com cuidado para ajudá-la a crescer.\nCom a água, o adubo, o sol e as abelhas, sua semente irá se desenvolver.\n\nClique em COMEÇAR."
 ];
 let falaPlantioAtual = 0;
-
 function iniciarDialogosPlantio() {
     transicaoPlantio.classList.add("ativa");
     falaPlantioAtual = 0;
@@ -366,7 +366,6 @@ function iniciarDialogosPlantio() {
     btnProxFalaPlantio.style.display = "block";
     btnIniciarPlantio.style.display = "none";
 }
-
 function mostrarFalaPlantio() {
     let txt = falasPlantio[falaPlantioAtual].replace("[NOME]", nomeJogador);
     textoPlantioDiv.innerText = txt;
@@ -378,7 +377,6 @@ function mostrarFalaPlantio() {
         btnIniciarPlantio.style.display = "none";
     }
 }
-
 btnProxFalaPlantio.addEventListener("click", () => {
     if (falaPlantioAtual < falasPlantio.length - 1) {
         falaPlantioAtual++;
@@ -393,7 +391,8 @@ btnIniciarPlantio.addEventListener("click", () => {
 // --- FASE PLANTIO ---
 function iniciarPlantioFase() {
     plantioTela.classList.add("ativa");
-    sementes.forEach(s => s.style.display = "inline-block");
+    // As sementes já estão lateralizadas pelo CSS
+    sementes.forEach(s => s.style.display = "block");
     regador.style.display = "none";
     plantinha.style.display = "none";
     setaRegador.style.display = "none";
@@ -512,4 +511,4 @@ btnPDF.addEventListener("click", () => {
     win.print();
 });
 
-console.log("✅ Jogo AgroHeróis carregado com sucesso (velocidade 1.5px/frame, intervalo 2.5s)");
+console.log("✅ Jogo AgroHeróis carregado - Velocidade constante 0.5px/frame, sementes lateralizadas");
