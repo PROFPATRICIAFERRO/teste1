@@ -1,55 +1,44 @@
 document.addEventListener("DOMContentLoaded", function() {
     // =============================================
-    // 0. CONTROLE DE MÚSICA (com verificação de erro)
+    // CONTROLE DE MÚSICA (VERSÃO ROBUSTA)
     // =============================================
     const botaoMusica = document.getElementById("btnMusica");
     const audio = document.getElementById("musicaFundo");
     let musicaTocando = false;
 
     if (botaoMusica && audio) {
-        // Evento de erro caso o MP3 não seja encontrado
-        audio.addEventListener("error", function(e) {
-            console.error("Erro ao carregar o arquivo de música. Verifique se 'Agros_em_Ação.mp3' está na mesma pasta.");
-            botaoMusica.style.opacity = "0.5";
-            botaoMusica.title = "Música não disponível";
-            botaoMusica.disabled = true;
-        });
-
-        audio.addEventListener("canplaythrough", function() {
-            console.log("Música carregada com sucesso!");
+        audio.addEventListener("canplaythrough", () => {
+            console.log("✅ Música carregada com sucesso.");
             botaoMusica.disabled = false;
-            botaoMusica.style.opacity = "1";
         });
-
+        audio.addEventListener("error", (e) => {
+            console.error("❌ Erro ao carregar a música. Verifique o arquivo 'Agros_em_Ação.mp3'.", e);
+            botaoMusica.disabled = true;
+            botaoMusica.style.opacity = "0.5";
+            botaoMusica.title = "Arquivo de música não encontrado";
+        });
+        audio.load();
         botaoMusica.addEventListener("click", function() {
             if (musicaTocando) {
                 audio.pause();
                 botaoMusica.textContent = "🎵";
                 musicaTocando = false;
-                console.log("Música pausada");
             } else {
-                // Toca a música (requer interação do usuário, já garantida)
                 audio.play().then(() => {
                     musicaTocando = true;
                     botaoMusica.textContent = "🔊";
-                    console.log("Música tocando");
                 }).catch(err => {
-                    console.error("Erro ao tocar música:", err);
-                    alert("Não foi possível tocar a música. Verifique o arquivo e tente novamente.");
+                    console.error("Erro ao tentar tocar música:", err);
+                    alert("Não foi possível reproduzir a música. Verifique se o arquivo 'Agros_em_Ação.mp3' está na mesma pasta.");
                 });
             }
         });
-
-        // Pré-carrega o áudio
-        audio.load();
-        // Ícone inicial
-        botaoMusica.textContent = "🎵";
     } else {
-        console.warn("Botão ou elemento de áudio não encontrado.");
+        console.warn("Botão de música ou elemento de áudio não encontrado.");
     }
 
     // =============================================
-    // 1. CORREÇÕES VISUAIS (abelha fallback, adelita transparente)
+    // FALLBACK DA ABELHA (caso a.png não exista)
     // =============================================
     const abelhaImg = document.getElementById('abelha');
     let abelhaElement = abelhaImg;
@@ -71,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
             abelhaImg.parentNode.appendChild(emojiBee);
             abelhaElement = emojiBee;
             window.abelhaElement = emojiBee;
+            console.log("🐝 Imagem da abelha não encontrada, usando emoji.");
         };
         abelhaImg.onload = function() {
             window.abelhaElement = abelhaImg;
@@ -82,13 +72,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Remove fundo branco da personagem
     const adelita = document.querySelector('.adelita');
     if (adelita) {
         adelita.style.mixBlendMode = 'multiply';
     }
 
     // =============================================
-    // 2. TRANSIÇÃO DA TELA INICIAL
+    // TRANSIÇÃO DA TELA INICIAL
     // =============================================
     const telaInicial = document.getElementById("telaInicial");
     const introducao = document.getElementById("introducao");
@@ -105,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 3. DIÁLOGOS DA INTRODUÇÃO (idênticos ao anterior)
+    // DIÁLOGOS DA INTRODUÇÃO
     // =============================================
     let nomeJogador = "";
     let personagemEscolhido = "";
@@ -179,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // =============================================
-    // 4. FASE ABELHA (código completo)
+    // FASE ABELHA
     // =============================================
     let jogoRodando = false;
     let floresColetadas = 0;
@@ -311,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 5. COMPOSTAGEM (mesmo código anterior)
+    // COMPOSTAGEM
     // =============================================
     const transicaoCompostagem = document.getElementById("transicaoCompostagem");
     const textoCompostagemDiv = document.getElementById("textoCompostagem");
@@ -400,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 6. PLANTIO
+    // PLANTIO
     // =============================================
     const transicaoPlantio = document.getElementById("transicaoPlantio");
     const textoPlantioDiv = document.getElementById("textoPlantio");
@@ -518,7 +509,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 7. CERTIFICADO E PDF
+    // CERTIFICADO E PDF
     // =============================================
     const btnCertificado = document.getElementById("btnCertificado");
     const certificadoTela = document.getElementById("certificadoTela");
@@ -542,5 +533,5 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame - música com verificação de erro");
+    console.log("Jogo carregado - música pronta (clique no botão 🎵 para ativar).");
 });
