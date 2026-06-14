@@ -8,23 +8,43 @@
 </head>
 <body>
 
-<!-- TELA INICIAL -->
+<!-- ========== TELA INICIAL ========== -->
 <section id="telaInicial" class="tela ativa">
-    <img src="galeria.png" class="fundo" alt="Fundo">
+    <img src="3.png" class="fundo" alt="Fundo">
+    
+    <!-- Logos animadas -->
+    <div class="logos-iniciais">
+        <img src="logo.png" alt="Logo" class="logo-animada">
+        <img src="logo1.png" alt="Logo1" class="logo-animada">
+        <img src="logo2.png" alt="Logo2" class="logo-animada">
+    </div>
+
     <div class="centro">
         <button id="btnComecar" class="botao">COMEÇAR</button>
     </div>
+
+    <!-- Rodapé com faixa verde -->
+    <div class="rodape">
+        <p>jogo desenvolvido por Matheus Souza Nascimento – aluno 2º D Noturno</p>
+        <p>Orientadora: Professora Mestre Patrícia Ariadny Ferro</p>
+        <p>Colégio Estadual Antonio Tortato – NRE Paranavaí</p>
+    </div>
 </section>
 
-<!-- TELA DE APRESENTAÇÃO (DIÁLOGOS) -->
+<!-- ========== TELA DE APRESENTAÇÃO (DIÁLOGOS) ========== -->
 <section id="introducao" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
+    
+    <!-- Logos maiores -->
     <div class="logos">
-        <img src="logo1.png" alt="Logo1">
         <img src="logo.png" alt="Logo">
-        <img src="logo3.png" alt="Logo3">
+        <img src="logo1.png" alt="Logo1">
+        <img src="logo2.png" alt="Logo2">
     </div>
+    
     <img src="principal1.png" class="adelita" alt="Adelita">
+    
+    <!-- Balão de fala reposicionado -->
     <div class="caixaDialogo">
         <div id="textoDialogo"></div>
         <div id="entradaNome">
@@ -39,13 +59,13 @@
     </div>
 </section>
 
-<!-- TRANSIÇÃO FASE 1 -> 2 (principal2) -->
+<!-- ========== TRANSIÇÃO FASE 1 -> 2 ========== -->
 <section id="transicao1" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
-        <img src="logo1.png" alt="Logo1">
         <img src="logo.png" alt="Logo">
-        <img src="logo3.png" alt="Logo3">
+        <img src="logo1.png" alt="Logo1">
+        <img src="logo2.png" alt="Logo2">
     </div>
     <img src="principal2.png" class="adelita" alt="Adelita transição">
     <div class="caixaDialogo" id="dialogoTransicao1">
@@ -54,13 +74,13 @@
     </div>
 </section>
 
-<!-- FASE 1 - ABELHA (POLINIZAÇÃO) -->
+<!-- ========== FASE 1 - ABELHA ========== -->
 <section id="faseAbelha" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
-        <img src="logo1.png" alt="Logo1">
         <img src="logo.png" alt="Logo">
-        <img src="logo3.png" alt="Logo3">
+        <img src="logo1.png" alt="Logo1">
+        <img src="logo2.png" alt="Logo2">
     </div>
     <div id="hud">
         <div id="contadorFlores">🌸 Flores: 0 / 10</div>
@@ -70,13 +90,13 @@
     <div id="objetosJogo"></div>
 </section>
 
-<!-- TELA DE SUCESSO APÓS FASE 1 -->
+<!-- ========== TELA DE SUCESSO ========== -->
 <section id="sucessoAbelha" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
-        <img src="logo1.png" alt="Logo1">
         <img src="logo.png" alt="Logo">
-        <img src="logo3.png" alt="Logo3">
+        <img src="logo1.png" alt="Logo1">
+        <img src="logo2.png" alt="Logo2">
     </div>
     <div class="caixaDialogo" style="text-align:center;">
         <h2>🌸 Missão Cumprida! 🌸</h2>
@@ -85,13 +105,13 @@
     </div>
 </section>
 
-<!-- TRANSIÇÃO PARA COMPOSTAGEM (diálogos 13 a 16) -->
+<!-- ========== TRANSIÇÃO COMPOSTAGEM ========== -->
 <section id="transicaoCompostagem" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
-        <img src="logo1.png" alt="Logo1">
         <img src="logo.png" alt="Logo">
-        <img src="logo3.png" alt="Logo3">
+        <img src="logo1.png" alt="Logo1">
+        <img src="logo2.png" alt="Logo2">
     </div>
     <img src="principal2.png" class="adelita" alt="Adelita">
     <div class="caixaDialogo" id="dialogoCompostagem">
@@ -101,7 +121,7 @@
     </div>
 </section>
 
-<!-- FASE 2 - COMPOSTAGEM -->
+<!-- ========== FASE 2 - COMPOSTAGEM ========== -->
 <section id="compostagemTela" class="tela">
     <img src="4.png" class="fundo" alt="Fundo">
     <div id="composteiraArea">
@@ -115,16 +135,16 @@
         <img src="lata.png" draggable="true" class="item" data-correto="false">
         <img src="metal.png" draggable="true" class="item" data-correto="false">
     </div>
-    <div id="contadorCompostagem" style="position:absolute; bottom:20px; left:20px; background:white; padding:10px; border-radius:10px; font-size:24px;">Acertos: 0 / 4</div>
+    <div id="contadorCompostagem" class="contador-compostagem">Acertos: 0 / 4</div>
 </section>
 
-<!-- TRANSIÇÃO PARA PLANTIO -->
+<!-- ========== TRANSIÇÃO PLANTIO ========== -->
 <section id="transicaoPlantio" class="tela">
     <img src="2.png" class="fundo" alt="Fundo">
     <div class="logos">
-        <img src="logo1.png" alt="Logo1">
         <img src="logo.png" alt="Logo">
-        <img src="logo3.png" alt="Logo3">
+        <img src="logo1.png" alt="Logo1">
+        <img src="logo2.png" alt="Logo2">
     </div>
     <img src="principal1.png" class="adelita" alt="Adelita">
     <div class="caixaDialogo" id="dialogoPlantio">
@@ -134,7 +154,7 @@
     </div>
 </section>
 
-<!-- FASE 3 - PLANTIO -->
+<!-- ========== FASE 3 - PLANTIO ========== -->
 <section id="plantioTela" class="tela">
     <img src="2.png" class="fundo" alt="Fundo">
     <div id="sementes">
@@ -146,17 +166,17 @@
         <img src="terra.png" id="terra" alt="Terra">
         <img src="regua.png" id="regador" style="display:none;" alt="Regador">
         <img src="plantinha.png" id="plantinha" style="display:none;" alt="Plantinha">
-        <div id="setaRegador" style="position:absolute; top:280px; right:100px; font-size:40px; animation: piscar 1s infinite; display:none;">👇</div>
+        <div id="setaRegador" class="seta-regador">👇</div>
     </div>
 </section>
 
-<!-- TELA FINAL -->
+<!-- ========== TELA FINAL ========== -->
 <section id="telaFinal" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
-        <img src="logo1.png" alt="Logo1">
         <img src="logo.png" alt="Logo">
-        <img src="logo3.png" alt="Logo3">
+        <img src="logo1.png" alt="Logo1">
+        <img src="logo2.png" alt="Logo2">
     </div>
     <img src="principal3.png" class="adelita" alt="Adelita">
     <div class="caixaDialogo">
@@ -166,7 +186,7 @@
     </div>
 </section>
 
-<!-- CERTIFICADO -->
+<!-- ========== CERTIFICADO ========== -->
 <section id="certificadoTela" class="tela">
     <img src="3.png" class="fundo certificadoFundo" alt="Fundo">
     <div id="certificado">
