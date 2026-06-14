@@ -37,7 +37,7 @@ body {
     left: 0;
 }
 
-/* TELA INICIAL */
+/* TELA INICIAL - CENTRALIZA A IMAGEM 3.png */
 .fundo-inicial-container {
     position: absolute;
     top: 0;
@@ -55,18 +55,28 @@ body {
     object-fit: contain;
 }
 
-/* LOGOS INICIAIS - LADO A LADO (horizontal) */
+/* LOGOS INICIAIS - ESTRUTURA LADO A LADO */
 .logos-iniciais {
     position: absolute;
     top: 20px;
     left: 20px;
+    right: 20px;
     z-index: 20;
     display: flex;
-    flex-direction: row;    /* horizontal */
-    gap: 30px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.logos-esquerda {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.logos-direita {
+    display: flex;
+    align-items: flex-start;
 }
 .logo-animada {
-    height: 140px;
+    height: 240px;          /* 3x maior que antes (80px) */
     width: auto;
     animation: pulsarBrilho 1.5s ease-in-out infinite;
     filter: drop-shadow(0 0 8px gold);
@@ -77,19 +87,39 @@ body {
     100% { transform: scale(1); filter: drop-shadow(0 0 2px gold); }
 }
 
-/* LOGOS DEMAIS TELAS - HORIZONTAL */
+/* LOGOS DEMAIS TELAS */
 .logos {
     position: absolute;
     top: 15px;
     left: 15px;
     z-index: 10;
     display: flex;
-    flex-direction: row;    /* horizontal */
     gap: 20px;
 }
 .logos img {
     height: 100px;
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
+}
+
+/* BOTÃO FLUTUANTE DE MÚSICA */
+.botao-musica {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2f9e44;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+.botao-musica:hover {
+    transform: scale(1.1);
 }
 
 /* RODAPÉ */
@@ -111,7 +141,7 @@ body {
     margin: 2px 0;
 }
 
-/* BOTÕES */
+/* BOTÕES GERAIS */
 .botao {
     background: #2f9e44;
     color: white;
@@ -136,7 +166,7 @@ body {
     z-index: 30;
 }
 
-/* PERSONAGEM ADELITA - mantém transparência */
+/* PERSONAGEM ADELITA (remove fundo branco) */
 .adelita {
     position: absolute;
     left: 30px;
@@ -144,8 +174,7 @@ body {
     height: 480px;
     z-index: 5;
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
-    /* Remove qualquer fundo branco residual */
-    background: transparent;
+    mix-blend-mode: multiply;
 }
 
 /* CAIXA DE DIÁLOGO */
@@ -218,18 +247,11 @@ body {
     font-size: 22px;
     font-weight: bold;
 }
-/* ABELHA - usando emoji como fallback, mas também aceita imagem */
 #abelha {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 110px;
     z-index: 15;
-    font-size: 70px;
-    text-align: center;
-    line-height: 1;
     animation: flutuar 0.3s infinite alternate;
-    /* Se for imagem, mantém tamanho */
-    object-fit: contain;
 }
 @keyframes flutuar {
     from { transform: translateY(-5px); }
@@ -375,7 +397,7 @@ body {
 @media (max-width: 900px) {
     .caixaDialogo { left: 20px; width: 90%; bottom: 20px; }
     .adelita { height: 300px; }
-    .logos img, .logo-animada { height: 70px; }
+    .logos img, .logo-animada { height: 100px; }  /* ajuste para telas médias */
     .botao { font-size: 22px; padding: 10px 30px; }
     .semente { width: 90px; }
 }
