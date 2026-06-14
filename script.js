@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
             botaoMusica.disabled = false;
         });
         audio.addEventListener("error", (e) => {
-            console.error("❌ Erro ao carregar a música. Verifique o arquivo 'Agros_em_Ação.mp3'.", e);
+            console.error("❌ Erro ao carregar a música. Verifique o arquivo 'musica.mp3'.", e);
             botaoMusica.disabled = true;
             botaoMusica.style.opacity = "0.5";
             botaoMusica.title = "Arquivo de música não encontrado";
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     botaoMusica.textContent = "🔊";
                 }).catch(err => {
                     console.error("Erro ao tentar tocar música:", err);
-                    alert("Não foi possível reproduzir a música. Verifique se o arquivo 'Agros_em_Ação.mp3' está na mesma pasta.");
+                    alert("Não foi possível reproduzir a música. Verifique se o arquivo 'musica.mp3' está na mesma pasta.");
                 });
             }
         });
