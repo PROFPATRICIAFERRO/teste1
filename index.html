@@ -10,27 +10,19 @@
 
 <!-- TELA INICIAL -->
 <section id="telaInicial" class="tela ativa">
-
-<div class="fundo-inicial-container">
-    <img src="3.png" class="imagem-central" alt="Agro Forte">
-</div>
-
+    <div class="fundo-inicial-container">
+        <img src="3.png" class="imagem-central" alt="Agro Forte">
     </div>
 
+    <!-- NOVA ESTRUTURA DAS LOGOS -->
     <div class="logos-iniciais">
-
-        <img src="logo.png"
-             class="logo-animada logo-grande"
-             alt="Logo">
-
-        <img src="logo1.png"
-             class="logo-animada logo-grande"
-             alt="Logo1">
-
-        <img src="logo2.png"
-             class="logo-animada logo-grande"
-             alt="Logo2">
-
+        <div class="logos-esquerda">
+            <img src="logo.png" class="logo-animada logo-grande" alt="Logo">
+            <img src="logo2.png" class="logo-animada logo-grande" alt="Logo2">
+        </div>
+        <div class="logos-direita">
+            <img src="logo1.png" class="logo-animada logo-grande" alt="Logo1">
+        </div>
     </div>
 
     <div class="centro">
@@ -42,6 +34,12 @@
         <p>Colégio Estadual Antonio Tortato – NRE Paranavaí</p>
     </div>
 </section>
+
+<!-- BOTÃO DE MÚSICA (FLUTUANTE) -->
+<button id="btnMusica" class="botao-musica">🎵</button>
+<audio id="musicaFundo" loop>
+    <source src="Agros_em_Ação.mp3" type="audio/mpeg">
+</audio>
 
 <!-- INTRODUÇÃO (DIÁLOGOS) -->
 <section id="introducao" class="tela">
