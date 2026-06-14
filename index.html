@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AgroHeróis - Agro Forte, Futuro Sustentável</title>
-    <link rel="stylesheet" href="stylo.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- TELA INICIAL -->
+<!-- ========== TELA INICIAL ========== -->
 <section id="telaInicial" class="tela ativa">
-    <div class="fundo-inicial"></div>
+    <div class="fundo-inicial-container"></div>
     <div class="logos-iniciais">
-        <img src="logo.png" alt="Logo" class="logo-animada">
-        <img src="logo1.png" alt="Logo1" class="logo-animada">
-        <img src="logo2.png" alt="Logo2" class="logo-animada">
+        <img src="logo.png" class="logo-animada" alt="Logo">
+        <img src="logo1.png" class="logo-animada" alt="Logo1">
+        <img src="logo2.png" class="logo-animada" alt="Logo2">
     </div>
     <div class="centro">
         <button id="btnComecar" class="botao">COMEÇAR</button>
@@ -26,9 +26,9 @@
     </div>
 </section>
 
-<!-- TELA DE INTRODUÇÃO (DIÁLOGOS) -->
+<!-- ========== TELA DE INTRODUÇÃO / DIÁLOGOS ========== -->
 <section id="introducao" class="tela">
-    <img src="1.png" class="fundo">
+    <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
         <img src="logo.png" alt="Logo">
         <img src="logo1.png" alt="Logo1">
@@ -42,20 +42,31 @@
         </div>
         <div id="escolhaPersonagem">
             <h3>Escolha seu personagem</h3>
-            <img src="menina.png" id="menina" class="personagemEscolha">
-            <img src="menino.png" id="menino" class="personagemEscolha">
+            <img src="menina.png" id="menina" class="personagemEscolha" alt="Menina">
+            <img src="menino.png" id="menino" class="personagemEscolha" alt="Menino">
         </div>
         <button id="btnProximo" class="seta">➜</button>
     </div>
 </section>
 
-<!-- FASE ABELHA (POLINIZAÇÃO) -->
+<!-- ========== TRANSIÇÃO (principal2) ========== -->
+<section id="transicao1" class="tela">
+    <img src="1.png" class="fundo">
+    <div class="logos">
+        <img src="logo.png"><img src="logo1.png"><img src="logo2.png">
+    </div>
+    <img src="principal2.png" class="adelita">
+    <div class="caixaDialogo">
+        <div id="textoTransicao"></div>
+        <button id="btnContinuarTransicao" class="botao">CONTINUAR</button>
+    </div>
+</section>
+
+<!-- ========== FASE 1 - ABELHA ========== -->
 <section id="faseAbelha" class="tela">
     <img src="1.png" class="fundo">
     <div class="logos">
-        <img src="logo.png" alt="Logo">
-        <img src="logo1.png" alt="Logo1">
-        <img src="logo2.png" alt="Logo2">
+        <img src="logo.png"><img src="logo1.png"><img src="logo2.png">
     </div>
     <div id="hud">
         <div id="contadorFlores">🌸 Flores: 0 / 10</div>
@@ -65,13 +76,11 @@
     <div id="objetosJogo"></div>
 </section>
 
-<!-- TELA DE SUCESSO ABELHA -->
+<!-- ========== SUCESSO ABELHA ========== -->
 <section id="sucessoAbelha" class="tela">
     <img src="1.png" class="fundo">
     <div class="logos">
-        <img src="logo.png" alt="Logo">
-        <img src="logo1.png" alt="Logo1">
-        <img src="logo2.png" alt="Logo2">
+        <img src="logo.png"><img src="logo1.png"><img src="logo2.png">
     </div>
     <div class="caixaDialogo" style="text-align:center;">
         <h2>🌸 Missão Cumprida! 🌸</h2>
@@ -80,56 +89,52 @@
     </div>
 </section>
 
-<!-- TRANSIÇÃO COMPOSTAGEM -->
+<!-- ========== TRANSIÇÃO COMPOSTAGEM ========== -->
 <section id="transicaoCompostagem" class="tela">
     <img src="1.png" class="fundo">
     <div class="logos">
-        <img src="logo.png" alt="Logo">
-        <img src="logo1.png" alt="Logo1">
-        <img src="logo2.png" alt="Logo2">
+        <img src="logo.png"><img src="logo1.png"><img src="logo2.png">
     </div>
     <img src="principal2.png" class="adelita">
-    <div class="caixaDialogo" id="dialogoCompostagem">
+    <div class="caixaDialogo">
         <div id="textoCompostagem"></div>
         <button id="btnIniciarCompostagem" class="botao" style="display:none;">COMEÇAR</button>
         <button id="btnProxFalaCompostagem" class="seta">➜</button>
     </div>
 </section>
 
-<!-- FASE COMPOSTAGEM -->
+<!-- ========== FASE 2 - COMPOSTAGEM ========== -->
 <section id="compostagemTela" class="tela">
     <img src="4.png" class="fundo">
     <div id="composteiraArea">
         <img src="compostagem.png" id="composteira">
     </div>
     <div id="itensCompostagem">
-        <img src="melancia.png" class="item" data-correto="true">
-        <img src="banana.png" class="item" data-correto="true">
-        <img src="maca.png" class="item" data-correto="true">
-        <img src="ovo.png" class="item" data-correto="true">
-        <img src="lata.png" class="item" data-correto="false">
-        <img src="metal.png" class="item" data-correto="false">
+        <img src="melancia.png" draggable="true" class="item" data-correto="true">
+        <img src="banana.png" draggable="true" class="item" data-correto="true">
+        <img src="maca.png" draggable="true" class="item" data-correto="true">
+        <img src="ovo.png" draggable="true" class="item" data-correto="true">
+        <img src="lata.png" draggable="true" class="item" data-correto="false">
+        <img src="metal.png" draggable="true" class="item" data-correto="false">
     </div>
     <div id="contadorCompostagem">Acertos: 0 / 4</div>
 </section>
 
-<!-- TRANSIÇÃO PLANTIO -->
+<!-- ========== TRANSIÇÃO PLANTIO ========== -->
 <section id="transicaoPlantio" class="tela">
     <img src="2.png" class="fundo">
     <div class="logos">
-        <img src="logo.png" alt="Logo">
-        <img src="logo1.png" alt="Logo1">
-        <img src="logo2.png" alt="Logo2">
+        <img src="logo.png"><img src="logo1.png"><img src="logo2.png">
     </div>
     <img src="principal1.png" class="adelita">
-    <div class="caixaDialogo" id="dialogoPlantio">
+    <div class="caixaDialogo">
         <div id="textoPlantio"></div>
         <button id="btnIniciarPlantio" class="botao" style="display:none;">COMEÇAR</button>
         <button id="btnProxFalaPlantio" class="seta">➜</button>
     </div>
 </section>
 
-<!-- FASE PLANTIO -->
+<!-- ========== FASE 3 - PLANTIO ========== -->
 <section id="plantioTela" class="tela">
     <img src="2.png" class="fundo">
     <div id="sementes">
@@ -145,13 +150,11 @@
     </div>
 </section>
 
-<!-- TELA FINAL -->
+<!-- ========== TELA FINAL ========== -->
 <section id="telaFinal" class="tela">
     <img src="1.png" class="fundo">
     <div class="logos">
-        <img src="logo.png" alt="Logo">
-        <img src="logo1.png" alt="Logo1">
-        <img src="logo2.png" alt="Logo2">
+        <img src="logo.png"><img src="logo1.png"><img src="logo2.png">
     </div>
     <img src="principal3.png" class="adelita">
     <div class="caixaDialogo">
@@ -161,7 +164,7 @@
     </div>
 </section>
 
-<!-- CERTIFICADO -->
+<!-- ========== CERTIFICADO ========== -->
 <section id="certificadoTela" class="tela">
     <img src="3.png" class="fundo certificadoFundo">
     <div id="certificado">
