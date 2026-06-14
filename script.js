@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
         btnComecar.addEventListener("click", function() {
             telaInicial.classList.remove("ativa");
             introducao.classList.add("ativa");
-            mostrarFala(); // inicia os diálogos
+            mostrarFala();
         });
     } else {
         console.error("Elementos de tela ou botão não encontrados!");
@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (falaAtual < falas.length) {
             mostrarFala();
         } else {
-            // Final dos diálogos: iniciar fase da abelha
             introducao.classList.remove("ativa");
             iniciarFaseAbelha();
         }
@@ -92,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // =============================================
-    // 3. FASE ABELHA (velocidade reduzida)
+    // 3. FASE ABELHA (velocidade ajustada: 2.8 px/frame)
     // =============================================
     let jogoRodando = false;
     let floresColetadas = 0;
@@ -118,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
         abelhaImg.style.top = posYAbelha + "px";
         atualizarHUD();
         if (intervaloObjetos) clearInterval(intervaloObjetos);
-        intervaloObjetos = setInterval(criarObjeto, 2500);
+        intervaloObjetos = setInterval(criarObjeto, 2000); // intervalo um pouco menor (2s)
         animacaoLoop = requestAnimationFrame(loopJogo);
     }
 
@@ -170,7 +169,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const objetos = document.querySelectorAll(".objeto");
         objetos.forEach(obj => {
             let x = parseFloat(obj.style.left);
-            x -= 1.5; // velocidade lenta
+            // VELOCIDADE AJUSTADA: 2.8 pixels por frame (um pouco mais veloz)
+            x -= 2.8;
             obj.style.left = x + "px";
             if (x + obj.offsetWidth < 0) obj.remove();
             if (colidiu(abelhaImg, obj)) {
@@ -204,11 +204,10 @@ document.addEventListener("DOMContentLoaded", function() {
         jogoRodando = false;
         clearInterval(intervaloObjetos);
         cancelAnimationFrame(animacaoLoop);
-        alert("Você perdeu todas as vidas! O jogo vai reiniciar.");
+        alert("❌ Você perdeu todas as vidas! O jogo vai reiniciar.");
         location.reload();
     }
 
-    // Botão para ir para compostagem
     const btnProxCompostagem = document.getElementById("btnProxCompostagem");
     btnProxCompostagem.addEventListener("click", function() {
         sucessoAbelha.classList.remove("ativa");
@@ -443,5 +442,5 @@ document.addEventListener("DOMContentLoaded", function() {
         win.print();
     });
 
-    console.log("Jogo carregado com sucesso!");
+    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame");
 });
