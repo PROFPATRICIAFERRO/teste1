@@ -76,7 +76,7 @@ body {
     align-items: flex-start;
 }
 .logo-animada {
-    height: 240px;          /* 3x maior que antes (80px) */
+    height: 240px;          /* 3x maior */
     width: auto;
     animation: pulsarBrilho 1.5s ease-in-out infinite;
     filter: drop-shadow(0 0 8px gold);
@@ -101,7 +101,7 @@ body {
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3));
 }
 
-/* BOTÃO FLUTUANTE DE MÚSICA */
+/* BOTÃO DE MÚSICA */
 .botao-musica {
     position: fixed;
     bottom: 20px;
@@ -397,7 +397,7 @@ body {
 @media (max-width: 900px) {
     .caixaDialogo { left: 20px; width: 90%; bottom: 20px; }
     .adelita { height: 300px; }
-    .logos img, .logo-animada { height: 100px; }  /* ajuste para telas médias */
+    .logos img, .logo-animada { height: 100px; }
     .botao { font-size: 22px; padding: 10px 30px; }
     .semente { width: 90px; }
 }
