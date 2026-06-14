@@ -164,7 +164,7 @@ function iniciarFaseAbelha() {
     atualizarHUD();
     if (intervaloObjetos) clearInterval(intervaloObjetos);
     // AUMENTEI O INTERVALO PARA 1700ms (mais lento)
-    intervaloObjetos = setInterval(criarObjeto, 1700);
+    intervaloObjetos = setInterval(criarObjeto, 2300);
     animacaoLoop = requestAnimationFrame(loopJogo);
 }
 
