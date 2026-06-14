@@ -1,23 +1,20 @@
 // =====================================
 // JOGO AGROHERÓIS - VERSÃO COMPLETA
-// VELOCIDADE MUITO LENTA (3px/frame, 2s intervalo)
+// OBJETOS PERCORREM TODA A TELA
 // =====================================
 
-// --- VARIÁVEIS GLOBAIS ---
 let nomeJogador = "";
 let personagemEscolhido = "";
-let faseAbelhaAtiva = false;
 let jogoRodando = false;
 let floresColetadas = 0;
 let vidas = 3;
 let posYAbelha = 300;
-let animacaoLoop;
 let intervaloObjetos;
 let acertosCompostagem = 0;
 let sementeEscolhida = "";
 let audioContext;
 
-// --- ELEMENTOS DOM ---
+// Elementos DOM
 const telaInicial = document.getElementById("telaInicial");
 const intro = document.getElementById("introducao");
 const faseAbelha = document.getElementById("faseAbelha");
@@ -33,9 +30,6 @@ const abelhaImg = document.getElementById("abelha");
 const objetosJogo = document.getElementById("objetosJogo");
 const contadorFloresSpan = document.getElementById("contadorFlores");
 const vidasSpan = document.getElementById("vidas");
-const transicao1 = document.getElementById("transicao1");
-const textoTransicao = document.getElementById("textoTransicao");
-const btnContinuarTransicao = document.getElementById("btnContinuarTransicao");
 const sucessoAbelha = document.getElementById("sucessoAbelha");
 const msgSucesso = document.getElementById("msgSucesso");
 const btnProxCompostagem = document.getElementById("btnProxCompostagem");
@@ -62,11 +56,9 @@ const certificadoTela = document.getElementById("certificadoTela");
 const nomeCertificadoSpan = document.getElementById("nomeCertificado");
 const btnPDF = document.getElementById("baixarPDF");
 
-// --- SONS ---
+// Sons
 function tocarSom(frequencia, duracao = 0.2, tipo = "sine") {
-    if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
+    if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const agora = audioContext.currentTime;
     const osc = audioContext.createOscillator();
     const gain = audioContext.createGain();
@@ -85,7 +77,7 @@ function somErro() { tocarSom(440, 0.3, "sawtooth"); }
 function somAcerto() { tocarSom(660, 0.2, "sine"); }
 function somConcluir() { tocarSom(523.25, 0.4, "sine"); tocarSom(659.25, 0.4, "sine"); }
 
-// --- DIÁLOGOS DA INTRODUÇÃO (12 falas) ---
+// Diálogos Introdução
 const falasIntroducao = [
     "Olá! Eu sou a Adelita e faço parte dos AgroHeróis!\n\nQual é o seu nome?",
     "Que nome lindo, [NOME]!\n\nHoje você vai participar de uma missão muito importante.\n\nEscolha seu personagem.",
@@ -103,10 +95,8 @@ const falasIntroducao = [
 let falaAtual = 0;
 
 function mostrarFalaIntroducao() {
-    let texto = falasIntroducao[falaAtual];
-    texto = texto.replace("[NOME]", nomeJogador);
+    let texto = falasIntroducao[falaAtual].replace("[NOME]", nomeJogador);
     textoDialogo.innerText = texto;
-
     if (falaAtual === 0) {
         entradaNomeDiv.style.display = "block";
         escolhaPersonagemDiv.style.display = "none";
@@ -130,9 +120,7 @@ btnProximo.addEventListener("click", () => {
         nomeJogador = nomeInput.value.trim();
         if (!nomeJogador) return alert("Digite seu nome.");
     }
-    if (falaAtual === 1 && !personagemEscolhido) {
-        return alert("Escolha um personagem.");
-    }
+    if (falaAtual === 1 && !personagemEscolhido) return alert("Escolha um personagem.");
     if (falaAtual === 11) {
         intro.classList.remove("ativa");
         iniciarFaseAbelha();
@@ -153,24 +141,16 @@ menino.addEventListener("click", () => {
     menina.style.border = "none";
 });
 
-// --- FASE ABELHA ---
-function iniciarFaseAbelha() {
-    faseAbelha.classList.add("ativa");
-    jogoRodando = true;
-    floresColetadas = 0;
-    vidas = 3;
-    posYAbelha = 300;
-    abelhaImg.style.top = "300px";
-    atualizarHUD();
-    if (intervaloObjetos) clearInterval(intervaloObjetos);
-    // INTERVALO MAIS LONGO: 2 segundos
-    intervaloObjetos = setInterval(criarObjeto, 2000);
-    animacaoLoop = requestAnimationFrame(loopJogo);
-}
-
+// FASE ABELHA
 function atualizarHUD() {
     contadorFloresSpan.innerText = `🌸 Flores: ${floresColetadas} / 10`;
     vidasSpan.innerText = `❤️ Vidas: ${vidas}`;
+}
+
+function colidiu(a, b) {
+    const r1 = a.getBoundingClientRect();
+    const r2 = b.getBoundingClientRect();
+    return !(r1.top > r2.bottom || r1.bottom < r2.top || r1.left > r2.right || r1.right < r2.left);
 }
 
 function criarObjeto() {
@@ -190,26 +170,11 @@ function criarObjeto() {
         objeto.dataset.tipo = "fumaca";
     }
     objeto.classList.add("objeto");
-    objeto.style.left = "100vw";
-    objeto.style.top = Math.random() * 550 + 50 + "px";
+    objeto.style.position = "absolute";
+    objeto.style.width = "80px";
+    objeto.style.left = window.innerWidth + "px";
+    objeto.style.top = Math.random() * (window.innerHeight - 120) + 60 + "px";
     objetosJogo.appendChild(objeto);
-}
-
-document.addEventListener("keydown", (e) => {
-    if (!jogoRodando) return;
-    if (e.key === "ArrowUp") {
-        posYAbelha = Math.max(50, posYAbelha - 30);
-        abelhaImg.style.top = posYAbelha + "px";
-    } else if (e.key === "ArrowDown") {
-        posYAbelha = Math.min(600, posYAbelha + 30);
-        abelhaImg.style.top = posYAbelha + "px";
-    }
-});
-
-function colidiu(a, b) {
-    const r1 = a.getBoundingClientRect();
-    const r2 = b.getBoundingClientRect();
-    return !(r1.top > r2.bottom || r1.bottom < r2.top || r1.left > r2.right || r1.right < r2.left);
 }
 
 function loopJogo() {
@@ -217,10 +182,9 @@ function loopJogo() {
     const objetos = document.querySelectorAll(".objeto");
     objetos.forEach(obj => {
         let x = parseInt(obj.style.left);
-        // VELOCIDADE MUITO LENTA: 3 pixels por frame
         x -= 3;
         obj.style.left = x + "px";
-        if (x < -150) obj.remove();
+        if (x + obj.offsetWidth < 0) obj.remove();
         if (colidiu(abelhaImg, obj)) {
             if (obj.dataset.tipo === "flor") {
                 floresColetadas++;
@@ -237,6 +201,30 @@ function loopJogo() {
             }
         }
     });
+    requestAnimationFrame(loopJogo);
+}
+
+document.addEventListener("keydown", (e) => {
+    if (!jogoRodando) return;
+    if (e.key === "ArrowUp") {
+        posYAbelha = Math.max(50, posYAbelha - 30);
+        abelhaImg.style.top = posYAbelha + "px";
+    } else if (e.key === "ArrowDown") {
+        posYAbelha = Math.min(window.innerHeight - 100, posYAbelha + 30);
+        abelhaImg.style.top = posYAbelha + "px";
+    }
+});
+
+function iniciarFaseAbelha() {
+    faseAbelha.classList.add("ativa");
+    jogoRodando = true;
+    floresColetadas = 0;
+    vidas = 3;
+    posYAbelha = window.innerHeight / 2;
+    abelhaImg.style.top = posYAbelha + "px";
+    atualizarHUD();
+    if (intervaloObjetos) clearInterval(intervaloObjetos);
+    intervaloObjetos = setInterval(criarObjeto, 2000);
     requestAnimationFrame(loopJogo);
 }
 
@@ -262,7 +250,7 @@ btnProxCompostagem.addEventListener("click", () => {
     iniciarDialogosCompostagem();
 });
 
-// --- DIÁLOGOS COMPOSTAGEM (13 a 16) ---
+// DIÁLOGOS COMPOSTAGEM
 const falasCompostagem = [
     "Muito bem, [NOME]!\n\nAgora vamos aprender sobre a compostagem.\nA compostagem transforma restos de alimentos e folhas em adubo natural, ajudando as plantas a crescerem fortes e saudáveis.",
     "Sua missão:\n\nArraste os materiais corretos para a composteira.\n✅ Pode colocar: cascas de frutas, cascas de legumes, folhas secas.",
@@ -302,7 +290,7 @@ btnIniciarCompostagem.addEventListener("click", () => {
     iniciarCompostagem();
 });
 
-// --- FASE COMPOSTAGEM ---
+// FASE COMPOSTAGEM
 function iniciarCompostagem() {
     compostagemTela.classList.add("ativa");
     acertosCompostagem = 0;
@@ -325,7 +313,6 @@ function dragStart(e) {
 }
 function dropNaComposteira(e) {
     e.preventDefault();
-    const src = e.dataTransfer.getData("text/plain");
     const itemClicado = dragSrc;
     if (!itemClicado) return;
     const isCorreto = itemClicado.getAttribute("data-correto") === "true";
@@ -347,7 +334,7 @@ function dropNaComposteira(e) {
     dragSrc = null;
 }
 
-// --- DIÁLOGOS PLANTIO (17 a 20) ---
+// DIÁLOGOS PLANTIO
 const falasPlantio = [
     "Parabéns, [NOME]!\n\nVocê separou os resíduos corretamente e ajudou a produzir um adubo natural através da compostagem.",
     "Agora o solo já está preparado e cheio de nutrientes!\nLembra das abelhas que ajudamos na missão anterior?\nElas ajudam as plantas a produzir flores, frutos e sementes.\nE o adubo da compostagem ajuda essas plantas a crescerem fortes e saudáveis.",
@@ -387,7 +374,7 @@ btnIniciarPlantio.addEventListener("click", () => {
     iniciarPlantioFase();
 });
 
-// --- FASE PLANTIO ---
+// FASE PLANTIO
 function iniciarPlantioFase() {
     plantioTela.classList.add("ativa");
     sementes.forEach(s => s.style.display = "inline-block");
@@ -469,7 +456,6 @@ btnCertificado.addEventListener("click", () => {
     nomeCertificadoSpan.innerText = nomeJogador;
 });
 
-// --- GERAR PDF ---
 btnPDF.addEventListener("click", () => {
     const conteudo = `
     <html>
@@ -509,4 +495,4 @@ btnPDF.addEventListener("click", () => {
     win.print();
 });
 
-console.log("✅ Jogo AgroHeróis carregado com sucesso (velocidade muito lenta: 3px/frame)");
+console.log("✅ Jogo AgroHeróis carregado - objetos percorrem toda a tela");
