@@ -10,7 +10,10 @@
 
 <!-- ========== TELA INICIAL ========== -->
 <section id="telaInicial" class="tela ativa">
-    <img src="3.png" class="fundo" alt="Fundo">
+    <!-- Fundo sem corte: contain + cor de fundo -->
+    <div class="fundo-container">
+        <img src="3.png" class="fundo-inicial" alt="Fundo">
+    </div>
     
     <!-- Logos animadas -->
     <div class="logos-iniciais">
@@ -34,17 +37,12 @@
 <!-- ========== TELA DE APRESENTAÇÃO (DIÁLOGOS) ========== -->
 <section id="introducao" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
-    
-    <!-- Logos maiores -->
     <div class="logos">
         <img src="logo.png" alt="Logo">
         <img src="logo1.png" alt="Logo1">
         <img src="logo2.png" alt="Logo2">
     </div>
-    
     <img src="principal1.png" class="adelita" alt="Adelita">
-    
-    <!-- Balão de fala reposicionado -->
     <div class="caixaDialogo">
         <div id="textoDialogo"></div>
         <div id="entradaNome">
@@ -59,7 +57,7 @@
     </div>
 </section>
 
-<!-- ========== TRANSIÇÃO FASE 1 -> 2 ========== -->
+<!-- TRANSIÇÃO FASE 1 -> 2 -->
 <section id="transicao1" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
@@ -74,7 +72,7 @@
     </div>
 </section>
 
-<!-- ========== FASE 1 - ABELHA ========== -->
+<!-- FASE 1 - ABELHA -->
 <section id="faseAbelha" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
@@ -90,7 +88,7 @@
     <div id="objetosJogo"></div>
 </section>
 
-<!-- ========== TELA DE SUCESSO ========== -->
+<!-- SUCESSO ABELHA -->
 <section id="sucessoAbelha" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
@@ -105,7 +103,7 @@
     </div>
 </section>
 
-<!-- ========== TRANSIÇÃO COMPOSTAGEM ========== -->
+<!-- TRANSIÇÃO COMPOSTAGEM -->
 <section id="transicaoCompostagem" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
@@ -121,7 +119,7 @@
     </div>
 </section>
 
-<!-- ========== FASE 2 - COMPOSTAGEM ========== -->
+<!-- FASE 2 - COMPOSTAGEM -->
 <section id="compostagemTela" class="tela">
     <img src="4.png" class="fundo" alt="Fundo">
     <div id="composteiraArea">
@@ -138,7 +136,7 @@
     <div id="contadorCompostagem" class="contador-compostagem">Acertos: 0 / 4</div>
 </section>
 
-<!-- ========== TRANSIÇÃO PLANTIO ========== -->
+<!-- TRANSIÇÃO PLANTIO -->
 <section id="transicaoPlantio" class="tela">
     <img src="2.png" class="fundo" alt="Fundo">
     <div class="logos">
@@ -154,7 +152,7 @@
     </div>
 </section>
 
-<!-- ========== FASE 3 - PLANTIO ========== -->
+<!-- FASE 3 - PLANTIO -->
 <section id="plantioTela" class="tela">
     <img src="2.png" class="fundo" alt="Fundo">
     <div id="sementes">
@@ -170,7 +168,7 @@
     </div>
 </section>
 
-<!-- ========== TELA FINAL ========== -->
+<!-- TELA FINAL -->
 <section id="telaFinal" class="tela">
     <img src="1.png" class="fundo" alt="Fundo">
     <div class="logos">
@@ -186,7 +184,7 @@
     </div>
 </section>
 
-<!-- ========== CERTIFICADO ========== -->
+<!-- CERTIFICADO -->
 <section id="certificadoTela" class="tela">
     <img src="3.png" class="fundo certificadoFundo" alt="Fundo">
     <div id="certificado">
