@@ -1,21 +1,38 @@
 document.addEventListener("DOMContentLoaded", function() {
     // =============================================
-    // 0. CORREÇÕES VISUAIS (logos em linha, abelha fallback)
+    // 0. CONTROLE DE MÚSICA
     // =============================================
-    // Garantir que as logos iniciais fiquem em linha (horizontal)
-    const logosIniciais = document.querySelector('.logos-iniciais');
-    if (logosIniciais) {
-        logosIniciais.style.display = 'flex';
-        logosIniciais.style.flexDirection = 'row';
-        logosIniciais.style.flexWrap = 'wrap';
-        logosIniciais.style.gap = '20px';
+    const botaoMusica = document.getElementById("btnMusica");
+    const audio = document.getElementById("musicaFundo");
+    let musicaTocando = false;
+
+    if (botaoMusica && audio) {
+        botaoMusica.addEventListener("click", function() {
+            if (musicaTocando) {
+                audio.pause();
+                botaoMusica.textContent = "🎵";  // emoji sem som
+                musicaTocando = false;
+            } else {
+                // Tenta tocar (navegadores permitem após interação do usuário)
+                audio.play().then(() => {
+                    musicaTocando = true;
+                    botaoMusica.textContent = "🔊";  // emoji com som
+                }).catch(e => console.log("Erro ao tocar música:", e));
+            }
+        });
+        // Pré-carrega o áudio
+        audio.load();
+        // Inicialmente ícone de música desligada
+        botaoMusica.textContent = "🎵";
     }
 
-    // Verificar se a imagem da abelha carregou, senão usar emoji
+    // =============================================
+    // 1. CORREÇÕES VISUAIS (logos em linha, abelha fallback, adelita transparente)
+    // =============================================
     const abelhaImg = document.getElementById('abelha');
+    let abelhaElement = abelhaImg;
     if (abelhaImg) {
         abelhaImg.onerror = function() {
-            // Se falhar, cria um elemento de texto com emoji
             const emojiBee = document.createElement('div');
             emojiBee.id = 'abelha-emoji';
             emojiBee.textContent = '🐝';
@@ -25,28 +42,31 @@ document.addEventListener("DOMContentLoaded", function() {
             emojiBee.style.height = 'auto';
             emojiBee.style.zIndex = '15';
             emojiBee.style.animation = 'flutuar 0.3s infinite alternate';
-            // Copiar posição
-            emojiBee.style.left = abelhaImg.style.left;
-            emojiBee.style.top = abelhaImg.style.top;
+            emojiBee.style.pointerEvents = 'none';
+            emojiBee.style.left = abelhaImg.style.left || (window.innerWidth * 0.15) + 'px';
+            emojiBee.style.top = abelhaImg.style.top || (window.innerHeight / 2 - 50) + 'px';
             abelhaImg.style.display = 'none';
             abelhaImg.parentNode.appendChild(emojiBee);
-            // Atualizar referência para o novo elemento
+            abelhaElement = emojiBee;
             window.abelhaElement = emojiBee;
         };
-        // Se carregar normalmente, usa a imagem
         abelhaImg.onload = function() {
             window.abelhaElement = abelhaImg;
+            abelhaElement = abelhaImg;
         };
+        if (abelhaImg.complete) {
+            window.abelhaElement = abelhaImg;
+            abelhaElement = abelhaImg;
+        }
     }
 
-    // Garantir que a personagem principal1.png fique sem fundo branco
     const adelita = document.querySelector('.adelita');
     if (adelita) {
         adelita.style.mixBlendMode = 'multiply';
     }
 
     // =============================================
-    // 1. TRANSIÇÃO DA TELA INICIAL PARA INTRODUÇÃO
+    // 2. TRANSIÇÃO DA TELA INICIAL PARA INTRODUÇÃO
     // =============================================
     const telaInicial = document.getElementById("telaInicial");
     const introducao = document.getElementById("introducao");
@@ -63,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 2. DIÁLOGOS DA INTRODUÇÃO
+    // 3. DIÁLOGOS DA INTRODUÇÃO
     // =============================================
     let nomeJogador = "";
     let personagemEscolhido = "";
@@ -137,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // =============================================
-    // 3. FASE ABELHA (com fallback para emoji)
+    // 4. FASE ABELHA (com fallback para emoji)
     // =============================================
     let jogoRodando = false;
     let floresColetadas = 0;
@@ -146,15 +166,12 @@ document.addEventListener("DOMContentLoaded", function() {
     let intervaloObjetos;
     let animacaoLoop;
     const faseAbelha = document.getElementById("faseAbelha");
-    // Pega o elemento que representa a abelha (pode ser imagem ou emoji)
-    let abelhaElement = document.getElementById("abelha");
     const objetosJogo = document.getElementById("objetosJogo");
     const contadorFloresSpan = document.getElementById("contadorFlores");
     const vidasSpan = document.getElementById("vidas");
     const sucessoAbelha = document.getElementById("sucessoAbelha");
     const msgSucesso = document.getElementById("msgSucesso");
 
-    // Função para atualizar a posição do elemento (imagem ou emoji)
     function setAbelhaTop(top) {
         if (abelhaElement) abelhaElement.style.top = top + "px";
     }
@@ -272,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 4. COMPOSTAGEM (diálogos e fase)
+    // 5. COMPOSTAGEM (diálogos e fase)
     // =============================================
     const transicaoCompostagem = document.getElementById("transicaoCompostagem");
     const textoCompostagemDiv = document.getElementById("textoCompostagem");
@@ -361,7 +378,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 5. PLANTIO (diálogos e fase)
+    // 6. PLANTIO (diálogos e fase)
     // =============================================
     const transicaoPlantio = document.getElementById("transicaoPlantio");
     const textoPlantioDiv = document.getElementById("textoPlantio");
@@ -479,7 +496,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // =============================================
-    // 6. CERTIFICADO E PDF
+    // 7. CERTIFICADO E PDF
     // =============================================
     const btnCertificado = document.getElementById("btnCertificado");
     const certificadoTela = document.getElementById("certificadoTela");
@@ -503,5 +520,5 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame - abelha com fallback");
+    console.log("Jogo carregado com sucesso - velocidade 2.8px/frame - música integrada");
 });
